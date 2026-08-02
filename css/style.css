@@ -512,3 +512,75 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   .container { padding: 0 24px; }
   .premium-cat-grid { grid-template-columns: 1fr; }
 }
+
+
+/* --- UI REFINEMENTS --- */
+.nav-logo-img {
+  height: 90px !important;
+  width: auto !important;
+  mix-blend-mode: multiply !important;
+  margin-top: 5px;
+}
+
+.footer-brand img {
+  height: 90px !important;
+  width: auto !important;
+  mix-blend-mode: multiply !important;
+  margin-bottom: 20px;
+}
+
+.collection-title {
+  position: relative !important;
+  z-index: 10;
+  color: var(--gold) !important;
+  background: var(--bg) !important;
+  padding: 10px 20px !important;
+  border-radius: 4px;
+  font-size: 1.5rem !important;
+  letter-spacing: 2px;
+  margin-top: -20px !important;
+  box-shadow: 0 4px 12px var(--border) !important;
+  display: inline-block;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-card img {
+  border-radius: 8px;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+
+/* Fix Contact & About Pages */
+.contact-container, .about-container {
+  background: var(--card-warm);
+  padding: 60px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px var(--border-soft);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 1px solid var(--border-soft);
+}
+
+.contact-container h1, .about-container h1 {
+  font-size: 3rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.carousel-slide.active {
+  z-index: 2 !important;
+  opacity: 1;
+}
+.carousel-slide {
+  z-index: 1;
+}
+
+.hero-video-overlay {
+  background: rgba(0,0,0,0.3) !important; 
+}
