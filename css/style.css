@@ -614,3 +614,224 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
 .premium-cat-card .cat-img-wrap {
   border-radius: 12px !important;
 }
+
+/* Hero Adjustments */
+#hero {
+  height: 60vh !important;
+  min-height: 400px !important;
+  border-radius: 0 !important;
+}
+.hero-carousel, #hero-video {
+  border-radius: 0 !important;
+}
+
+/* Elegant Buttons */
+.btn-primary, .btn-secondary {
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::before, .btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--gold);
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+.btn-primary:hover::before, .btn-secondary:hover::before {
+  transform: scaleY(1);
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  color: #fff !important;
+  border-color: var(--gold) !important;
+}
+
+/* Ensure secondary buttons don't have hardcoded inline backgrounds overriding */
+.hero-cta a {
+  background: transparent !important;
+  color: var(--text) !important;
+  border: 1px solid var(--text) !important;
+}
+.hero-cta a:hover {
+  color: #fff !important;
+  border-color: var(--gold) !important;
+}
+
+/* Category Circles Restore */
+.premium-cat-card .cat-img-wrap {
+  border-radius: 50% !important;
+  aspect-ratio: 1 !important;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+.premium-cat-card .cat-img-overlay {
+  display: none !important;
+}
+.premium-cat-card .cat-img-info {
+  position: static !important;
+  background: transparent !important;
+  padding: 16px 0 0 0 !important;
+  backdrop-filter: none !important;
+}
+.premium-cat-card .cat-name {
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
+
+/* Dropdown & Footer Beautification */
+.nav-dropdown .dropdown-menu {
+  background: var(--card) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05) !important;
+  padding: 12px 0 !important;
+  min-width: 200px !important;
+  margin-top: 15px !important;
+}
+.dropdown-menu li a {
+  padding: 12px 24px !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.85rem !important;
+  color: var(--text-mid) !important;
+  transition: all 0.3s ease !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0.1em !important;
+}
+.dropdown-menu li a:hover {
+  background: var(--bg-deep) !important;
+  color: var(--gold) !important;
+  padding-left: 30px !important;
+}
+
+.footer-brand p {
+  font-size: 1rem !important;
+  color: var(--text-mid) !important;
+  line-height: 2 !important;
+  letter-spacing: 0.05em !important;
+}
+.footer-col h4 {
+  font-size: 0.85rem !important;
+  color: var(--gold) !important;
+  margin-bottom: 24px !important;
+}
+.footer-col ul li a {
+  font-size: 0.85rem !important;
+  letter-spacing: 0.05em !important;
+  opacity: 0.8 !important;
+}
+.footer-col ul li a:hover {
+  opacity: 1 !important;
+  color: var(--gold) !important;
+}
+
+/* Contact Form Beautification */
+.contact-form {
+  background: var(--card) !important;
+  padding: 40px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03) !important;
+  border: 1px solid var(--border-soft) !important;
+}
+.contact-form .form-group label {
+  font-family: var(--font-display) !important;
+  font-size: 1.1rem !important;
+  color: var(--text) !important;
+  margin-bottom: 12px !important;
+  display: block !important;
+}
+.contact-form input, .contact-form textarea {
+  width: 100% !important;
+  padding: 16px 20px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  background: var(--bg-deep) !important;
+  font-family: var(--font-body) !important;
+  font-size: 1rem !important;
+  transition: all 0.3s ease !important;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none !important;
+  border-color: var(--gold) !important;
+  background: var(--card) !important;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1) !important;
+}
+.contact-form .btn-primary {
+  width: 100% !important;
+  padding: 20px !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.15em !important;
+  margin-top: 10px !important;
+}
+
+/* About Page Beautification */
+.about-container {
+  background: var(--card) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.04) !important;
+  border: 1px solid var(--border-soft) !important;
+  padding: 80px !important;
+  max-width: 1000px !important;
+  margin: 60px auto !important;
+}
+.about-container h2 {
+  font-family: var(--font-display) !important;
+  font-size: 3.5rem !important;
+  color: var(--gold) !important;
+  margin-bottom: 30px !important;
+  text-align: center !important;
+}
+.about-container p {
+  font-size: 1.1rem !important;
+  line-height: 2.2 !important;
+  color: var(--text-mid) !important;
+  margin-bottom: 24px !important;
+  text-align: center !important;
+  max-width: 800px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 60px;
+}
+.story-grid .story-visual {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+/* Shop Active UI Fix */
+.filter-btn {
+  font-family: var(--font-display) !important;
+  font-size: 1.1rem !important;
+  color: var(--text-mid) !important;
+  border: 1px solid var(--border-soft) !important;
+  background: var(--card) !important;
+  padding: 12px 30px !important;
+  border-radius: 30px !important;
+  transition: all 0.3s ease !important;
+  letter-spacing: 0.05em !important;
+}
+.filter-btn:hover {
+  border-color: var(--gold) !important;
+  color: var(--gold) !important;
+}
+.filter-btn.active {
+  background: var(--gold) !important;
+  color: #fff !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3) !important;
+}
