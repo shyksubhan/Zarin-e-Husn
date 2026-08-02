@@ -1,29 +1,29 @@
 /* ============================================================
-   ZARINEHUSN — Site Configuration
+   ZARIN-E-HUSN — Site Configuration
    Edit this file to update your WhatsApp number, social links, etc.
    ============================================================ */
 const ZARINEHUSN_CONFIG = {
   /* ── WhatsApp ──
      Format: country code + number, no spaces, no +
-     Example: Pakistan 0300-1234567 → '923001234567'          */
+     Example: Pakistan 0315-0727131 → '923150727131'          */
   whatsapp: {
-    number:  '923014617844',          // ← REPLACE with your number
-    message: 'Hi! I found you on Golnisà and I have a question.',
+    number:  '923150727131',
+    message: 'Hi! I found you on Zarin-e-Husn and I have a question.',
   },
   /* ── Social Media ──
      Replace these URLs with your actual profile links         */
   social: {
-    instagram: 'https://www.instagram.com/zarinehusn_/',   // ← your Instagram URL
-    facebook:  'https://www.facebook.com/profile.php?id=61590913872614',    // ← your Facebook URL
+    instagram: 'https://www.instagram.com/zarin_e_husn/',
+    facebook:  'https://www.facebook.com/profile.php?id=61592598563035',
     whatsapp:  '',                                    // auto-built from number above
     tiktok:    '',                                    // optional — leave blank to hide
   },
   /* ── Contact ── */
   contact: {
-    email:    'zarinehusnqueries@gmail.com',
-    phone:    '+92 301 4617844',
+    email:    'zarinehusn@gmail.com',
+    phone:    '+92 315 0727131',
     location: 'Lahore, Punjab, Pakistan',
-    hours:    'Monday – Saturday',
+    hours:    'Monday – Saturday: 10am – 7pm',
   },
 };
 /* Auto-build WhatsApp URL */
@@ -37,20 +37,9 @@ window.ZARINEHUSN_CONFIG = ZARINEHUSN_CONFIG;
    AUTO-FILL CONTACT DETAILS
    Any element with data-zarinehusn="email" / "phone" / "location" / "hours"
    gets its text (and href, for <a> tags) filled in automatically from
-   ZARINEHUSN_CONFIG.contact above. This means editing the contact block
-   at the top of this file updates EVERY page at once — footers, the
-   contact page, policy page, everywhere — no need to hunt through HTML
-   files one by one.
-
-   Usage in HTML:
-     <span data-zarinehusn="email"></span>
-     <a href="#" data-zarinehusn="email">zarinehusnqueries@gmail.com</a>   (href auto becomes mailto:)
-     <span data-zarinehusn="phone"></span>
-     <a href="#" data-zarinehusn="phone">+92 300 000 0000</a>     (href auto becomes tel:)
-     <span data-zarinehusn="location"></span>
-     <span data-zarinehusn="hours"></span>
+   ZARINEHUSN_CONFIG.contact above.
    ============================================================ */
-function applyGolnisàContactInfo(root) {
+function applyZarinContactInfo(root) {
   root = root || document;
   const c = ZARINEHUSN_CONFIG.contact;
 
@@ -70,7 +59,9 @@ function applyGolnisàContactInfo(root) {
   });
 }
 /* Run once the page loads */
-document.addEventListener('DOMContentLoaded', () => applyGolnisàContactInfo());
+document.addEventListener('DOMContentLoaded', () => applyZarinContactInfo());
 /* Expose globally so pages that inject HTML later (like policy.html)
    can re-run it on the newly added content */
-window.applyGolnisàContactInfo = applyGolnisàContactInfo;
+window.applyZarinContactInfo = applyZarinContactInfo;
+/* Keep legacy name working */
+window.applyGolnisàContactInfo = applyZarinContactInfo;

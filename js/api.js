@@ -3,7 +3,13 @@
    Used by all frontend pages to talk to the backend.
    ============================================================ */
 
-const ZARINEHUSN_API = 'https://zarinehusn.com/api';
+const ZARINEHUSN_API = (function() {
+  const origin = window.location.origin || '';
+  if (origin.includes('localhost') || origin.includes('127.0.0.1') || origin === 'null' || origin.startsWith('file')) {
+    return 'http://localhost:3001/api';
+  }
+  return 'https://zarinehusn.com/api';
+})();
 
 /* ── Get stored JWT token ── */
 function getToken() {

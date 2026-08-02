@@ -1,5 +1,5 @@
 /* ============================================================
-   VELORRA — Shared Singleton Data Store
+   ZARIN-E-HUSN — Shared Singleton Data Store
    THE single source of truth for all in-memory data.
    All routes import this module — they all share the SAME arrays.
    ============================================================ */
@@ -26,8 +26,8 @@ const store = {
     company: {
       name: 'Zarin-e-Husn',
       address: '',
-      phone: '+92 301 4617844',
-      email: '',
+      phone: '+92 315 0727131',
+      email: 'zarinehusn@gmail.com',
       website: '',
       socials: ''
     },

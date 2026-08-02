@@ -1,5 +1,5 @@
 /* ============================================================
-   GOLNISÀ — Email Utility (Resend)
+   ZARIN-E-HUSN — Email Utility (Resend)
    ============================================================ */
 const { Resend } = require('resend');
 
@@ -25,7 +25,7 @@ async function sendOrderConfirmation({ to, orderRef, items, delivery, total, pay
     to,
     subject: `Order Confirmed — ${orderRef} | Zarin-e-Husn`,
     html: `<!DOCTYPE html><html><body style="margin:0;padding:40px;background:#0a0a0a;font-family:Georgia,serif;color:#ccc;">
-      <h1 style="color:#c9a84c;">GOLNISÀ</h1>
+      <h1 style="color:#c9a84c;">ZARIN-E-HUSN</h1>
       <h2 style="color:#fff;">Order Confirmed ✓</h2>
       <p>Thank you ${delivery.fname}! Your order <strong style="color:#c9a84c;">${orderRef}</strong> has been placed.</p>
       <table width="100%" style="margin:24px 0;">${itemRows}</table>
@@ -98,7 +98,7 @@ async function sendNewsletterWelcome(email) {
     to: email,
     subject: '💛 Welcome to Zarin-e-Husn',
     html: `<body style="margin:0;padding:40px;background:#0a0a0a;font-family:Georgia,serif;text-align:center;color:#ccc;">
-      <h1 style="color:#c9a84c;">GOLNISÀ</h1>
+      <h1 style="color:#c9a84c;">ZARIN-E-HUSN</h1>
       <h2 style="color:#fff;">Welcome to the Circle 💛</h2>
       <p style="color:#888;">You're now part of Zarin-e-Husn's exclusive circle. You'll be the first to know about new arrivals, fresh collections, and special offers.</p>
       <p style="color:#888;font-size:.85rem;margin-top:24px;">Questions? zarinehusn@gmail.com</p>
@@ -116,7 +116,7 @@ async function sendReplyEmail({ to, customerName, originalMessage, replyText }) 
     to,
     subject: `Re: Your message to Zarin-e-Husn`,
     html: `<!DOCTYPE html><html><body style="margin:0;padding:40px;background:#faf7f2;font-family:Georgia,serif;color:#2c1f14;">
-      <h2 style="color:#b8883a;">GOLNISÀ</h2>
+      <h2 style="color:#b8883a;">ZARIN-E-HUSN</h2>
       <p>Dear ${customerName || 'Valued Customer'},</p>
       <p style="line-height:1.8;">${replyText.replace(/\n/g, '<br>')}</p>
       <hr style="border:none;border-top:1px solid #e8d5b0;margin:24px 0;"/>
@@ -143,7 +143,7 @@ async function sendBulkPromotion({ subscribers, subject, body, promoCode }) {
         to: email,
         subject,
         html: `<!DOCTYPE html><html><body style="margin:0;padding:40px;background:#faf7f2;font-family:Georgia,serif;color:#2c1f14;text-align:center;">
-          <h2 style="color:#b8883a;letter-spacing:.15em;">GOLNISÀ</h2>
+          <h2 style="color:#b8883a;letter-spacing:.15em;">ZARIN-E-HUSN</h2>
           <hr style="border:none;border-top:1px solid #e8d5b0;margin:20px auto;width:80px;"/>
           <div style="max-width:520px;margin:0 auto;text-align:left;line-height:1.9;color:#5a4030;">
             ${body.replace(/\n/g, '<br>')}
@@ -191,7 +191,7 @@ async function sendInvoiceEmail({ to, invoiceRef, customerName, pdfPath, liveOrd
     subject: `Invoice ${invoiceRef} | Zarin-e-Husn`,
     attachments,
     html: `<!DOCTYPE html><html><body style="margin:0;padding:40px;background:#faf7f2;font-family:Georgia,serif;color:#2c1f14;">
-      <h2 style="color:#b8883a;">ZARIN-E-HUSN?</h2>
+      <h2 style="color:#b8883a;">ZARIN-E-HUSN</h2>
       <p>Dear ${customerName || 'Customer'},</p>
       <p>Thank you for shopping with Zarin-e-Husn. Please find attached the invoice for your order <strong>${invoiceRef}</strong>.</p>
       <p style="color:#9a8070;font-size:.78rem;margin-top:24px;">

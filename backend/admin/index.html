@@ -11,8 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root {
-  --bg:#1a1a1a; --card:#242424; --card2:#2a2a2a; --border:rgba(212,175,55,0.30);
-  --gold:#d4af37; --gold2:#f3d573; --text:#f5f5f5; --muted:#888888;
+  --bg:#faf8f5; --card:#ffffff; --card2:#fdfbf8; --border:rgba(201,168,76,0.20);
+  --gold:#c9a84c; --gold2:#e8d48b; --text:#2c2824; --muted:#9a928a;
   --green:#22c55e; --red:#ef4444; --blue:#3b82f6; --orange:#f59e0b;
   --sidebar:240px;
 }
@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:'Lato','Segoe UI',sans-s
 /* ── Login Screen ── */
 #login-screen{
   position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(135deg,#242424 60%,#1a1a1a);
+  background:linear-gradient(135deg,#faf8f5 60%,#f2ede6);
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;
 }
 #login-screen.hidden{display:none!important;}
@@ -88,9 +88,9 @@ body{background:var(--bg);color:var(--text);font-family:'Lato','Segoe UI',sans-s
 .table-header h3{font-size:1rem;font-weight:600;}
 table{width:100%;border-collapse:collapse;}
 th{text-align:left;padding:12px 16px;font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
-td{padding:13px 16px;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,.03);}
+td{padding:13px 16px;font-size:0.85rem;border-bottom:1px solid rgba(0,0,0,.04);}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.02);}
+tr:hover td{background:rgba(0,0,0,.02);}
 
 /* ── Badges ── */
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
@@ -1662,7 +1662,8 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 
 <!-- ════════════════════════════ JAVASCRIPT ═════════════════════ -->
 <script>
-const API = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3001/api' : 'https://zarinehusn.com/api';
+const IS_LOCAL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+const API = IS_LOCAL ? 'http://localhost:3001/api' : 'https://zarinehusn.com/api';
 let adminToken  = localStorage.getItem('zarinehusn_admin_token') || null;
 let currentUser = null;
 let notifications = [];

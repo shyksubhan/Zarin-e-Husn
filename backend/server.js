@@ -1,5 +1,5 @@
 /* ============================================================
-   VELORRA — Express Backend Server v2
+   ZARIN-E-HUSN — Express Backend Server v2
    ============================================================ */
 require('dotenv').config();
 
@@ -37,11 +37,6 @@ app.use(cors({
     'http://127.0.0.1:3001',
     'http://localhost:5500',
     'http://127.0.0.1:5500',
-    'https://velorra-vvp3.onrender.com',
-    'https://velorra.store',
-    'https://www.velorra.store',
-    'https://velorrajewelry.store',
-    'https://www.velorrajewelry.store',
     'https://zarinehusn.com',
     'https://www.zarinehusn.com',
     'null',   /* file:// protocol */
@@ -474,7 +469,7 @@ app.get('/api/health', (req, res) => {
   try { firebaseStatus = getDB() ? 'connected' : 'demo'; } catch { firebaseStatus = 'demo'; }
   res.json({
     status:    'ok',
-    service:   'Velorra Backend',
+    service:   'Zarin-e-Husn Backend',
     version:   '2.0.0',
     firebase:  firebaseStatus,
     demoMode:  firebaseStatus === 'demo',
@@ -564,7 +559,7 @@ app.use((err, req, res, next) => {
 
   app.listen(PORT, () => {
     console.log('\n╔════════════════════════════════════════════════╗');
-    console.log('║       VELORRA BACKEND SERVER v2.0              ║');
+    console.log('║       ZARIN-E-HUSN BACKEND v2.0                ║');
     console.log('╠════════════════════════════════════════════════╣');
     console.log(`║  Website:  http://localhost:${PORT}               ║`);
     console.log(`║  Admin:    http://localhost:${PORT}/admin          ║`);

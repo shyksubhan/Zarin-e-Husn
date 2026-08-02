@@ -26,7 +26,7 @@ const CATEGORY_HIERARCHY = {
   'cosmetics': ['lipsticks', 'foundations', 'blush', 'mascara', 'eyeliner', 'face-powders', 'highlighters']
 };
 
-function velorCatLabel(cat) {
+function getCategoryLabel(cat) {
   if (!cat) return '';
   return ZARINEHUSN_CAT_LABELS[cat.toLowerCase()] || cat;
 }
@@ -61,19 +61,19 @@ function zarinehusnProductCardHTML(p) {
       : `<div style="width:100%;height:100%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--gold);">${emoji}</div>`;
 
   return `
-    <div class="product-card" data-cat="${resolvedCat}" data-main-cat="${mainCat}" data-additional-cats="${(p.additionalCategories || []).join(',')}">
-      <div class="product-img-wrap">
+    <div class="luxury-product-card" data-cat="${resolvedCat}" data-main-cat="${mainCat}" data-additional-cats="${(p.additionalCategories || []).join(',')}">
+      <div class="card-img-wrap">
         ${badge}
         <a href="product.html?id=${p.id}">${mediaHTML}</a>
         <button class="product-action-btn" onclick="openQuickView('${p.id}')" aria-label="Quick View"><i class="fa-regular fa-eye"></i></button>
       </div>
-      <div class="product-info">
-        <p class="product-cat">${velorCatLabel(subcat || cat)}</p>
+      <div class="card-info">
+        <p class="product-cat">${getCategoryLabel(subcat || cat)}</p>
         <h3 class="product-name"><a href="product.html?id=${p.id}">${p.name}</a></h3>
         <div class="product-price">PKR ${Number(p.price).toLocaleString()} ${oldPrice}</div>
         <div class="product-action-row" style="display:flex;gap:8px;margin-top:12px;">
-          <button class="btn-primary product-add" style="flex:1;font-size:0.8rem;padding:8px;" onclick="addToCart('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Add to Bag</button>
-          <button class="btn-outline product-buy" style="flex:1;font-size:0.8rem;padding:8px;" onclick="buyNow('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Buy it Now</button>
+          <button class="btn-luxury-primary product-add" style="flex:1;font-size:0.8rem;padding:8px;" onclick="addToCart('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Add to Bag</button>
+          <button class="btn-luxury-outline product-buy" style="flex:1;font-size:0.8rem;padding:8px;" onclick="buyNow('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Buy it Now</button>
         </div>
       </div>
     </div>
@@ -81,11 +81,11 @@ function zarinehusnProductCardHTML(p) {
 }
 
 function zarinehusnEmptyState(msg) {
-  return `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;background:#fcfbf9;border-radius:12px;border:1px dashed #e5d5c5;color:var(--muted);"><i class="fa-solid fa-box-open" style="font-size:2rem;color:var(--gold);margin-bottom:16px;"></i><p>${msg}</p></div>`;
+  return `<div style="grid-column:1/-1;text-align:center;padding:80px 20px;background:var(--luxury-empty-bg, #faf9f7);border-radius:12px;color:var(--muted);"><i class="fa-solid fa-box-open" style="font-size:2.5rem;color:var(--gold);margin-bottom:16px;opacity:0.6;"></i><h3 style="font-family:var(--font-heading);font-weight:400;margin-bottom:8px;font-size:1.5rem;color:var(--text-color);">No products available</h3><p>${msg}</p></div>`;
 }
 
 function zarinehusnReInitCards(container) {
-  container.querySelectorAll('.product-img-wrap').forEach(wrap => {
+  container.querySelectorAll('.card-img-wrap').forEach(wrap => {
     const vid = wrap.querySelector('video');
     if (vid) {
       wrap.addEventListener('mouseenter', () => vid.play().catch(e=>e));
@@ -108,7 +108,7 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
       b.classList.add('active');
       const f = b.getAttribute('data-filter');
       
-      const cards = grid.querySelectorAll('.product-card');
+      const cards = grid.querySelectorAll('.luxury-product-card');
       let visibleCount = 0;
       cards.forEach(card => {
         const c = card.getAttribute('data-cat');
@@ -158,7 +158,7 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
 }
 
 async function zarinehusnRenderShopGrid() {
-  const grid = document.querySelector('#shop-products-grid, .products-grid');
+  const grid = document.querySelector('#shop-products-grid, .luxury-product-grid');
   if (!grid) return;
 
   const mainCat = grid.getAttribute('data-main-cat');
@@ -186,7 +186,7 @@ async function zarinehusnRenderShopGrid() {
     zarinehusnSetupShopFilters(products, grid, mainCat);
   } catch (err) {
     console.error('Failed to load products:', err);
-    grid.innerHTML = zarinehusnEmptyState('Unable to load products. Please refresh the page.');
+    grid.innerHTML = zarinehusnEmptyState('No products available yet. Check back soon!');
   }
 }
 
@@ -233,7 +233,7 @@ async function zarinehusnRenderHomepageGrids() {
               <div class="pinned-scroll-track" id="${rowId}" style="display:flex;overflow-x:auto;gap:12px;padding-bottom:20px;scroll-snap-type:x mandatory;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;">
                 ${pinProducts.map(p => {
                   let html = zarinehusnProductCardHTML(p);
-                  return html.replace('class="product-card"', 'class="product-card pin-card" style="flex:0 0 220px;min-width:220px;scroll-snap-align:start;"');
+                  return html.replace('class="luxury-product-card"', 'class="luxury-product-card pin-card" style="flex:0 0 220px;min-width:220px;scroll-snap-align:start;"');
                 }).join('')}
               </div>
             </div>
@@ -270,7 +270,7 @@ async function zarinehusnRenderHomepageGrids() {
     const jewGrid = document.getElementById('featured-jewelry-grid');
     if (jewGrid) {
       const jProds = featuredProducts.filter(p => CATEGORY_HIERARCHY['jewelry'].includes(p.subcategory || p.category));
-      jewGrid.innerHTML = jProds.length ? jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
+      jewGrid.innerHTML = jProds.length ? jProds.map(p => zarinehusnProductCardHTML(p).replace('class="luxury-product-card"', 'class="luxury-product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
       zarinehusnReInitCards(jewGrid);
     }
 
@@ -281,7 +281,7 @@ async function zarinehusnRenderHomepageGrids() {
         const additional = p.additionalCategories || [];
         return CATEGORY_HIERARCHY['cosmetics'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['cosmetics'].includes(a));
       });
-      cosGrid.innerHTML = cProds.length ? cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
+      cosGrid.innerHTML = cProds.length ? cProds.map(p => zarinehusnProductCardHTML(p).replace('class="luxury-product-card"', 'class="luxury-product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
       zarinehusnReInitCards(cosGrid);
     }
 
