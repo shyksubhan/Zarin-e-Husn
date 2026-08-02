@@ -42,8 +42,8 @@ app.use(cors({
     'https://www.velorra.store',
     'https://velorrajewelry.store',
     'https://www.velorrajewelry.store',
-    'https://golnisa.com',
-    'https://www.golnisa.com',
+    'https://zarinehusn.com',
+    'https://www.zarinehusn.com',
     'null',   /* file:// protocol */
   ],
   credentials: true,
@@ -103,7 +103,7 @@ Disallow: /backend/
 Disallow: /checkout
 Disallow: /account
 
-Sitemap: https://golnisa.com/sitemap.xml`);
+Sitemap: https://zarinehusn.com/sitemap.xml`);
 });
 
 /* ── GET /sitemap.xml — Dynamic sitemap including all live products ── */
@@ -111,7 +111,7 @@ app.get('/sitemap.xml', async (req, res) => {
   const { getDB } = require('./utils/firebase');
   const today = new Date().toISOString().slice(0, 10);
 
-  const DOMAIN = 'https://golnisa.com';
+  const DOMAIN = 'https://zarinehusn.com';
   const staticUrls = [
     { loc: `${DOMAIN}/`,                  priority: '1.0', changefreq: 'weekly'  },
     { loc: `${DOMAIN}/shop`,              priority: '0.9', changefreq: 'daily'   },

@@ -105,10 +105,9 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
       <li class="nav-dropdown">
         <a href="shop">Shop <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></a>
         <ul class="dropdown-menu">
-          <li><a href="shop">All Collections</a></li>
+          <li><a href="shop.html">All Collections</a></li>
           <li><a href="jewelry.html">Jewelry</a></li>
-          <li><a href="hair-accessories.html">Skincare</a></li>
-          <li><a href="clothing.html">Cosmetics</a></li>
+          <li><a href="cosmetics.html">Cosmetics</a></li>
         </ul>
       </li>
       <li><a href="about">Our Story</a></li>
@@ -139,18 +138,22 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
   </div>
   <!-- HERO -->
   <section id="hero">
-    <!-- Image Background -->
-    <img id="hero-video" src="images/hero-bg.jpg" alt="Zarin-e-Husn" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:-1;" />
+    <!-- Image Carousel Background -->
+    <div class="hero-carousel">
+      <div class="carousel-slide active" style="background-image: url('images/categories/jewelry.jpg');"></div>
+      <div class="carousel-slide" style="background-image: url('images/categories/cosmetics.jpg');"></div>
+      <div class="carousel-slide" style="background-image: url('images/hero-bg.jpg');"></div>
+    </div>
     <!-- Dark overlay so text stays readable -->
-    <div class="hero-video-overlay" aria-hidden="true" style="background: rgba(0,0,0,0.4);"></div>
+    <div class="hero-video-overlay" aria-hidden="true" style="background: rgba(0,0,0,0.6);"></div>
     <!-- SEO-only hidden heading (not visible) -->
     <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Zarin-e-Husn — Luxury Cosmetics &amp; Jewelry Online Pakistan</h1>
     <div class="hero-content">
-      <p class="hero-title-main" style="font-family: var(--font-display); letter-spacing: 0.15em;">ZARIN-E-HUSN</p>
-      <p class="hero-title-sub" style="margin-bottom: 30px;">Premium Jewelry &amp; Beauty Essentials Crafted for Every Woman.</p>
+      <p class="hero-title-main" style="font-family: var(--font-display); letter-spacing: 0.15em; color: var(--gold);">ZARIN-E-HUSN</p>
+      <p class="hero-title-sub" style="margin-bottom: 30px; color: #fff;">Premium Jewelry &amp; Beauty Essentials Crafted for Every Woman.</p>
       <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
         <a href="jewelry.html" class="btn-primary" style="padding: 14px 32px; background: var(--gold); border: 1px solid var(--gold); color: #fff; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s;">Shop Jewelry</a>
-        <a href="clothing.html" class="btn-primary" style="padding: 14px 32px; background: transparent; border: 1px solid #fff; color: #fff; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s;">Shop Cosmetics</a>
+        <a href="cosmetics.html" class="btn-primary" style="padding: 14px 32px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s;">Shop Cosmetics</a>
       </div>
     </div>
   </section>
@@ -173,19 +176,9 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
           </div>
         </a>
 
-        <a href="hair-accessories.html" class="premium-cat-card">
-          <div class="cat-img-wrap">
-            <img src="images/categories/skincare.jpg" alt="Hair Accessories Online Pakistan — Zarin-e-Husn" loading="lazy"/>
-            <div class="cat-img-overlay"></div>
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name">Skincare</p>
-          </div>
-        </a>
-
-        <a href="clothing.html" class="premium-cat-card">
+        <a href="cosmetics.html" class="premium-cat-card">
           <div class="cat-img-wrap" style="background:#eae3d8;">
-            <img src="images/categories/cosmetics.jpg" alt="Women's Clothing Pakistan — Zarin-e-Husn" loading="lazy" onerror="this.style.display='none'"/>
+            <img src="images/categories/cosmetics.jpg" alt="Cosmetics Online Pakistan — Zarin-e-Husn" loading="lazy" onerror="this.style.display='none'"/>
             <div class="cat-img-overlay"></div>
           </div>
           <div class="cat-img-info">
@@ -212,25 +205,13 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- Featured Hair Accessories -->
-<section id="featured-hair" style="padding:0 0 60px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-header" style="text-align:left; margin-bottom:20px;">
-      <h2 style="font-size:2rem;">Featured <em style="color: var(--gold);">Skincare</em></h2>
-    </div>
-    <div class="horizontal-scroll-grid" id="featured-hair-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory;">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Clothing -->
-<section id="featured-clothing" style="padding:0 0 60px 0; background:var(--bg);">
+<!-- Featured Cosmetics -->
+<section id="featured-cosmetics" style="padding:0 0 60px 0; background:var(--bg);">
   <div class="container">
     <div class="section-header" style="text-align:left; margin-bottom:20px;">
       <h2 style="font-size:2rem;">Featured <em style="color: var(--gold);">Cosmetics</em></h2>
     </div>
-    <div class="horizontal-scroll-grid" id="featured-clothing-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory;">
+    <div class="horizontal-scroll-grid" id="featured-cosmetics-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory;">
       <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
     </div>
   </div>
@@ -300,8 +281,7 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
           <h4>Shop</h4>
           <ul>
             <li><a href="jewelry.html">Jewelry</a></li>
-            <li><a href="hair-accessories.html">Skincare</a></li>
-            <li><a href="clothing.html">Cosmetics</a></li>
+            <li><a href="cosmetics.html">Cosmetics</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -316,8 +296,8 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
         </div>
         <div class="footer-col">
           <h4>Get In Touch</h4>
-          <p>&#9993; <span data-zarinehusn="email">hello@zarinehusn.com</span></p>
-          <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 300 000 0000</span></p>
+          <p>&#9993; <span data-zarinehusn="email">zarinehusn@gmail.com</span></p>
+          <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></p>
           <p>&#128205; <span data-zarinehusn="location">Lahore, Pakistan</span></p>
           <p data-zarinehusn="hours">Mon–Sat: 10am – 7pm</p>
         </div>
@@ -396,18 +376,17 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
       }
     })();
   </script>
-  <!-- Hero video responsive loader -->
+  <!-- Hero carousel sliding script -->
   <script>
     (function() {
-      var vid = document.getElementById('hero-video');
-      var src = document.getElementById('hero-video-src');
-      if (!vid || !src) return;
-      var isMobile = window.innerWidth <= 600;
-      var url = isMobile ? 'videos/hero-bg-mobile.mp4' : 'videos/hero-bg.mp4';
-      // Cache bust so browser always loads the latest file
-      src.src = url + '?v=2';
-      vid.load();
-      vid.play().catch(function(){});
+      const slides = document.querySelectorAll('.carousel-slide');
+      if (slides.length === 0) return;
+      let currentSlide = 0;
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 4000);
     })();
   </script>
 </body>

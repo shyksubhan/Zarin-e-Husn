@@ -40,10 +40,10 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
     const stream = fs.createWriteStream(pdfPath);
     doc.pipe(stream);
 
-    // Colors
-    const C_BLACK = '#0a0a0a';
-    const C_GOLD = '#b8883a';
-    const C_CREAM = '#fdfbf7';
+    // Colors (Elegant Black & Gold theme for PDF)
+    const C_BLACK = '#1a1a1a';
+    const C_GOLD = '#d4af37';
+    const C_CREAM = '#fcf8f2';
     const C_TEXT = '#333333';
     const C_MUTED = '#888888';
     const C_BORDER = '#eaeaea';
@@ -68,10 +68,10 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
 
     // Company Details (under logo)
     doc.fontSize(8).fillColor(C_MUTED).font('Helvetica');
-    const fWeb = company.website || 'golnisa.com';
-    const fEmail = company.email || 'golnisaqueries@gmail.com';
+    const fWeb = company.website || 'zarinehusn.com';
+    const fEmail = company.email || 'zarinehusn@gmail.com';
     const fPhone = company.phone || '+92 301 4617844';
-    const fInsta = company.instagram || 'golnisa_';
+    const fInsta = company.instagram || 'zarin_e_husn';
     const fAddr = company.address || 'Lahore, Punjab, Pakistan';
 
     doc.text(fWeb, 50, startY + 40, { link: 'https://' + fWeb.replace(/^https?:\/\//, '') });
@@ -242,7 +242,7 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
 
     doc.rect(0, 780, 600, 65).fillAndStroke(C_BLACK, C_BLACK);
     doc.fillColor(C_GOLD).fontSize(9).font('Helvetica-Bold');
-    doc.text(`Thank you for shopping with Golnisà!`, 0, 795, { align: 'center', width: 600 });
+    doc.text(`Thank you for shopping with Zarin-e-Husn!`, 0, 795, { align: 'center', width: 600 });
     doc.fillColor('#dddddd').fontSize(8).font('Helvetica');
     doc.text(`${fWeb}   |   ${fEmail}   |   ${fPhone}`, 0, 810, { align: 'center', width: 600 });
 

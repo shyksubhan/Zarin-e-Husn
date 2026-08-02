@@ -14,4 +14,4 @@ Disallow: /checkout
 Disallow: /account
 
 # Sitemap location
-Sitemap: https://golnisa.com/sitemap.xml
+Sitemap: https://zarinehusn.com/sitemap.xml

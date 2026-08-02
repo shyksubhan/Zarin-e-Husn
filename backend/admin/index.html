@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Golnisà Admin Panel</title>
+<title>Zarin-e-Husn Admin Panel</title>
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
@@ -11,8 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root {
-  --bg:#faf7f2; --card:#ffffff; --card2:#f5f0e8; --border:#e8d5b0;
-  --gold:#b8883a; --gold2:#d4a855; --text:#2c1f14; --muted:#9a8070;
+  --bg:#1a1a1a; --card:#242424; --card2:#2a2a2a; --border:rgba(212,175,55,0.30);
+  --gold:#d4af37; --gold2:#f3d573; --text:#f5f5f5; --muted:#888888;
   --green:#22c55e; --red:#ef4444; --blue:#3b82f6; --orange:#f59e0b;
   --sidebar:240px;
 }
@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:'Lato','Segoe UI',sans-s
 /* ── Login Screen ── */
 #login-screen{
   position:fixed;inset:0;z-index:9999;
-  background:linear-gradient(135deg,#f5ede0 60%,#faf7f2);
+  background:linear-gradient(135deg,#242424 60%,#1a1a1a);
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;
 }
 #login-screen.hidden{display:none!important;}
@@ -284,7 +284,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 <!-- ═══════════════════════════════════════════ LOGIN SCREEN ═══ -->
 <div id="login-screen">
   <div class="login-box">
-    <h1>Golnis<span>à</span> <span style="font-weight:300;color:var(--muted)">Admin</span></h1>
+    <h1>Zarin-e-Husn <span style="font-weight:300;color:var(--muted)">Admin</span></h1>
     <p>Sign in to manage your store</p>
     <div id="login-error" class="login-error"></div>
     <input type="text"     id="login-username" placeholder="Username" autocomplete="username"/>
@@ -296,8 +296,8 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 <!-- ═══════════════════════════════════════════ SIDEBAR ════════ -->
 <div id="sidebar">
   <div class="sidebar-logo">
-    <img src="../../images/logo.svg" alt="Golnisà" style="height:40px;width:auto;max-width:160px;display:block;margin-bottom:4px;"/>
-    <small>Admin Panel v2.0</small>
+    <img src="../../images/logo.svg" alt="Zarin-e-Husn" style="height:40px;width:auto;max-width:160px;display:block;margin-bottom:4px;"/>
+    <small>Admin Panel</small>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
@@ -1184,7 +1184,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
     <div id="company-msg" style="display:none;padding:10px;border-radius:7px;font-size:0.85rem;margin-bottom:14px;"></div>
     
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="form-group"><label>Company Name</label><input type="text" id="cs-name" placeholder="e.g. Golnisà"/></div>
+      <div class="form-group"><label>Company Name</label><input type="text" id="cs-name" placeholder="e.g. Zarin-e-Husn"/></div>
       <div class="form-group"><label>Company Logo URL</label><input type="text" id="cs-logo" placeholder="https://..."/></div>
       <div class="form-group"><label>Contact Phone</label><input type="text" id="cs-phone"/></div>
       <div class="form-group"><label>Contact Email</label><input type="text" id="cs-email"/></div>
@@ -1215,7 +1215,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 
   <div class="settings-section" id="launch-date-section">
     <h3><i class="fa-solid fa-flag" style="color:var(--gold);margin-right:8px"></i>Site Launch Date</h3>
-    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px;">Monthly &amp; lifetime profit statements only count sales from this date onward. Set it to the day Golnisà actually went live.</p>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px;">Monthly &amp; lifetime profit statements only count sales from this date onward. Set it to the day Zarin-e-Husn actually went live.</p>
     <div id="launch-date-msg" style="display:none;padding:10px;border-radius:7px;font-size:0.85rem;margin-bottom:14px;"></div>
     <div class="form-group" style="max-width:240px;"><label>Launch Date</label><input type="date" id="launch-date-input"/></div>
     <button class="btn btn-gold" onclick="saveLaunchDate()">Save Launch Date</button>
@@ -1662,8 +1662,8 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 
 <!-- ════════════════════════════ JAVASCRIPT ═════════════════════ -->
 <script>
-const API = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3001/api' : 'https://golnisa.com/api';
-let adminToken  = localStorage.getItem('golnisa_admin_token') || null;
+const API = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3001/api' : 'https://zarinehusn.com/api';
+let adminToken  = localStorage.getItem('zarinehusn_admin_token') || null;
 let currentUser = null;
 let notifications = [];
 let sseSource    = null;
@@ -1747,7 +1747,7 @@ async function doLogin() {
 
     adminToken  = data.token;
     currentUser = data.user;
-    localStorage.setItem('golnisa_admin_token', adminToken);
+    localStorage.setItem('zarinehusn_admin_token', adminToken);
 
     /* ← THE FIX: hide login screen BEFORE calling initDashboard */
     hideLogin();
@@ -1891,7 +1891,7 @@ function logout() {
 function clearSession() {
   adminToken  = null;
   currentUser = null;
-  localStorage.removeItem('golnisa_admin_token');
+  localStorage.removeItem('zarinehusn_admin_token');
   if (sseSource) { sseSource.close(); sseSource = null; }
 }
 
@@ -3917,7 +3917,7 @@ function exportProductsExcel() {
   });
 
   const dateStr = new Date().toISOString().slice(0, 10);
-  XLSX.writeFile(wb, `Golnisà_Products_${dateStr}.xlsx`);
+  XLSX.writeFile(wb, `Zarin-e-Husn_Products_${dateStr}.xlsx`);
   toast('Beautiful Excel file downloaded! ✓', 'success');
 }
 
@@ -5145,7 +5145,7 @@ function renderAbandoned(list) {
       ? '<span style="background:rgba(34,197,94,0.15);color:#22c55e;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600">✅ Resolved</span>'
       : '<span style="background:rgba(249,115,22,0.15);color:#f97316;padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600">🛒 Abandoned</span>';
     const waLink = d.phone
-      ? `<a href="https://wa.me/${d.phone.replace(/\D/g,'')}?text=Hi+${encodeURIComponent(d.fname||'')}%2C+you+left+something+in+your+cart+at+Golnisà+Jewelry%21+Complete+your+order+here%3A+https%3A%2F%2Fgolnisa.com%2Fcheckout.html" target="_blank" class="btn btn-outline" style="font-size:0.7rem;padding:5px 10px;color:#25d366;border-color:rgba(37,211,102,0.4)"><i class="fa-brands fa-whatsapp"></i> Recover</a>`
+      ? `<a href="https://wa.me/${d.phone.replace(/\D/g,'')}?text=Hi+${encodeURIComponent(d.fname||'')}%2C+you+left+something+in+your+cart+at+Zarin-e-Husn+Jewelry%21+Complete+your+order+here%3A+https%3A%2F%2Fzarinehusn.com%2Fcheckout.html" target="_blank" class="btn btn-outline" style="font-size:0.7rem;padding:5px 10px;color:#25d366;border-color:rgba(37,211,102,0.4)"><i class="fa-brands fa-whatsapp"></i> Recover</a>`
       : '';
     return `<tr>
       <td>${i + 1}</td>
@@ -5184,10 +5184,10 @@ async function convertAbandonedToOrder(id) {
 function showConfirmModal({ icon, title, message, confirmText, cancelText, confirmColor }) {
   return new Promise(resolve => {
     /* Remove any existing */
-    document.getElementById('golnisa-confirm-modal')?.remove();
+    document.getElementById('zarinehusn-confirm-modal')?.remove();
 
     const overlay = document.createElement('div');
-    overlay.id = 'golnisa-confirm-modal';
+    overlay.id = 'zarinehusn-confirm-modal';
     overlay.style.cssText = `
       position:fixed;inset:0;z-index:99999;
       background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);
@@ -5338,13 +5338,13 @@ function renderVisitors(visitors) {
 </script>
 
 <!-- ── Custom Confirm Modal ── -->
-<div id="golnisa-confirm-overlay" style="
+<div id="zarinehusn-confirm-overlay" style="
   position:fixed;inset:0;z-index:9999;
   background:rgba(0,0,0,0);
   display:none;align-items:center;justify-content:center;
   backdrop-filter:blur(0px);
   transition:all .25s ease;">
-  <div id="golnisa-confirm-box" style="
+  <div id="zarinehusn-confirm-box" style="
     background:linear-gradient(145deg,#1a1a1a,#111);
     border:1px solid rgba(184,136,58,0.3);
     border-radius:20px;
@@ -5359,21 +5359,21 @@ function renderVisitors(visitors) {
     <div style="height:3px;background:linear-gradient(90deg,transparent,#b8883a,transparent);"></div>
     <!-- Icon + Content -->
     <div style="padding:32px 32px 24px;text-align:center;">
-      <div id="golnisa-confirm-icon" style="
+      <div id="zarinehusn-confirm-icon" style="
         width:64px;height:64px;border-radius:50%;
         background:rgba(217,106,106,0.12);
         border:1px solid rgba(217,106,106,0.25);
         display:flex;align-items:center;justify-content:center;
         margin:0 auto 20px;font-size:1.6rem;">🗑️</div>
-      <h3 id="golnisa-confirm-title" style="
+      <h3 id="zarinehusn-confirm-title" style="
         color:#fff;font-size:1.15rem;font-weight:700;
         margin:0 0 10px;letter-spacing:0.01em;"></h3>
-      <p id="golnisa-confirm-msg" style="
+      <p id="zarinehusn-confirm-msg" style="
         color:#888;font-size:0.875rem;line-height:1.6;margin:0;"></p>
     </div>
     <!-- Buttons -->
     <div style="padding:0 24px 24px;display:flex;gap:10px;">
-      <button id="golnisa-confirm-cancel" style="
+      <button id="zarinehusn-confirm-cancel" style="
         flex:1;padding:13px;border-radius:10px;
         background:rgba(255,255,255,0.05);
         border:1px solid rgba(255,255,255,0.1);
@@ -5381,7 +5381,7 @@ function renderVisitors(visitors) {
         cursor:pointer;transition:all .2s;letter-spacing:0.03em;">
         Cancel
       </button>
-      <button id="golnisa-confirm-ok" style="
+      <button id="zarinehusn-confirm-ok" style="
         flex:1;padding:13px;border-radius:10px;
         background:linear-gradient(135deg,#d96a6a,#c0392b);
         border:none;color:#fff;font-size:0.875rem;font-weight:700;
@@ -5397,27 +5397,27 @@ function renderVisitors(visitors) {
 /* ── Custom Confirm Dialog ── */
 function bktConfirm({ title = 'Are you sure?', message = 'This action cannot be undone.', confirmText = 'Delete', icon = '🗑️', danger = true } = {}) {
   return new Promise(resolve => {
-    const overlay = document.getElementById('golnisa-confirm-overlay');
-    const box     = document.getElementById('golnisa-confirm-box');
-    const okBtn   = document.getElementById('golnisa-confirm-ok');
-    const cancelBtn = document.getElementById('golnisa-confirm-cancel');
+    const overlay = document.getElementById('zarinehusn-confirm-overlay');
+    const box     = document.getElementById('zarinehusn-confirm-box');
+    const okBtn   = document.getElementById('zarinehusn-confirm-ok');
+    const cancelBtn = document.getElementById('zarinehusn-confirm-cancel');
 
-    document.getElementById('golnisa-confirm-title').textContent = title;
-    document.getElementById('golnisa-confirm-msg').textContent   = message;
-    document.getElementById('golnisa-confirm-icon').textContent  = icon;
+    document.getElementById('zarinehusn-confirm-title').textContent = title;
+    document.getElementById('zarinehusn-confirm-msg').textContent   = message;
+    document.getElementById('zarinehusn-confirm-icon').textContent  = icon;
     okBtn.textContent = confirmText;
 
     /* Danger vs neutral style */
     if (danger) {
       okBtn.style.background = 'linear-gradient(135deg,#d96a6a,#c0392b)';
       okBtn.style.boxShadow  = '0 4px 20px rgba(217,106,106,0.3)';
-      document.getElementById('golnisa-confirm-icon').style.background = 'rgba(217,106,106,0.12)';
-      document.getElementById('golnisa-confirm-icon').style.border = '1px solid rgba(217,106,106,0.25)';
+      document.getElementById('zarinehusn-confirm-icon').style.background = 'rgba(217,106,106,0.12)';
+      document.getElementById('zarinehusn-confirm-icon').style.border = '1px solid rgba(217,106,106,0.25)';
     } else {
       okBtn.style.background = 'linear-gradient(135deg,#b8883a,#a8873c)';
       okBtn.style.boxShadow  = '0 4px 20px rgba(184,136,58,0.3)';
-      document.getElementById('golnisa-confirm-icon').style.background = 'rgba(184,136,58,0.12)';
-      document.getElementById('golnisa-confirm-icon').style.border = '1px solid rgba(184,136,58,0.25)';
+      document.getElementById('zarinehusn-confirm-icon').style.background = 'rgba(184,136,58,0.12)';
+      document.getElementById('zarinehusn-confirm-icon').style.border = '1px solid rgba(184,136,58,0.25)';
     }
 
     /* Show */
@@ -5520,7 +5520,7 @@ async function approveReview(id, approve) {
   try {
     const res = await fetch(`${API}/reviews/${id}/approve`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('golnisa_admin_token')}` },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('zarinehusn_admin_token')}` },
       body: JSON.stringify({ approved: approve }),
     });
     if (res.ok) { toast(approve ? 'Review approved — now visible on homepage ✓' : 'Review hidden.', 'success'); loadReviews(); }

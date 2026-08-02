@@ -24,7 +24,7 @@ const store = {
   spendings:    [],   /* tracked expenses/investments */
   settings: {
     company: {
-      name: 'Golnisà',
+      name: 'Zarin-e-Husn',
       address: '',
       phone: '+92 301 4617844',
       email: '',

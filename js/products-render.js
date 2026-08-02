@@ -3,39 +3,27 @@
    ============================================================ */
 
 const ZARINEHUSN_CAT_LABELS = {
-  'clips':       'Skincare',
-  'catchers':    'Cleansers',
-  'scrunchies':  'Serums',
-  'hair-bands':  'Moisturizers',
-  'pins':        'Toners',
-  'ponies':      'Face Masks',
-  'fancy':       'Beauty Tools',
-  'gift-items':  'Gift Sets',
+  // Cosmetics
+  'lipsticks': 'Lipsticks',
+  'foundations': 'Foundations',
+  'blush': 'Blush',
+  'mascara': 'Mascara',
+  'eyeliner': 'Eyeliner',
+  'face-powders': 'Face Powders',
+  'highlighters': 'Highlighters',
   
+  // Jewelry
   'bracelets':   'Bracelets',
   'rings':       'Rings',
   'earrings':    'Earrings',
   'necklace':    'Necklaces',
   'bangles':     'Bangles',
-  
-  'winter-collection': 'Foundations',
-  'daily-pret':        'Lipsticks',
-  'unstitched':        'Concealers',
-  'g-prints':          'Blush',
-  'new-arrivals':      'Mascara',
-  'trending-now':      'Eyeliner',
-  'sale':              'Sale',
-  'fancy-wear':        'Perfumes',
-  'kaftan':            'Body Lotions',
-  'casual':            'Face Powders',
-  'party-wear':        'Highlighters',
-  'summer-collection': 'Bronzers'
+  'jewelry-sets': 'Jewelry Sets'
 };
 
 const CATEGORY_HIERARCHY = {
   'jewelry': ['bracelets', 'rings', 'earrings', 'necklace', 'bangles', 'jewelry-sets'],
-  'hair-accessories': ['scrunchies', 'clips', 'hair-bands', 'pins', 'ponies', 'fancy', 'gift-items'],
-  'clothing': ['fancy-wear', 'kaftan', 'casual', 'party-wear', 'summer-collection', 'winter-collection', 'daily-pret', 'unstitched', 'g-prints', 'new-arrivals', 'trending-now']
+  'cosmetics': ['lipsticks', 'foundations', 'blush', 'mascara', 'eyeliner', 'face-powders', 'highlighters']
 };
 
 function velorCatLabel(cat) {
@@ -231,8 +219,7 @@ async function zarinehusnRenderHomepageGrids() {
 
           const catUrl = (() => {
             if (CATEGORY_HIERARCHY['jewelry'].includes(pin.id)) return `jewelry.html?cat=${pin.id}`;
-            if (CATEGORY_HIERARCHY['hair-accessories'].includes(pin.id)) return `hair-accessories.html?cat=${pin.id}`;
-            if (CATEGORY_HIERARCHY['clothing'].includes(pin.id)) return `clothing.html?cat=${pin.id}`;
+            if (CATEGORY_HIERARCHY['cosmetics'].includes(pin.id)) return `cosmetics.html?cat=${pin.id}`;
             return `shop.html?cat=${pin.id}`;
           })();
 
@@ -287,23 +274,15 @@ async function zarinehusnRenderHomepageGrids() {
       zarinehusnReInitCards(jewGrid);
     }
 
-    // Hair Accessories
-    const hairGrid = document.getElementById('featured-hair-grid');
-    if (hairGrid) {
-      const hProds = featuredProducts.filter(p => CATEGORY_HIERARCHY['hair-accessories'].includes(p.subcategory || p.category));
-      hairGrid.innerHTML = hProds.length ? hProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
-      zarinehusnReInitCards(hairGrid);
-    }
-
-    // Clothing
-    const clothGrid = document.getElementById('featured-clothing-grid');
-    if (clothGrid) {
+    // Cosmetics
+    const cosGrid = document.getElementById('featured-cosmetics-grid');
+    if (cosGrid) {
       const cProds = featuredProducts.filter(p => {
         const additional = p.additionalCategories || [];
-        return CATEGORY_HIERARCHY['clothing'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['clothing'].includes(a));
+        return CATEGORY_HIERARCHY['cosmetics'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['cosmetics'].includes(a));
       });
-      clothGrid.innerHTML = cProds.length ? cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
-      zarinehusnReInitCards(clothGrid);
+      cosGrid.innerHTML = cProds.length ? cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
+      zarinehusnReInitCards(cosGrid);
     }
 
   } catch (err) {

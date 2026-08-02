@@ -1,6 +1,6 @@
 /* ============================================================
    Zarin-e-Husn — Global Styles
-   Theme: Luxury Gold × Deep Slate × Silk White
+   Theme: Elegant Dark × Gold
    Fonts: Playfair Display (headings) · Lato (body & UI)
    ============================================================ */
 
@@ -8,32 +8,32 @@
 
 /* ── Variables ── */
 :root {
-  --bg:          #faf7f2;
-  --bg-deep:     #f2ede4;
-  --card:        #ffffff;
-  --card-warm:   #fdf9f4;
-  --gold:        #b8883a;
-  --gold-light:  #d4a855;
-  --gold-rose:   #c47e6a;
-  --gold-dim:    #8a6530;
-  --rose:        #c4766a;
-  --rose-light:  #d4907e;
+  --bg:          #1a1a1a;
+  --bg-deep:     #121212;
+  --card:        #242424;
+  --card-warm:   #2a2a2a;
+  --gold:        #d4af37;
+  --gold-light:  #f3d573;
+  --gold-rose:   #d4af37;
+  --gold-dim:    #a68623;
+  --rose:        #d4af37;
+  --rose-light:  #f3d573;
   --champagne:   #e8d5b0;
-  --text:        #2c1f14;
-  --text-mid:    #5a4030;
-  --muted:       #9a8070;
-  --border:      rgba(184,136,58,0.20);
-  --border-soft: rgba(184,136,58,0.10);
-  --shadow:      rgba(100,60,20,0.10);
+  --text:        #f5f5f5;
+  --text-mid:    #cccccc;
+  --muted:       #888888;
+  --border:      rgba(212,175,55,0.30);
+  --border-soft: rgba(212,175,55,0.15);
+  --shadow:      rgba(0,0,0,0.50);
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body:    'Lato', 'Segoe UI', sans-serif;
   --font-ui:      'Lato', 'Segoe UI', sans-serif;
   --nav-h:       72px;
   --transition:  0.36s cubic-bezier(0.25,0.8,0.25,1);
   /* keep legacy var names working */
-  --black:       #faf7f2;
-  --deep:        #f2ede4;
-  --white:       #2c1f14;
+  --black:       #121212;
+  --deep:        #000000;
+  --white:       #ffffff;
 }
 
 /* ── Reset ── */
@@ -67,7 +67,7 @@ body > nav, header > nav, .site-nav {
   transition: background var(--transition), box-shadow var(--transition);
 }
 body > nav.scrolled, header > nav.scrolled {
-  background: rgba(250,247,242,0.96);
+  background: rgba(26, 26, 26, 0.96);
   backdrop-filter: blur(16px);
   box-shadow: 0 1px 0 var(--border), 0 4px 24px var(--shadow);
 }
@@ -79,16 +79,15 @@ body > nav.scrolled, header > nav.scrolled {
 .nav-logo-link em {
   color: var(--gold) !important;
 }
-/* Homepage only: white logo/icons over video hero (before scroll) */
+/* Homepage only: gold logo/icons over video hero (before scroll) */
 body.page-home nav:not(.scrolled) .nav-logo-link {
-  color: #fff !important;
-  filter: brightness(0) invert(1);
+  color: var(--gold) !important;
 }
 body.page-home nav:not(.scrolled) .nav-links:not(.mobile-open) > li:not(.nav-dropdown) > a,
 body.page-home nav:not(.scrolled) .nav-links:not(.mobile-open) > .nav-dropdown > a {
-  color: rgba(255,255,255,0.92) !important;
+  color: var(--text) !important;
 }
-/* Dropdown menu links always dark */
+/* Dropdown menu links always light */
 .nav-dropdown .dropdown-menu a,
 body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a,
 .nav-links .nav-dropdown .dropdown-menu a {
@@ -99,9 +98,9 @@ body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a,
 }
 body.page-home nav:not(.scrolled) .nav-icons button,
 body.page-home nav:not(.scrolled) .nav-icons a {
-  color: rgba(255,255,255,0.92) !important;
+  color: var(--text) !important;
 }
-/* Mobile open menu always dark text regardless of page */
+/* Mobile open menu */
 .nav-links.mobile-open a {
   color: var(--text-mid) !important;
   opacity: 1;
@@ -109,10 +108,10 @@ body.page-home nav:not(.scrolled) .nav-icons a {
 .nav-links.mobile-open a:hover {
   color: var(--gold) !important;
 }
-/* Scrolled nav: switch back to normal colors on light background */
+/* Scrolled nav: keep light colors on dark background */
 body > nav.scrolled .nav-logo-link,
 header > nav.scrolled .nav-logo-link {
-  color: var(--text) !important;
+  color: var(--gold) !important;
   filter: none;
 }
 body > nav.scrolled .nav-logo-link em,
@@ -137,7 +136,7 @@ header > nav.scrolled .nav-links a {
   color: var(--gold);
   text-transform: uppercase;
 }
-.nav-logo span { color: var(--text); }
+.nav-logo span { color: var(--gold); }
 .nav-links { display: flex; gap: 36px; align-items: center; }
 .nav-links a {
   font-size: 0.68rem;
@@ -185,7 +184,7 @@ body.page-home nav:not(.scrolled) .hamburger span { background: #fff; }
   flex-direction: column;
   position: absolute;
   top: var(--nav-h); left: 0; right: 0;
-  background: rgba(250,247,242,0.98);
+  background: rgba(26,26,26,0.98);
   backdrop-filter: blur(16px);
   padding: 24px;
   gap: 20px;
@@ -193,7 +192,7 @@ body.page-home nav:not(.scrolled) .hamburger span { background: #fff; }
   box-shadow: 0 12px 32px var(--shadow);
   z-index: 999;
 }
-.nav-links.mobile-open a { color: var(--text-mid) !important; opacity: 1; }
+.nav-links.mobile-open a { color: var(--text) !important; opacity: 1; }
 .nav-links.mobile-open a:hover { color: var(--gold) !important; }
 
 /* ── Nav Dropdown ── */
@@ -253,7 +252,24 @@ body.page-home nav:not(.scrolled) .hamburger span { background: #fff; }
   height: 100vh; min-height: 600px;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  background: #2a2522;
+}
+.hero-carousel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -2;
+}
+.carousel-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.carousel-slide.active {
+  opacity: 1;
 }
 
 /* Video fills the hero on all screen sizes */

@@ -19,7 +19,7 @@
   <meta name="twitter:title"       content="Shop Hair Accessories & Jewelry — Zarin-e-Husn | Pakistan" />
   <meta name="twitter:description" content="Browse 200+ hair accessories & jewelry pieces online in Pakistan. Scrunchies, pins, hair clips, necklaces, earrings, rings, bracelets & more. COD available — Zarin-e-Husn." />
   <meta name="twitter:image"       content="https://zarinehusn.com/images/categories/necklace.jpg" />
-  <title>Hair Accessories — Zarin-e-Husn | Pakistan</title>
+  <title>Women's Clothing — Zarin-e-Husn | Pakistan</title>
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages.css" />
@@ -34,10 +34,9 @@
     <li class="nav-dropdown">
         <a href="shop">Shop <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></a>
         <ul class="dropdown-menu">
-          <li><a href="shop">All Collections</a></li>
+          <li><a href="shop.html">All Collections</a></li>
           <li><a href="jewelry.html">Jewelry</a></li>
-          <li><a href="hair-accessories.html">Skincare</a></li>
-          <li><a href="clothing.html">Cosmetics</a></li>
+          <li><a href="cosmetics.html">Cosmetics</a></li>
         </ul>
       </li>
     <li><a href="about">Our Story</a></li>
@@ -68,7 +67,7 @@
 <div class="page-hero">
   <div class="container">
     <p class="section-label">Premium Collections</p>
-    <h1 id="shop-hero-title">Premium <em style="color: var(--gold);">Hair</em> Accessories</h1>
+    <h1 id="shop-hero-title">Zarin-e-Husn <em style="color: var(--gold);">Cosmetics</em></h1>
     <p id="shop-hero-desc" style="max-width: 600px; margin: 16px auto 0; font-size: 1.1rem; color: var(--muted); line-height: 1.6; font-family: 'Inter', sans-serif;">
       Discover Pakistan's finest online selection of premium scrunchies, elegant clips, and beautifully crafted jewelry pieces for every occasion.
     </p>
@@ -78,9 +77,9 @@
 <section style="padding:60px 0 100px;">
   <div class="container">
     <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All Skincare</button>                        <button class="filter-btn" data-filter="scrunchies">Serums</button>                        <button class="filter-btn" data-filter="clips">Hair Clips</button>                        <button class="filter-btn" data-filter="hair-bands">Moisturizers</button>                        <button class="filter-btn" data-filter="pins">Toners</button>                        <button class="filter-btn" data-filter="ponies">Face Masks</button>                        <button class="filter-btn" data-filter="fancy">Fancy Accessories</button>                        <button class="filter-btn" data-filter="gift-items">Gift Sets</button>                        <button class="filter-btn" data-filter="sale">Sale</button>
+      <button class="filter-btn active" data-filter="all">All Cosmetics</button>                        <button class="filter-btn" data-filter="lipsticks">Lipsticks</button>                        <button class="filter-btn" data-filter="foundations">Foundations</button>                        <button class="filter-btn" data-filter="blush">Blush</button>                        <button class="filter-btn" data-filter="mascara">Mascara</button>                        <button class="filter-btn" data-filter="eyeliner">Eyeliner</button>                        <button class="filter-btn" data-filter="face-powders">Face Powders</button>                        <button class="filter-btn" data-filter="highlighters">Highlighters</button>
     </div>
-    <div class="products-grid" id="shop-products-grid" data-main-cat="hair-accessories">
+    <div class="products-grid" id="shop-products-grid" data-main-cat="cosmetics">
       <p style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:0.5;">Loading products…</p>
     </div>
   </div>
@@ -117,8 +116,7 @@
         <h4>Shop</h4>
           <ul>
             <li><a href="jewelry.html">Jewelry</a></li>
-            <li><a href="hair-accessories.html">Skincare</a></li>
-            <li><a href="clothing.html">Cosmetics</a></li>
+            <li><a href="cosmetics.html">Cosmetics</a></li>
           </ul>
       </div>
       <div class="footer-col">
@@ -131,8 +129,8 @@
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <p>&#9993; <span data-zarinehusn="email">hello@zarinehusn.com</span></p>
-        <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 300 000 0000</span></p>
+        <p>&#9993; <span data-zarinehusn="email">zarinehusn@gmail.com</span></p>
+        <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></p>
         <p>&#128205; <span data-zarinehusn="location">Lahore, Pakistan</span></p>
         <p data-zarinehusn="hours">Mon&ndash;Sat: 10am &ndash; 7pm</p>
       </div>
@@ -174,15 +172,14 @@ window.updateShopHero = function(cat) {
   if (!titleEl || !descEl) return;
 
   const data = {
-    'all': { title: 'Hair <em style="color: var(--gold);">Accessories</em>', desc: "Discover Pakistan's finest online selection of premium scrunchies, elegant clips, and hair bands." },
-    'scrunchies': { title: 'Premium Scrunchies <em style="color: var(--gold);">Collection</em>', desc: 'Shop soft, luxurious silk and satin scrunchies designed to protect your hair while keeping you stylish. Available for Cash on Delivery in Pakistan.' },
-    'clips': { title: 'Elegant Hair Clips <em style="color: var(--gold);">Collection</em>', desc: 'Find your perfect style with our collection of elegant and durable hair clips. From minimalist metals to intricate designs, perfect for everyday wear or special events.' },
-    'hair-bands': { title: 'Stylish Hair Bands <em style="color: var(--gold);">Collection</em>', desc: 'Explore comfortable and chic hair bands that add the perfect finishing touch to any outfit. Order online today in Pakistan.' },
-    'pins': { title: 'Decorative Hair Pins <em style="color: var(--gold);">Collection</em>', desc: 'Add a touch of sparkle to your hairstyles with our premium decorative hair pins and slides.' },
-    'ponies': { title: 'Everyday Ponies <em style="color: var(--gold);">Collection</em>', desc: 'Secure your hair with our durable, snag-free ponytail holders in beautiful colors and styles.' },
-    'fancy': { title: 'Fancy Accessories <em style="color: var(--gold);">Collection</em>', desc: 'Get ready for weddings and parties with our exclusive bridal and formal hair accessories.' },
-    'gift-items': { title: 'Perfect Gift Items <em style="color: var(--gold);">Collection</em>', desc: 'Find the perfect jewelry and accessory gift sets for your loved ones. Beautifully packaged and ready to gift.' },
-    'sale': { title: 'Sale <em style="color: var(--gold);">Collection</em>', desc: 'Shop our discounted hair accessories. Limited time offers on premium items!' }
+    'all': { title: 'Zarin-e-Husn <em style="color: var(--gold);">Cosmetics</em>', desc: "Discover Pakistan's finest online selection of cosmetics, from highlighters to premium foundations." },
+    'lipsticks': { title: 'Premium <em style="color: var(--gold);">Lipsticks</em>', desc: 'Long-lasting and vibrant lipsticks for every occasion.' },
+    'foundations': { title: 'Flawless <em style="color: var(--gold);">Foundations</em>', desc: 'Find your perfect match for a flawless base.' },
+    'blush': { title: 'Radiant <em style="color: var(--gold);">Blush</em>', desc: 'Add a natural flush of color to your cheeks.' },
+    'mascara': { title: 'Volumizing <em style="color: var(--gold);">Mascara</em>', desc: 'Achieve stunning lashes with our premium mascaras.' },
+    'eyeliner': { title: 'Precision <em style="color: var(--gold);">Eyeliner</em>', desc: 'Define your eyes with our smudge-proof eyeliners.' },
+    'face-powders': { title: 'Setting <em style="color: var(--gold);">Powders</em>', desc: 'Set your makeup for an all-day matte finish.' },
+    'highlighters': { title: 'Glowing <em style="color: var(--gold);">Highlighters</em>', desc: 'Get that perfect glow with our luminous highlighters.' }
   };
 
   const info = data[cat] || data['all'];
@@ -190,9 +187,9 @@ window.updateShopHero = function(cat) {
   descEl.innerHTML = info.desc;
   
   if (cat === 'all') {
-    window.history.replaceState(null, '', 'hair-accessories.html');
+    window.history.replaceState(null, '', 'cosmetics.html');
   } else {
-    window.history.replaceState(null, '', 'hair-accessories.html?cat=' + cat);
+    window.history.replaceState(null, '', 'cosmetics.html?cat=' + cat);
   }
 };
 
