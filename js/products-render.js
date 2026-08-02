@@ -270,7 +270,13 @@ async function zarinehusnRenderHomepageGrids() {
     const jewGrid = document.getElementById('featured-jewelry-grid');
     if (jewGrid) {
       const jProds = featuredProducts.filter(p => CATEGORY_HIERARCHY['jewelry'].includes(p.subcategory || p.category));
-      jewGrid.innerHTML = jProds.length ? jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
+      
+if (jProds.length) {
+  jewGrid.innerHTML = jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
+  document.getElementById('featured-jewelry').style.display = 'block';
+} else {
+  document.getElementById('featured-jewelry').style.display = 'none';
+}
       zarinehusnReInitCards(jewGrid);
     }
 
@@ -281,7 +287,13 @@ async function zarinehusnRenderHomepageGrids() {
         const additional = p.additionalCategories || [];
         return CATEGORY_HIERARCHY['cosmetics'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['cosmetics'].includes(a));
       });
-      cosGrid.innerHTML = cProds.length ? cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('') : zarinehusnEmptyState('More coming soon.');
+      
+if (cProds.length) {
+  cosGrid.innerHTML = cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
+  document.getElementById('featured-cosmetics').style.display = 'block';
+} else {
+  document.getElementById('featured-cosmetics').style.display = 'none';
+}
       zarinehusnReInitCards(cosGrid);
     }
 
