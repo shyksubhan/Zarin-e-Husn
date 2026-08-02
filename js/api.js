@@ -8,7 +8,7 @@ const ZARINEHUSN_API = (function() {
   if (origin.includes('localhost') || origin.includes('127.0.0.1') || origin === 'null' || origin.startsWith('file')) {
     return 'http://localhost:3001/api';
   }
-  return 'https://zarinehusn.com/api';
+  return origin + '/api';
 })();
 
 /* ── Get stored JWT token ── */
