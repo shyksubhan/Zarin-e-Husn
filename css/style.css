@@ -874,3 +874,12 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   border: 1px solid var(--border-soft) !important;
   box-shadow: 0 15px 35px rgba(0,0,0,0.05) !important;
 }
+
+/* Flat Hero Overlay for Perfect Visibility */
+.hero-video-overlay {
+  background: rgba(250, 248, 245, 0.6) !important;
+}
+.hero-title-main, .hero-sub, .hero-eyebrow {
+  color: var(--text) !important;
+  text-shadow: none !important;
+}
