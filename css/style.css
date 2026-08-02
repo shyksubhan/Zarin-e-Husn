@@ -853,3 +853,10 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   width: 100% !important;
   height: 100% !important;
 }
+
+/* Dropdown box shadow fix */
+.nav-dropdown:not(.open) .dropdown-menu {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
