@@ -835,3 +835,21 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   border-color: var(--gold) !important;
   box-shadow: 0 5px 15px rgba(201, 168, 76, 0.3) !important;
 }
+
+/* Enforce perfectly circular categories on homepage */
+.premium-circle {
+  border-radius: 50% !important;
+  aspect-ratio: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  box-shadow: 0 10px 30px var(--shadow) !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+.premium-circle img {
+  border-radius: 50% !important;
+  aspect-ratio: 1 !important;
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+}
