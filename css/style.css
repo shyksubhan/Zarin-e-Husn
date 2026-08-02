@@ -855,8 +855,22 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
 }
 
 /* Dropdown box shadow fix */
-.nav-dropdown:not(.open) .dropdown-menu {
-  background: transparent !important;
-  border: none !important;
+
+
+.nav-dropdown > .dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
   box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+  transition: all 0.3s ease;
+  display: block !important;
+}
+.nav-dropdown:hover > .dropdown-menu,
+.nav-dropdown.open > .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  background: var(--card) !important;
+  border: 1px solid var(--border-soft) !important;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05) !important;
 }
