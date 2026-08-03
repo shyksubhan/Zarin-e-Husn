@@ -937,3 +937,212 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   max-width: 700px !important;
   margin: 0 auto !important;
 }
+
+/* ═══════════════════════════════════════════
+   NAVBAR DROPDOWN — Beautiful redesign
+   ═══════════════════════════════════════════ */
+.nav-dropdown > .dropdown-menu {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(12px) !important;
+  background: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 60px rgba(44,40,36,0.12), 0 4px 16px rgba(44,40,36,0.06) !important;
+  padding: 8px !important;
+  min-width: 200px !important;
+  margin-top: 12px !important;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+.nav-dropdown:hover > .dropdown-menu,
+.nav-dropdown.open > .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  background: #fff !important;
+}
+
+/* Dropdown items */
+.nav-dropdown .dropdown-menu li {
+  margin: 0 !important;
+}
+.nav-dropdown .dropdown-menu a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 11px 16px !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.06em !important;
+  color: var(--text) !important;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  transition: background 0.18s ease, color 0.18s ease, padding-left 0.18s ease !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  position: relative !important;
+}
+.nav-dropdown .dropdown-menu a::before {
+  content: none !important;
+}
+.nav-dropdown .dropdown-menu a:hover {
+  background: rgba(212,175,55,0.08) !important;
+  color: var(--gold) !important;
+  padding-left: 20px !important;
+}
+
+/* Gold dot indicator on hover */
+.nav-dropdown .dropdown-menu a::after {
+  content: '' !important;
+  display: inline-block !important;
+  width: 4px !important;
+  height: 4px !important;
+  background: var(--gold) !important;
+  border-radius: 50% !important;
+  margin-left: auto !important;
+  opacity: 0 !important;
+  transition: opacity 0.18s ease !important;
+  flex-shrink: 0 !important;
+}
+.nav-dropdown .dropdown-menu a:hover::after {
+  opacity: 1 !important;
+}
+
+/* Divider between "All Collections" and the category links */
+.nav-dropdown .dropdown-menu li:first-child a {
+  border-bottom: 1px solid rgba(44,40,36,0.06) !important;
+  border-radius: 8px 8px 0 0 !important;
+  margin-bottom: 4px !important;
+  padding-bottom: 14px !important;
+  color: var(--muted) !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* Ensure text always visible (override white-on-white from hero) */
+body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a,
+body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a:hover,
+nav .nav-dropdown .dropdown-menu a {
+  color: var(--text) !important;
+}
+body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a:hover {
+  color: var(--gold) !important;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVENESS FIXES
+   ═══════════════════════════════════════════ */
+
+/* General mobile container padding */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  
+  /* Nav */
+  nav {
+    padding: 0 16px !important;
+  }
+  
+  /* Hero text scaling */
+  .hero-title-main {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  .hero-title-sub {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Categories — stack on smallest screens */
+  .premium-cat-grid,
+  .premium-cat-grid--two {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+    max-width: 100% !important;
+  }
+  .premium-circle {
+    max-width: 140px !important;
+  }
+  
+  /* Section titles */
+  .section-title {
+    font-size: 1.6rem !important;
+  }
+  
+  /* Story grid */
+  .story-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  
+  /* Footer grid */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  
+  /* Testimonial slider */
+  .testimonial-slider {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Page hero */
+  .page-hero {
+    padding: 80px 16px 40px !important;
+  }
+  .page-hero h1 {
+    font-size: 2rem !important;
+  }
+
+  /* Cart drawer full width on mobile */
+  #cart-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    height: 80vh !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-cat-grid,
+  .premium-cat-grid--two {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .hero-title-main {
+    font-size: 1.7rem !important;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .story-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+  }
+  .premium-cat-grid--two {
+    max-width: 560px !important;
+  }
+}
+
+/* Shop sidebar mobile overlay backdrop */
+@media (max-width: 991px) {
+  .shop-sidebar.active::before {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.4) !important;
+    z-index: -1 !important;
+  }
+}

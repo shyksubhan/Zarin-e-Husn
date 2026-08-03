@@ -53,6 +53,9 @@ async function initSuperAdmin() {
           u.username = saved.username;
           u.email = saved.username;
         }
+        /* Always keep super-admin-1 active — never let a Firestore record
+           deactivate the built-in owner account */
+        u.active = true;
       }
     } catch (err) {
       console.error('Could not load persisted super admin record:', err.message);
@@ -154,7 +157,11 @@ router.post('/login', async (req, res) => {
 
     /* ── Admin login ── */
     await initSuperAdmin();
-    const adminUser = await findAdminUserByUsername(normalEmail);
+    let adminUser = await findAdminUserByUsername(normalEmail);
+    /* Fallback: env username still works even if Firebase stored a different one */
+    if (!adminUser && normalEmail === (process.env.ADMIN_USERNAME || "admin").toLowerCase()) {
+      adminUser = store.findAdminUserById("super-admin-1");
+    }
     if (adminUser && adminUser.active) {
       const passMatch = adminUser.passwordHash
         ? await bcrypt.compare(password, adminUser.passwordHash)

@@ -101,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('overlay');
   const openCart  = () => { drawer?.classList.add('open'); overlay?.classList.add('active'); };
   const closeCart = () => { drawer?.classList.remove('open'); overlay?.classList.remove('active'); };
+  window.openCart  = openCart;
+  window.closeCart = closeCart;
   document.querySelectorAll('[data-open-cart]').forEach(el => el.addEventListener('click', openCart));
   document.getElementById('cart-close')?.addEventListener('click', closeCart);
   overlay?.addEventListener('click', closeCart);
