@@ -37,8 +37,8 @@ function zarinehusnProductCardHTML(p) {
     ? `<span class="product-price-old">PKR ${Number(p.priceOld).toLocaleString()}</span>`
     : '';
   const emoji = p.emoji || '🛍️';
-  const variant = (p.colors && p.colors[0]) || (p.sizes && p.sizes[0]) || 'Standard';
-  const safeName = p.name.replace(/'/g, "'");
+  const variant = ((p.colors && p.colors[0]) || (p.sizes && p.sizes[0]) || 'Standard').replace(/\\/g, '\\\\').replace(/'/g, "\\''").replace(/"/g, '&quot;');
+  const safeName = p.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
   const mainImage = (p.images && p.images.length) ? p.images[0] : null;
   const hasVideo  = !!p.video;
 
