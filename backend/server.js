@@ -176,7 +176,16 @@ ${urlTags}
 
 
 
-app.use(express.static(path.join(__dirname, '..'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '..'), { 
+  extensions: ['html'],
+  setHeaders: (res, path, stat) => {
+    if (path.endsWith('.html') || path.endsWith('.css') || path.endsWith('.js')) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+  }
+}));
 
 /* ── SSE Notifications endpoint (/api/notifications/stream) ── */
 app.get('/api/notifications/stream', (req, res) => {
@@ -493,6 +502,9 @@ app.get('/api/health', (req, res) => {
 /* ── Catch-all ── */
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'API endpoint not found.' });
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
