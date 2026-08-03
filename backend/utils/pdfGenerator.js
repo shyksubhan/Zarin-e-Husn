@@ -11,7 +11,7 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
   let logoBuffer = null;
   let localPngLogo = null;
   try {
-    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo.png');
+    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo-dark.png');
     if (fs.existsSync(localLogoPath)) {
       localPngLogo = localLogoPath;
     }
