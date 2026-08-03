@@ -51,7 +51,9 @@ async function initSuperAdmin() {
     u.active = true;
 
     /* Overlay a previously-changed password from Firestore, if one exists.
+       Reset flag each call so password changes always get picked up.
        Wrapped in its own try/catch so Firebase failures NEVER crash login. */
+    u._loadedFromFirestore = false;
     if (!u._loadedFromFirestore) {
       u._loadedFromFirestore = true;
       if (isFirebaseAvailable()) {
@@ -366,7 +368,7 @@ router.patch('/change-password', requireAuth, async (req, res) => {
           adminUser.tokenVersion = (adminUser.tokenVersion || 1) - 1;
           process.env.ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; /* unchanged baseline */
           return res.status(500).json({
-            error: 'Password was NOT saved — Firestore write failed: ' + err.message +
+            error: 'Password was NOT saved — Firestore write failed: ' + fbErr.message +
               '. Nothing has changed; please check server logs and try again.',
           });
         }

@@ -113,11 +113,17 @@ function zarinehusnReInitCards(container) {
       try {
         const d = JSON.parse(decodeURIComponent(fresh.dataset.card));
         const action = fresh.dataset.action;
-        if (action === 'add' && typeof window.addToCart === 'function') {
-          window.addToCart(d.name, d.price, d.emoji, d.variant, d.image);
-        } else if (action === 'buy' && typeof window.buyNow === 'function') {
-          window.buyNow(d.name, d.price, d.emoji, d.variant, d.image);
-        }
+        const tryAction = () => {
+          if (action === 'add' && typeof window.addToCart === 'function') {
+            window.addToCart(d.name, d.price, d.emoji, d.variant, d.image);
+          } else if (action === 'buy' && typeof window.buyNow === 'function') {
+            window.buyNow(d.name, d.price, d.emoji, d.variant, d.image);
+          } else {
+            /* addToCart not ready yet — wait for DOMContentLoaded */
+            window.addEventListener('DOMContentLoaded', tryAction, { once: true });
+          }
+        };
+        tryAction();
       } catch(err) {
         console.error('Button action error:', err);
       }
