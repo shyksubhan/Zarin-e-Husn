@@ -296,7 +296,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 <!-- ═══════════════════════════════════════════ SIDEBAR ════════ -->
 <div id="sidebar">
   <div class="sidebar-logo">
-    <img src="../../images/logo.svg" alt="Zarin-e-Husn" style="height:40px;width:auto;max-width:160px;display:block;margin-bottom:4px;"/>
+    <img src="../../images/logo-dark.png" alt="Zarin-e-Husn" style="height:40px;width:auto;max-width:160px;display:block;margin-bottom:4px;"/>
     <small>Admin Panel</small>
   </div>
   <nav class="sidebar-nav">
@@ -904,32 +904,25 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
     <div class="ml-auto" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
       <input class="search-input" id="product-search" placeholder="Search…" oninput="filterProductsTable()"/>
       <select class="filter-sel" id="product-category-filter" onchange="filterProductsTable()" title="Filter by category">
+
         <option value="">All Categories</option>
-        <option value="scrunchies">Scrunchies</option>
-        <option value="clips">Hair Clips</option>
-        <option value="hair-bands">Hair Bands</option>
-        <option value="pins">Pins</option>
-        <option value="ponies">Ponies</option>
-        
-        <option value="fancy">Fancy Accessories</option>
-        <option value="bracelets">Bracelets</option>
-        <option value="rings">Rings</option>
-        <option value="earrings">Earrings</option>
-        <option value="necklace">Necklace</option>
-        <option value="bangles">Bangles</option>
-        <option value="jewelry-sets">Jewelry Sets</option>
-        <option value="gift-items">Gift Items</option>
-        <option value="fancy-wear">Fancy Wear</option>
-        <option value="kaftan">Kaftan</option>
-        <option value="casual">Casual</option>
-        <option value="party-wear">Party Wear</option>
-        <option value="summer-collection">Summer Collection</option>
-        <option value="winter-collection">Winter Collection</option>
-        <option value="daily-pret">Daily Pret Ready to Wear</option>
-        <option value="unstitched">Unstitched</option>
-        <option value="g-prints">G. Prints</option>
-        <option value="new-arrivals">New Arrivals</option>
-        <option value="trending-now">Trending Now</option>
+        <optgroup label="Jewelry">
+          <option value="bracelets">Bracelets</option>
+          <option value="rings">Rings</option>
+          <option value="earrings">Earrings</option>
+          <option value="necklace">Necklace</option>
+          <option value="bangles">Bangles</option>
+          <option value="jewelry-sets">Jewelry Sets</option>
+        </optgroup>
+        <optgroup label="Cosmetics">
+          <option value="lipsticks">Lipsticks</option>
+          <option value="foundations">Foundations</option>
+          <option value="blush">Blush</option>
+          <option value="mascara">Mascara</option>
+          <option value="eyeliner">Eyeliner</option>
+          <option value="face-powders">Face Powders</option>
+          <option value="highlighters">Highlighters</option>
+        </optgroup>
 
       </select>
       <select class="filter-sel" id="product-sort-order" onchange="filterProductsTable()" title="Sort by time added">
@@ -1019,7 +1012,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
       </div>
       <div>
         <label style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;">Promo Code <span style="opacity:.5">(optional)</span></label>
-        <input type="text" id="promo-code" placeholder="e.g. GOLNISÀ20"
+        <input type="text" id="promo-code" placeholder="e.g. Zarin-e-Husn20"
           style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;font-family:inherit;font-size:.85rem;border-radius:6px;outline:none;box-sizing:border-box;text-transform:uppercase;">
       </div>
     </div>
@@ -1331,40 +1324,26 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
       
       <div style="display:flex;gap:10px;margin-bottom:20px;">
         <select id="pinned-sel" class="form-control" style="flex:1;">
-          <option value="">-- Select Collection --</option>
-          <optgroup label="── Hair Accessories ──">
-            <option value="scrunchies">Scrunchies</option>
-            <option value="clips">Hair Clips</option>
-            <option value="hair-bands">Hair Bands</option>
-            <option value="pins">Pins</option>
-            <option value="ponies">Ponies</option>
-            <option value="fancy">Fancy Hair Accessories</option>
-            <option value="gift-items">Gift Items</option>
-          </optgroup>
-          <optgroup label="── Jewelry ──">
-            <option value="bracelets">Bracelets</option>
-            <option value="rings">Rings</option>
-            <option value="earrings">Earrings</option>
-            <option value="necklace">Necklace</option>
-            <option value="bangles">Bangles</option>
-            <option value="jewelry-sets">Jewelry Sets</option>
-          </optgroup>
-          <optgroup label="── Clothing ──">
-            <option value="fancy-wear">Fancy Wear</option>
-            <option value="kaftan">Kaftan</option>
-            <option value="casual">Casual</option>
-            <option value="party-wear">Party Wear</option>
-            <option value="summer-collection">Summer Collection</option>
-            <option value="winter-collection">Winter Collection</option>
-            <option value="daily-pret">Daily Pret Ready to Wear</option>
-            <option value="unstitched">Unstitched</option>
-            <option value="g-prints">G. Prints</option>
-            <option value="new-arrivals">New Arrivals</option>
-            <option value="trending-now">Trending Now</option>
-          </optgroup>
-          <optgroup label="── Other ──">
-            <option value="sale">Sale</option>
-          </optgroup>
+
+        <option value="">-- Select Collection --</option>
+        <optgroup label="Jewelry">
+          <option value="bracelets">Bracelets</option>
+          <option value="rings">Rings</option>
+          <option value="earrings">Earrings</option>
+          <option value="necklace">Necklace</option>
+          <option value="bangles">Bangles</option>
+          <option value="jewelry-sets">Jewelry Sets</option>
+        </optgroup>
+        <optgroup label="Cosmetics">
+          <option value="lipsticks">Lipsticks</option>
+          <option value="foundations">Foundations</option>
+          <option value="blush">Blush</option>
+          <option value="mascara">Mascara</option>
+          <option value="eyeliner">Eyeliner</option>
+          <option value="face-powders">Face Powders</option>
+          <option value="highlighters">Highlighters</option>
+        </optgroup>
+
         </select>
         <button class="btn btn-outline" onclick="addPinnedCollection()">Add</button>
       </div>
@@ -1401,56 +1380,33 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
         <div class="form-group">
           <label>Category *</label>
           <select id="p-category">
-            <option value="">Select category</option>
-            <optgroup label="Hair Accessories">
-              <option value="scrunchies">Scrunchies</option>
-              <option value="clips">Hair Clips</option>
-              <option value="hair-bands">Hair Bands</option>
-              <option value="pins">Pins</option>
-              <option value="ponies">Ponies</option>
-              <option value="fancy">Fancy Accessories</option>
-              <option value="gift-items">Gift Items</option>
-            </optgroup>
-            <optgroup label="Jewelry">
-              <option value="bracelets">Bracelets</option>
-              <option value="rings">Rings</option>
-              <option value="earrings">Earrings</option>
-              <option value="necklace">Necklace</option>
-              <option value="bangles">Bangles</option>
-              <option value="jewelry-sets">Jewelry Sets</option>
-            </optgroup>
-            <optgroup label="Clothing">
-              <option value="fancy-wear">Fancy Wear</option>
-              <option value="kaftan">Kaftan</option>
-              <option value="casual">Casual</option>
-              <option value="party-wear">Party Wear</option>
-              <option value="summer-collection">Summer Collection</option>
-              <option value="winter-collection">Winter Collection</option>
-              <option value="daily-pret">Daily Pret Ready to Wear</option>
-              <option value="unstitched">Unstitched</option>
-              <option value="g-prints">G. Prints</option>
-              <option value="new-arrivals">New Arrivals</option>
-              <option value="trending-now">Trending Now</option>
-            </optgroup>
+
+        <option value="">Select category</option>
+        <optgroup label="Jewelry">
+          <option value="bracelets">Bracelets</option>
+          <option value="rings">Rings</option>
+          <option value="earrings">Earrings</option>
+          <option value="necklace">Necklace</option>
+          <option value="bangles">Bangles</option>
+          <option value="jewelry-sets">Jewelry Sets</option>
+        </optgroup>
+        <optgroup label="Cosmetics">
+          <option value="lipsticks">Lipsticks</option>
+          <option value="foundations">Foundations</option>
+          <option value="blush">Blush</option>
+          <option value="mascara">Mascara</option>
+          <option value="eyeliner">Eyeliner</option>
+          <option value="face-powders">Face Powders</option>
+          <option value="highlighters">Highlighters</option>
+        </optgroup>
+
           </select>
         </div>
         <div class="form-group" style="flex: 2;">
           <label>Additional Categories</label>
           <div id="p-additional-categories" style="border: 1px solid var(--border); border-radius: 8px; padding: 10px; height: 120px; overflow-y: auto; background: var(--bg); display: flex; flex-direction: column; gap: 6px;">
-            <strong style="font-size:0.8rem; color:var(--muted); margin-top:4px;">Clothing</strong>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="fancy-wear"> Fancy Wear</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="kaftan"> Kaftan</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="casual"> Casual</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="party-wear"> Party Wear</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="summer-collection"> Summer Collection</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="winter-collection"> Winter Collection</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="daily-pret"> Daily Pret</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="unstitched"> Unstitched</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="g-prints"> G. Prints</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="new-arrivals"> New Arrivals</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="trending-now"> Trending Now</label>
 
-            <strong style="font-size:0.8rem; color:var(--muted); margin-top:8px;">Jewelry</strong>
+            <strong style="font-size:0.8rem; color:var(--muted); margin-top:4px;">Jewelry</strong>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="bracelets"> Bracelets</label>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="rings"> Rings</label>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="earrings"> Earrings</label>
@@ -1458,14 +1414,15 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="bangles"> Bangles</label>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="jewelry-sets"> Jewelry Sets</label>
 
-            <strong style="font-size:0.8rem; color:var(--muted); margin-top:8px;">Hair Accessories</strong>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="scrunchies"> Scrunchies</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="clips"> Hair Clips</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="hair-bands"> Hair Bands</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="pins"> Pins</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="ponies"> Ponies</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="fancy"> Fancy</label>
-            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="gift-items"> Gift Items</label>
+            <strong style="font-size:0.8rem; color:var(--muted); margin-top:8px;">Cosmetics</strong>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="lipsticks"> Lipsticks</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="foundations"> Foundations</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="blush"> Blush</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="mascara"> Mascara</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="eyeliner"> Eyeliner</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="face-powders"> Face Powders</label>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="highlighters"> Highlighters</label>
+
           </div>
         </div>
         <div class="form-group"><label>Badge</label>
@@ -2411,7 +2368,7 @@ function exportDailyStatementsExcel() {
       XLSX.utils.book_append_sheet(wb, wsLifetime, 'Lifetime Snapshot');
     }
 
-    XLSX.writeFile(wb, `GOLNISÀ - Daily Statement - ${today()}.xlsx`);
+    XLSX.writeFile(wb, `Zarin-e-Husn - Daily Statement - ${today()}.xlsx`);
     toast('30-day statement exported ✓', 'success');
   } catch (err) {
     toast('Export failed: ' + err.message, 'error');
@@ -2504,7 +2461,7 @@ function exportMonthlyStatementsExcel() {
     wsLines['!cols'] = [{wch:10},{wch:14},{wch:13},{wch:24},{wch:6},{wch:18},{wch:15},{wch:14},{wch:12},{wch:13}];
     XLSX.utils.book_append_sheet(wb, wsLines, 'Itemised Sales');
 
-    XLSX.writeFile(wb, `GOLNISÀ - Monthly Statement - ${today()}.xlsx`);
+    XLSX.writeFile(wb, `Zarin-e-Husn - Monthly Statement - ${today()}.xlsx`);
     toast('Monthly statement exported ✓', 'success');
   } catch (err) {
     toast('Export failed: ' + err.message, 'error');
@@ -2597,7 +2554,7 @@ async function exportSingleMonthExcel(monthStr, monthLabel) {
     wsSummary['!cols'] = [{wch:16},{wch:16},{wch:14},{wch:18},{wch:16},{wch:16}];
     XLSX.utils.book_append_sheet(wb, wsSummary, 'Month Summary');
 
-    XLSX.writeFile(wb, `GOLNISÀ - ${monthLabel} Statement.xlsx`);
+    XLSX.writeFile(wb, `Zarin-e-Husn - ${monthLabel} Statement.xlsx`);
     toast(`${monthLabel} statement exported ✓`, 'success');
   } catch (err) {
     toast('Export failed: ' + err.message, 'error');
@@ -3839,19 +3796,19 @@ function exportProductsExcel() {
      SHEET 2 — One sheet per category
   ──────────────────────────────────────────────── */
   const categories = [
-    { key: 'scrunchies',  label: 'Scrunchies',        color: 'C0392B' },
-    { key: 'clips',    label: 'Hair Clips',           color: '8E44AD' },
-    { key: 'hair-bands',  label: 'Hair Bands',         color: '2980B9' },
-    { key: 'pins',        label: 'Pins',               color: '27AE60' },
-    { key: 'ponies',      label: 'Ponies',             color: 'D35400' },
-    { key: 'fancy',       label: 'Fancy Accessories',  color: 'E91E8C' },
     { key: 'bracelets',   label: 'Bracelets',          color: '16A085' },
     { key: 'rings',       label: 'Rings',              color: 'C0392B' },
     { key: 'earrings',    label: 'Earrings',           color: '8E44AD' },
     { key: 'necklace',    label: 'Necklace',           color: '2471A3' },
     { key: 'bangles',     label: 'Bangles',            color: 'D35400' },
     { key: 'jewelry-sets',label: 'Jewelry Sets',       color: '7D3C98' },
-    { key: 'gift-items',  label: 'Gift Items',         color: '1E8449' },
+    { key: 'lipsticks',   label: 'Lipsticks',          color: 'C0392B' },
+    { key: 'foundations', label: 'Foundations',        color: 'D35400' },
+    { key: 'blush',       label: 'Blush',              color: 'E91E8C' },
+    { key: 'mascara',     label: 'Mascara',            color: '2c3e50' },
+    { key: 'eyeliner',    label: 'Eyeliner',           color: '34495e' },
+    { key: 'face-powders',label: 'Face Powders',       color: 'bdc3c7' },
+    { key: 'highlighters',label: 'Highlighters',       color: 'f1c40f' }
   ];
 
   categories.forEach(({ key, label, color }) => {
@@ -5008,12 +4965,12 @@ async function exportExcel(type) {
 
     if (type === 'subscribers') {
       rows = allSubscribers.length ? allSubscribers : (await (await apiFetch('/newsletter')).json()).subscribers || [];
-      filename  = `GOLNISÀ - Subscribers - ${today()}.xlsx`;
+      filename  = `Zarin-e-Husn - Subscribers - ${today()}.xlsx`;
       sheetName = 'Subscribers';
       rows = rows.map((s, i) => ({ '#': i+1, Email: s.email, 'Subscribed At': fmtDate(s.subscribedAt), Status: 'Active' }));
     } else if (type === 'orders') {
       rows = allOrders.length ? allOrders : (await (await apiFetch('/orders')).json()).orders || [];
-      filename  = `GOLNISÀ - Orders - ${today()}.xlsx`;
+      filename  = `Zarin-e-Husn - Orders - ${today()}.xlsx`;
       sheetName = 'Orders';
       rows = rows.map(o => ({
         'Order Ref':    o.id,
@@ -5031,7 +4988,7 @@ async function exportExcel(type) {
       }));
     } else if (type === 'messages') {
       rows = allMessages.length ? allMessages : (await (await apiFetch('/contact')).json()).messages || [];
-      filename  = `GOLNISÀ - Messages - ${today()}.xlsx`;
+      filename  = `Zarin-e-Husn - Messages - ${today()}.xlsx`;
       sheetName = 'Messages';
       rows = rows.map(m => ({
         Name:    m.name,
