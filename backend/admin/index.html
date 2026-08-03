@@ -231,6 +231,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
   .page-header{flex-wrap:wrap;}
   table{font-size:0.8rem;}
   th,td{padding:10px 8px;}
+  .mobile-logout{display:flex !important;}
 }
 
 /* ── Responsive — Mobile (<=640px) ── */
@@ -357,6 +358,9 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
     </div>
     <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
       <i class="fa-solid fa-gear"></i><span>Settings</span>
+    </div>
+    <div class="nav-item mobile-logout" onclick="logout()" id="nav-logout" style="display:none; color:var(--red);">
+      <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
     </div>
   </nav>
   <div class="sidebar-footer">
