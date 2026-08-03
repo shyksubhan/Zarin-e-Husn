@@ -91,10 +91,14 @@ body > nav.scrolled, header > nav.scrolled {
 
 /* Ensure logo and icons are light on home since hero is dark */
 body.page-home nav:not(.scrolled) .nav-logo-link,
-body.page-home nav:not(.scrolled) .nav-links a, 
+body.page-home nav:not(.scrolled) .nav-links > li > a, 
 body.page-home nav:not(.scrolled) .nav-icons button,
 body.page-home nav:not(.scrolled) .nav-icons a {
   color: #fff !important;
+}
+/* Dropdown links must stay dark — white-on-white fix */
+body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a {
+  color: var(--text-mid) !important;
 }
 body.page-home nav:not(.scrolled) .nav-logo-link em { color: #fff !important; }
 
@@ -923,4 +927,11 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   .hero-content { padding: 0 24px 60px 24px !important; }
   .hero-title-main { font-size: 2.5rem !important; }
   .hero-title-sub { font-size: 0.85rem !important; }
+}
+
+/* Two-category grid — centered circles */
+.premium-cat-grid--two {
+  grid-template-columns: repeat(2, 1fr) !important;
+  max-width: 700px !important;
+  margin: 0 auto !important;
 }

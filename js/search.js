@@ -1,30 +1,21 @@
 /* ============================================================
-   VELORRA — Search System
+   ZARIN-E-HUSN — Search System
    Searches all products, pages, categories, keywords
    ============================================================ */
 const VELORRA_SEARCH_INDEX = [
-  /* Products */
-  { type: 'product', id: 'ivory-silk-maxi-gown',       title: 'Ivory Silk Maxi Gown',       keywords: 'women dress silk maxi gown ivory formal PKR 12500 VLR-001', url: 'product?id=ivory-silk-maxi-gown',        badge: 'PKR 12,500' },
-  { type: 'product', id: 'noir-rose-gold-timepiece',   title: 'Noir Rose Gold Timepiece',   keywords: 'watch timepiece rose gold noir unisex PKR 28000 VLR-002', url: 'product?id=noir-rose-gold-timepiece',    badge: 'PKR 28,000' },
-  { type: 'product', id: 'obsidian-slim-suit',         title: 'Obsidian Slim Suit',         keywords: 'men suit slim formal obsidian black PKR 35000 VLR-003',   url: 'product?id=obsidian-slim-suit',          badge: 'PKR 35,000' },
-  { type: 'product', id: 'aurora-gold-necklace',       title: 'Aurora Gold Necklace',       keywords: 'jewellery necklace gold aurora women accessories PKR 8500 VLR-004', url: 'product?id=aurora-gold-necklace', badge: 'PKR 8,500' },
-  { type: 'product', id: 'velvet-noir-lip-kit',        title: 'Velvet Noir Lip Kit',        keywords: 'cosmetics lips lipstick velvet noir beauty PKR 3500 VLR-005', url: 'product?id=velvet-noir-lip-kit',      badge: 'PKR 3,500' },
-  { type: 'product', id: 'champagne-leather-tote',     title: 'Champagne Leather Tote',     keywords: 'women bags handbag tote champagne leather PKR 18000 VLR-006 sale', url: 'product?id=champagne-leather-tote', badge: 'PKR 18,000' },
   /* Categories */
-  { type: 'category', title: 'All Collections',                 keywords: 'all shop products catalog', url: 'shop',     badge: 'Category' },
-  { type: 'category', title: 'Jewelry',                         keywords: 'jewelry rings bracelets necklaces earrings bangles sets', url: 'collections?main=jewelry', badge: 'Category' },
-  { type: 'category', title: 'Hair Accessories',                keywords: 'hair accessories scrunchies clips bands pins ponies', url: 'collections?main=hair-accessories', badge: 'Category' },
-  { type: 'category', title: 'Clothing',                        keywords: 'clothing apparel casual fancy party wear', url: 'collections?main=clothing', badge: 'Category' },
-  { type: 'category', title: 'Sale Items',                      keywords: 'sale discount offer reduced price',        url: 'shop?cat=sale',      badge: 'Sale' },
+  { type: 'category', title: 'All Collections',   keywords: 'all shop products catalog browse', url: 'shop',     badge: 'Category' },
+  { type: 'category', title: 'Jewelry',            keywords: 'jewelry rings bracelets necklaces earrings bangles sets gold silver', url: 'jewelry', badge: 'Category' },
+  { type: 'category', title: 'Cosmetics',          keywords: 'cosmetics beauty makeup lipstick blush foundation skincare', url: 'cosmetics', badge: 'Category' },
+  { type: 'category', title: 'Sale Items',         keywords: 'sale discount offer reduced price deal', url: 'shop?cat=sale', badge: 'Sale' },
   /* Pages */
-  { type: 'page', title: 'Our Story',        keywords: 'about velorra story brand lahore founded history',   url: 'about',                    badge: 'Page' },
-  { type: 'page', title: 'Contact Us',       keywords: 'contact email phone whatsapp address location',     url: 'contact',                  badge: 'Page' },
-  { type: 'page', title: 'Shipping Info',    keywords: 'shipping delivery days free standard',      url: 'policy?page=shipping',     badge: 'Policy' },
-  { type: 'page', title: 'Returns Policy',   keywords: 'returns refund exchange 14 day policy',             url: 'policy?page=returns',      badge: 'Policy' },
-  { type: 'page', title: 'Size Guide',       keywords: 'size guide xs s m l xl xxl measurements chart fit', url: 'policy?page=sizeguide',    badge: 'Guide'  },
-  { type: 'page', title: 'FAQs',            keywords: 'faq questions answers help support',                 url: 'policy?page=faqs',         badge: 'Help'   },
-  { type: 'page', title: 'Track Your Order', keywords: 'track order tracking status delivery shipment',     url: 'policy?page=track',        badge: 'Tool'   },
-  { type: 'page', title: 'My Account',       keywords: 'account login signin signup register profile',      url: 'account',                  badge: 'Account'},
+  { type: 'page', title: 'Our Story',        keywords: 'about zarin e husn story brand lahore founded history',   url: 'about',                  badge: 'Page' },
+  { type: 'page', title: 'Contact Us',       keywords: 'contact email phone whatsapp address location',           url: 'contact',                badge: 'Page' },
+  { type: 'page', title: 'Shipping Info',    keywords: 'shipping delivery days free standard',                    url: 'policy?page=shipping',   badge: 'Policy' },
+  { type: 'page', title: 'Returns Policy',   keywords: 'returns refund exchange 14 day policy',                   url: 'policy?page=returns',    badge: 'Policy' },
+  { type: 'page', title: 'FAQs',             keywords: 'faq questions answers help support',                      url: 'policy?page=faqs',       badge: 'Help'   },
+  { type: 'page', title: 'Track Your Order', keywords: 'track order tracking status delivery shipment',           url: 'policy?page=track',      badge: 'Tool'   },
+  { type: 'page', title: 'My Account',       keywords: 'account login signin signup register profile',            url: 'account',                badge: 'Account'},
 ];
 /* ── Icons per type ── */
 const TYPE_ICON = { product: '🛍️', category: '✦', page: '📄' };
