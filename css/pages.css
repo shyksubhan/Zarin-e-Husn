@@ -236,10 +236,12 @@
 .shop-section { padding: 60px 0 100px; }
 .shop-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 1fr 260px;
   gap: 40px;
   align-items: start;
 }
+.shop-sidebar { order: 2; }
+.shop-main { order: 1; }
 .shop-sidebar {
   position: sticky;
   top: 100px;

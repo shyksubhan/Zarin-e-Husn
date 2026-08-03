@@ -270,6 +270,14 @@ async function zarinehusnRenderShopGrid() {
     const data = await apiGet('/products');
     let products = data.products || [];
     
+    // STRICTLY FILTER OUT ANYTHING THAT IS NOT JEWELRY OR COSMETICS
+    products = products.filter(p => {
+      const c = p.category === 'catchers' ? 'clips' : p.category;
+      const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
+      const resolvedCat = s || c;
+      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat);
+    });
+
     // We do NOT pre-filter products here anymore, so that the sidebar "All Collections" works correctly on any page!
     // The sorting/filtering logic inside zarinehusnSetupShopFilters will handle all filtering!
 
@@ -293,6 +301,14 @@ async function zarinehusnRenderHomepageGrids() {
   try {
     const data = await apiGet('/products');
     let allProducts = data.products || [];
+
+    // STRICTLY FILTER OUT ANYTHING THAT IS NOT JEWELRY OR COSMETICS
+    allProducts = allProducts.filter(p => {
+      const c = p.category === 'catchers' ? 'clips' : p.category;
+      const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
+      const resolvedCat = s || c;
+      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat);
+    });
 
     // --- 1. Render Pinned Collections ---
     const pinnedRes = await apiGet('/admin/pinned').catch(e => null);

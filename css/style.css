@@ -446,6 +446,10 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
 .footer-col ul li { margin-bottom: 16px; }
 .footer-col ul li a { font-size: 0.9rem; color: var(--text-mid); transition: color var(--transition); }
 .footer-col ul li a:hover { color: var(--gold); }
+.get-in-touch-list { list-style: none; padding: 0; margin: 0; }
+.get-in-touch-list li { display: flex; align-items: center; gap: 12px; margin-bottom: 16px !important; color: var(--text-mid) !important; font-size: 0.9rem; }
+.get-in-touch-list li i { color: var(--gold); width: 16px; text-align: center; font-size: 1.1rem; }
+.get-in-touch-list li span { color: var(--text-mid); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 40px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; flex-wrap: wrap; gap: 16px; }
 .footer-pay { display: flex; gap: 16px; align-items: center; }
 .pay-badge { font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
