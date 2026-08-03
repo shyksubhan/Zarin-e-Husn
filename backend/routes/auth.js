@@ -117,12 +117,17 @@ async function getAllAdminUsers() {
   try {
     const snap = await getDB().collection('adminUsers').get();
     const fbUsers = snap.docs.map(d => ({ ...d.data(), id: d.id }));
-    /* Include all Firebase users, but ensure default super_admin is present */
-    const hasDefault = fbUsers.some(u => u.id === 'super-admin-1');
+    /* Include all Firebase users, but ensure default super_admin is fully formed */
+    const defaultSuper = store.adminUsers.find(u => u.id === 'super-admin-1') || {
+      id: 'super-admin-1', role: 'ceo', active: true, createdAt: new Date().toISOString()
+    };
+    const hasDefault = fbUsers.findIndex(u => u.id === 'super-admin-1');
     const merged = [...fbUsers];
-    if (!hasDefault) {
-      const defaultSuper = store.adminUsers.find(u => u.id === 'super-admin-1');
-      if (defaultSuper) merged.unshift(defaultSuper);
+    if (hasDefault === -1) {
+      merged.unshift(defaultSuper);
+    } else {
+      /* Merge in case the firestore doc was created via profile update and is missing role/active */
+      merged[hasDefault] = { ...defaultSuper, ...merged[hasDefault], role: merged[hasDefault].role || 'ceo', active: merged[hasDefault].active !== undefined ? merged[hasDefault].active : true };
     }
     /* Update in-memory cache */
     store.adminUsers = merged;
