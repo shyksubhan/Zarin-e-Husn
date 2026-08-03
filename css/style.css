@@ -1047,6 +1047,15 @@ body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a:hover {
   nav {
     padding: 0 16px !important;
   }
+  /* Products grid - force 2 items per row on mobile to prevent tall images */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px 12px !important;
+  }
+  .pin-card {
+    flex: 0 0 150px !important;
+    min-width: 150px !important;
+  }
   
   /* Hero text scaling */
   .hero-title-main {

@@ -377,8 +377,6 @@ async function zarinehusnRenderHomepageGrids() {
               <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
                 <h2 style="font-size:1.6rem;margin:0;">${pin.name}</h2>
                 <div style="display:flex; gap: 8px; align-items:center;">
-                  <button class="btn-outline scroll-left" onclick="document.getElementById('${rowId}').scrollBy({left:-300, behavior:'smooth'})" style="padding: 4px 12px; border-radius: 50%;"><i class="fa-solid fa-chevron-left"></i></button>
-                  <button class="btn-outline scroll-right" onclick="document.getElementById('${rowId}').scrollBy({left:300, behavior:'smooth'})" style="padding: 4px 12px; border-radius: 50%;"><i class="fa-solid fa-chevron-right"></i></button>
                   <a href="${catUrl}" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
                 </div>
               </div>

@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
     }
 
     const total       = Math.max(0, subtotal - discount) + deliveryFee;
-    const orderRef    = 'VLR-' + uuidv4().replace(/-/g, '').toUpperCase().slice(0, 8);
+    const orderRef    = 'ZH-' + uuidv4().replace(/-/g, '').toUpperCase().slice(0, 8);
 
     const order = {
       id: orderRef,
@@ -188,7 +188,7 @@ router.post('/from-abandoned', requireAdmin, async (req, res) => {
     const payMethod  = delivery.paymentMethod || 'cod';
     const deliveryFee = payMethod === 'bank_deposit' ? (subtotal >= 1000 ? 0 : 200) : (subtotal >= 5000 ? 0 : 200);
     const total      = subtotal + deliveryFee;
-    const orderRef   = 'VLR-' + uuidv4().replace(/-/g, '').toUpperCase().slice(0, 8);
+    const orderRef    = 'ZH-' + uuidv4().replace(/-/g, '').toUpperCase().slice(0, 8);
 
     const order = {
       id:             orderRef,

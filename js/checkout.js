@@ -303,7 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.setItem('zarinehusn_order_placed', '1');
       const abId = sessionStorage.getItem('zarinehusn_abandoned_id');
       if (abId) { fetch(`${ZARINEHUSN_API}/abandoned/${abId}/converted`, { method: 'PATCH' }).catch(() => {}); sessionStorage.removeItem('zarinehusn_abandoned_id'); }
-      const ref = 'VLR-' + Date.now().toString().slice(-8);
+      // Local Fallback (Should rarely happen)
+      const ref = 'ZH-' + Date.now().toString().slice(-8);
       document.getElementById('order-ref-num').textContent = 'Order Reference: ' + ref;
       showBankDepositSuccessNote(payMethod, ref);
       localStorage.removeItem('zarinehusn_cart');
