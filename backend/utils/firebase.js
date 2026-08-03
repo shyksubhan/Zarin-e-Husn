@@ -69,4 +69,4 @@ function getDB() {
   return db;
 }
 
-module.exports = { initFirebase, getDB };
+module.exports = { initFirebase, getDB, admin };

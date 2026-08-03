@@ -1,13 +1,15 @@
 /* ============================================================
    ZARIN-E-HUSN — Upload Routes
    Admin-only endpoint to upload product images/videos.
-   Files are saved to local disk (images/products).
+   Uploads to Firebase Storage if available, otherwise local disk.
    ============================================================ */
 const express = require('express');
 const multer  = require('multer');
 const path    = require('path');
 const fs      = require('fs');
 const { requireRole } = require('../middleware/auth');
+const { admin, getDB } = require('../utils/firebase');
+const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
 
@@ -16,17 +18,8 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-/* ── Multer: save file to disk ── */
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
-  }
-});
+/* ── Multer: save to memory so we can push to Firebase ── */
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
@@ -52,16 +45,54 @@ router.post('/', requireRole('super_admin', 'admin'), (req, res) => {
 
     try {
       const resourceType = req.file.mimetype.startsWith('video/') ? 'video' : 'image';
-      // Returns a relative URL path that express.static can serve
-      const fileUrl = `/images/products/${req.file.filename}`;
-      
+      const ext = path.extname(req.file.originalname) || '';
+      const uniqueName = req.file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9) + ext;
+
+      /* Attempt Firebase Storage first */
+      if (admin && getDB()) {
+        try {
+          const bucketName = process.env.FIREBASE_STORAGE_BUCKET || `${process.env.FIREBASE_PROJECT_ID}.appspot.com`;
+          const bucket = admin.storage().bucket(bucketName);
+          
+          const file = bucket.file(`products/${uniqueName}`);
+          const uuid = uuidv4();
+          
+          await file.save(req.file.buffer, {
+            metadata: {
+              contentType: req.file.mimetype,
+              metadata: {
+                firebaseStorageDownloadTokens: uuid
+              }
+            }
+          });
+          
+          // Generate Firebase Storage public URL
+          const fileUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/products%2F${encodeURIComponent(uniqueName)}?alt=media&token=${uuid}`;
+          
+          return res.status(201).json({
+            url: fileUrl,
+            type: resourceType,
+            publicId: uniqueName,
+          });
+        } catch (fbErr) {
+          console.error('Firebase Storage upload failed, falling back to local:', fbErr);
+          /* Fallback below */
+        }
+      }
+
+      /* Fallback: Local Disk (Ephemeral on Render unless persistent disk attached) */
+      const localPath = path.join(uploadDir, uniqueName);
+      fs.writeFileSync(localPath, req.file.buffer);
+      const fileUrl = `/images/products/${uniqueName}`;
+
       return res.status(201).json({
         url:  fileUrl,
         type: resourceType,
-        publicId: req.file.filename,
+        publicId: uniqueName,
       });
+
     } catch (e) {
-      console.error('Local upload error:', e);
+      console.error('Upload error:', e);
       return res.status(500).json({ error: 'Failed to upload file. Please try again.' });
     }
   });
