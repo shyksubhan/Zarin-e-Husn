@@ -467,7 +467,22 @@ const STORE_FILE = path.join(__dirname, '..', 'data', 'store.json');
 try {
   if (fs.existsSync(STORE_FILE)) {
     const data = JSON.parse(fs.readFileSync(STORE_FILE, 'utf8'));
-    if (data.adminUsers) store.adminUsers = data.adminUsers;
+    if (data.adminUsers) {
+      store.adminUsers = data.adminUsers;
+      /* Ensure super-admin-1 always exists and stays active */
+      const hasSuperAdmin = store.adminUsers.some(u => u.id === 'super-admin-1');
+      if (!hasSuperAdmin) {
+        store.adminUsers.unshift({
+          id: 'super-admin-1', username: null, email: null,
+          passwordHash: null, role: 'ceo', fname: 'Super', lname: 'Admin',
+          active: true, createdAt: new Date().toISOString(), lastLogin: null,
+        });
+      } else {
+        /* Always keep it active regardless of what was saved */
+        const su = store.adminUsers.find(u => u.id === 'super-admin-1');
+        if (su) su.active = true;
+      }
+    }
     if (data.users) store.users = data.users;
     if (data.orders) store.orders = data.orders;
     if (data.products && data.products.length > 0) store.products = data.products;

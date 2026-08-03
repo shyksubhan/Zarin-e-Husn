@@ -26,63 +26,83 @@ const VALID_ROLES = ['super_admin', 'admin', 'supervisor'];
    password change survives Render restarts/redeploys instead of
    reverting to the .env default. ── */
 async function initSuperAdmin() {
-  const u = store.findAdminUserById('super-admin-1');
-  if (!u) return;
-  if (!u.username) {
-    u.username = (process.env.ADMIN_USERNAME || 'admin').toLowerCase();
-    u.email    = u.username;
-  }
-  /* Hash the .env password only once, as a fallback baseline */
-  if (!u.passwordHash && process.env.ADMIN_PASSWORD) {
-    u.passwordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
-  }
-  /* Overlay a previously-changed password from Firestore, if one exists.
-     Only do this once per server boot (cheap flag) to avoid a Firestore
-     read on every single login attempt. */
-  if (!u._loadedFromFirestore && isFirebaseAvailable()) {
-    u._loadedFromFirestore = true; /* mark attempted regardless of outcome */
-    try {
-      const doc = await getDB().collection('adminUsers').doc('super-admin-1').get();
-      if (doc.exists) {
-        const saved = doc.data();
-        if (saved.passwordHash) u.passwordHash = saved.passwordHash;
-        if (saved.tokenVersion) u.tokenVersion  = saved.tokenVersion;
-        if (saved.fname) u.fname = saved.fname;
-        if (saved.lname) u.lname = saved.lname;
-        if (saved.username) {
-          u.username = saved.username;
-          u.email = saved.username;
-        }
-        /* Always keep super-admin-1 active — never let a Firestore record
-           deactivate the built-in owner account */
-        u.active = true;
-      }
-    } catch (err) {
-      console.error('Could not load persisted super admin record:', err.message);
+  try {
+    const u = store.findAdminUserById('super-admin-1');
+    if (!u) return;
+
+    /* Always ensure username is set */
+    if (!u.username) {
+      u.username = (process.env.ADMIN_USERNAME || 'admin').toLowerCase();
+      u.email    = u.username;
     }
+
+    /* ALWAYS hash the env password if passwordHash is missing — this is the
+       critical fix: on Render every restart loses store.json so passwordHash
+       resets to null. We must re-hash from env EVERY time it is null. */
+    if (!u.passwordHash && process.env.ADMIN_PASSWORD) {
+      u.passwordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
+    }
+
+    /* Always keep active */
+    u.active = true;
+
+    /* Overlay a previously-changed password from Firestore, if one exists.
+       Wrapped in its own try/catch so Firebase failures NEVER crash login. */
+    if (!u._loadedFromFirestore) {
+      u._loadedFromFirestore = true;
+      if (isFirebaseAvailable()) {
+        try {
+          const doc = await getDB().collection('adminUsers').doc('super-admin-1').get();
+          if (doc && doc.exists) {
+            const saved = doc.data();
+            if (saved.passwordHash) u.passwordHash = saved.passwordHash;
+            if (saved.tokenVersion) u.tokenVersion  = saved.tokenVersion;
+            if (saved.fname) u.fname = saved.fname;
+            if (saved.lname) u.lname = saved.lname;
+            if (saved.username) {
+              u.username = saved.username;
+              u.email = saved.username;
+            }
+            u.active = true;
+          }
+        } catch (err) {
+          console.error('Could not load persisted super admin record (non-fatal):', err.message);
+          /* Non-fatal: we already have the env-based credentials set above */
+        }
+      }
+    }
+  } catch (err) {
+    console.error('initSuperAdmin error (non-fatal):', err.message);
   }
 }
 
 /* ── Find admin user from Firebase or store ── */
 async function findAdminUserByUsername(username) {
-  const lower = (username || '').toLowerCase();
-  /* Always check in-memory store first (includes super admin) */
-  const inMem = store.findAdminUser(lower);
-  if (inMem) return inMem;
-  /* Then check Firebase if available */
-  if (isFirebaseAvailable()) {
-    try {
-      const snap = await getDB().collection('adminUsers')
-        .where('username', '==', lower).limit(1).get();
-      if (!snap.empty) {
-        const data = { ...snap.docs[0].data(), id: snap.docs[0].id };
-        /* Cache in memory so subsequent lookups are fast */
-        if (!store.findAdminUser(lower)) store.adminUsers.push(data);
-        return data;
+  try {
+    const lower = (username || '').toLowerCase();
+    /* Always check in-memory store first (includes super admin) */
+    const inMem = store.findAdminUser(lower);
+    if (inMem) return inMem;
+    /* Then check Firebase if available */
+    if (isFirebaseAvailable()) {
+      try {
+        const snap = await getDB().collection('adminUsers')
+          .where('username', '==', lower).limit(1).get();
+        if (snap && !snap.empty) {
+          const data = { ...snap.docs[0].data(), id: snap.docs[0].id };
+          /* Cache in memory so subsequent lookups are fast */
+          if (!store.findAdminUser(lower)) store.adminUsers.push(data);
+          return data;
+        }
+      } catch (fbErr) {
+        console.error('Firebase findAdminUser error (non-fatal):', fbErr.message);
       }
-    } catch {}
+    }
+    return null;
+  } catch (err) {
+    console.error('findAdminUserByUsername error (non-fatal):', err.message);
+    return null;
   }
-  return null;
 }
 
 /* ── Get all admin users ── */
@@ -156,11 +176,16 @@ router.post('/login', async (req, res) => {
     const normalEmail = email.trim().toLowerCase();
 
     /* ── Admin login ── */
-    await initSuperAdmin();
+    try { await initSuperAdmin(); } catch (e) { console.error('initSuperAdmin failed in login (non-fatal):', e.message); }
     let adminUser = await findAdminUserByUsername(normalEmail);
     /* Fallback: env username still works even if Firebase stored a different one */
     if (!adminUser && normalEmail === (process.env.ADMIN_USERNAME || "admin").toLowerCase()) {
       adminUser = store.findAdminUserById("super-admin-1");
+      /* If passwordHash still null (Render stateless restart), re-hash now */
+      if (adminUser && !adminUser.passwordHash && process.env.ADMIN_PASSWORD) {
+        adminUser.passwordHash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
+        adminUser.active = true;
+      }
     }
     if (adminUser && adminUser.active) {
       const passMatch = adminUser.passwordHash
