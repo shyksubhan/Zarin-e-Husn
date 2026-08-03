@@ -356,11 +356,11 @@ router.patch('/change-password', requireAuth, async (req, res) => {
       let firestorePersisted = false;
       if (isFirebaseAvailable()) {
         try {
-          await getDB().collection('adminUsers').doc(req.user.uid).update({
+          await getDB().collection('adminUsers').doc(req.user.uid).set({
             passwordHash: newHash,
             tokenVersion: adminUser.tokenVersion,
             updatedAt: new Date().toISOString()
-          });
+          }, { merge: true });
           firestorePersisted = true;
         } catch (fbErr) {
           /* Rollback in-memory and abort */
@@ -512,8 +512,7 @@ router.patch('/profile', requireAdmin, async (req, res) => {
     if (isFirebaseAvailable()) {
       try {
         const ref = getDB().collection('adminUsers').doc(uid);
-        const doc = await ref.get();
-        if (doc.exists) await ref.update(updates);
+        await ref.set(updates, { merge: true });
       } catch (e) {
         console.error('Firebase profile update failed:', e);
       }
