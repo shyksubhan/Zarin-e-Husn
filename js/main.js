@@ -304,28 +304,26 @@ window.proceedToCheckout = () => {
   window.location.href = 'checkout';
 };
 
- / *    % %  G l o b a l   M o u s e   d r a g - t o - s c r o l l   f o r   h o r i z o n t a l   g r i d s    % %  * / 
- d o c u m e n t . a d d E v e n t L i s t e n e r ( ' D O M C o n t e n t L o a d e d ' ,   ( )   = >   { 
-     d o c u m e n t . q u e r y S e l e c t o r A l l ( ' . h o r i z o n t a l - s c r o l l - g r i d ' ) . f o r E a c h ( t r a c k   = >   { 
-         l e t   i s D o w n   =   f a l s e ,   s t a r t X ,   s c r o l l L e f t ; 
-         t r a c k . s t y l e . c u r s o r   =   ' g r a b ' ; 
-         t r a c k . a d d E v e n t L i s t e n e r ( ' m o u s e d o w n ' ,   e   = >   { 
-             i s D o w n   =   t r u e ; 
-             t r a c k . c l a s s L i s t . a d d ( ' a c t i v e ' ) ; 
-             t r a c k . s t y l e . c u r s o r   =   ' g r a b b i n g ' ; 
-             s t a r t X   =   e . p a g e X   -   t r a c k . o f f s e t L e f t ; 
-             s c r o l l L e f t   =   t r a c k . s c r o l l L e f t ; 
-         } ) ; 
-         t r a c k . a d d E v e n t L i s t e n e r ( ' m o u s e l e a v e ' ,   ( )   = >   {   i s D o w n   =   f a l s e ;   t r a c k . c l a s s L i s t . r e m o v e ( ' a c t i v e ' ) ;   t r a c k . s t y l e . c u r s o r   =   ' g r a b ' ;   } ) ; 
-         t r a c k . a d d E v e n t L i s t e n e r ( ' m o u s e u p ' ,   ( )   = >   {   i s D o w n   =   f a l s e ;   t r a c k . c l a s s L i s t . r e m o v e ( ' a c t i v e ' ) ;   t r a c k . s t y l e . c u r s o r   =   ' g r a b ' ;   } ) ; 
-         t r a c k . a d d E v e n t L i s t e n e r ( ' m o u s e m o v e ' ,   e   = >   { 
-             i f   ( ! i s D o w n )   r e t u r n ; 
-             e . p r e v e n t D e f a u l t ( ) ; 
-             c o n s t   x   =   e . p a g e X   -   t r a c k . o f f s e t L e f t ; 
-             c o n s t   w a l k   =   ( x   -   s t a r t X )   *   2 ;   
-             t r a c k . s c r o l l L e f t   =   s c r o l l L e f t   -   w a l k ; 
-         } ) ; 
-     } ) ; 
- } ) ; 
-  
- 
+/* ── Global Mouse drag-to-scroll for horizontal grids ── */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.horizontal-scroll-grid').forEach(track => {
+    let isDown = false, startX, scrollLeft;
+    track.style.cursor = 'grab';
+    track.addEventListener('mousedown', e => {
+      isDown = true;
+      track.classList.add('active');
+      track.style.cursor = 'grabbing';
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    track.addEventListener('mouseleave', () => { isDown = false; track.classList.remove('active'); track.style.cursor = 'grab'; });
+    track.addEventListener('mouseup', () => { isDown = false; track.classList.remove('active'); track.style.cursor = 'grab'; });
+    track.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 2; 
+      track.scrollLeft = scrollLeft - walk;
+    });
+  });
+});

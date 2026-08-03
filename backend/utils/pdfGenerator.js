@@ -9,15 +9,15 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
   const statusOrder = liveOrder || snapshot;
 
   let logoBuffer = null;
-  let localSvgLogo = null;
+  let localPngLogo = null;
   try {
-    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo.svg');
+    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo.png');
     if (fs.existsSync(localLogoPath)) {
-      localSvgLogo = fs.readFileSync(localLogoPath, 'utf8');
+      localPngLogo = localLogoPath;
     }
   } catch(e) {}
 
-  if (!localSvgLogo && company.logoUrl && company.logoUrl.startsWith('http')) {
+  if (!localPngLogo && company.logoUrl && company.logoUrl.startsWith('http')) {
     try {
       const fetch = require('node:http');
       const https = require('node:https');
@@ -50,9 +50,9 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
 
     // --- HEADER ---
     let startY = 50;
-    if (localSvgLogo) {
+    if (localPngLogo) {
       try {
-        SVGtoPDF(doc, localSvgLogo, 50, startY - 10, { width: 140, height: 50, preserveAspectRatio: 'xMinYMin meet' });
+        doc.image(localPngLogo, 50, startY - 10, { width: 140 });
       } catch(e) {
         doc.fontSize(24).fillColor(C_GOLD).font('Helvetica-Bold').text(company.name, 50, startY);
       }
