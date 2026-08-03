@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product — Zarin-e-Husn | Hair Accessories & Jewelry Pakistan</title>
-  <meta name="description" content="Shop premium hair accessories and jewelry at Zarin-e-Husn Pakistan. Cash on Delivery available. Scrunchies, clips, pins, necklaces, earrings & more." />
+  <title>Product — Zarin-e-Husn | skincare & Jewelry Pakistan</title>
+  <meta name="description" content="Shop premium skincare and jewelry at Zarin-e-Husn Pakistan. Cash on Delivery available. serums, clips, toners, necklaces, earrings & more." />
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
   <link rel="stylesheet" href="css/style.css?v=3" />
   <link rel="stylesheet" href="css/pages.css?v=3" />
@@ -41,7 +41,7 @@
   <div class="search-box">
     <div class="search-inner">
       <span class="search-icon-big"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input type="text" id="search-input" placeholder="Search hair accessories, scrunchies, pins…" autocomplete="off" />
+      <input type="text" id="search-input" placeholder="Search skincare, serums, toners…" autocomplete="off" />
       <button id="search-close">&#10005;</button>
     </div>
     <div id="search-results"></div>
@@ -189,7 +189,7 @@
   if (ogTitle) ogTitle.setAttribute('content', `${product.name} — Zarin-e-Husn Pakistan`);
   const ogDesc = document.querySelector('meta[property="og:description"]');
   if (ogDesc) ogDesc.setAttribute('content',
-    `${product.name} — PKR ${Number(product.price).toLocaleString()}. ${product.description ? product.description.slice(0,120) + '…' : 'Shop hair accessories & jewelry online in Pakistan.'}`
+    `${product.name} — PKR ${Number(product.price).toLocaleString()}. ${product.description ? product.description.slice(0,120) + '…' : 'Shop skincare & jewelry online in Pakistan.'}`
   );
   const ogImg = document.querySelector('meta[property="og:image"]');
   if (ogImg && product.images && product.images[0]) ogImg.setAttribute('content', product.images[0]);

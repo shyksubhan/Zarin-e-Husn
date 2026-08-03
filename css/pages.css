@@ -69,61 +69,76 @@
 .wa-tooltip { display: none; } /* removed for minimalism */
 
 /* ── Checkout Page ── */
-.checkout-main { padding: calc(var(--nav-h) + 100px) 0 100px; min-height: 100vh; background: #ffffff; }
+.checkout-main { padding: calc(var(--nav-h) + 60px) 0 80px; min-height: 100vh; background: var(--bg); }
 .checkout-steps {
-  display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 80px;
+  display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 60px;
 }
-.ck-step { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.ck-step { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
 .ck-num {
-  width: 12px; height: 12px; border-radius: 50%;
-  border: 1px solid var(--text); background: transparent;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--card);
   display: flex; align-items: center; justify-content: center;
-  color: transparent; font-size: 0; transition: all 0.4s;
+  color: var(--muted); font-size: 0.9rem; font-family: var(--font-display); font-style: italic; transition: all 0.4s;
 }
-.ck-lbl { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
-.ck-step.active .ck-num { background: var(--text); }
-.ck-step.active .ck-lbl { color: var(--text); }
-.ck-step.complete .ck-num { background: var(--text); border-color: var(--text); }
-.ck-step-line { width: 100px; height: 1px; background: var(--border); margin: 0 24px 20px; }
-.checkout-grid { display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: start; }
+.ck-lbl { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.ck-step.active .ck-num { background: var(--text); color: var(--white); border-color: var(--text); }
+.ck-step.active .ck-lbl { color: var(--text); font-weight: 600; }
+.ck-step.complete .ck-num { background: var(--gold); color: var(--white); border-color: var(--gold); }
+.ck-step-line { width: 80px; height: 1px; background: var(--border); margin: 0 16px 20px; }
+
+.checkout-grid { display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: start; }
 .ck-panel.hidden { display: none; }
+.ck-panel { background: var(--card); padding: 48px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border-radius: 16px; border: 1px solid var(--border-soft); }
 .ck-panel-title {
-  font-family: var(--font-display); font-size: 2.5rem; font-weight: 300;
-  margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 24px;
+  font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; color: var(--text);
+  margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-soft);
 }
-.ck-form { display: flex; flex-direction: column; gap: 32px; }
-.ck-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.ck-form input, .ck-form select {
-  width: 100%; padding: 16px 0; border: none; border-bottom: 1px solid var(--border);
-  background: transparent; font-family: var(--font-body); font-size: 0.9rem; outline: none; color: var(--text);
-  transition: border-color 0.3s;
+.ck-form { display: flex; flex-direction: column; gap: 24px; }
+.ck-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.form-group { position: relative; }
+.ck-form input, .ck-form select, .ck-form textarea {
+  width: 100%; padding: 18px 16px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); font-family: var(--font-body); font-size: 0.95rem; color: var(--text);
+  transition: all 0.3s;
 }
-.ck-form input:focus, .ck-form select:focus { border-bottom-color: var(--text); }
-.ck-form label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
+.ck-form textarea { resize: vertical; min-height: 100px; }
+.ck-form input:focus, .ck-form select:focus, .ck-form textarea:focus { border-color: var(--gold); background: var(--white); outline: none; box-shadow: 0 0 0 4px rgba(201,168,76,0.1); }
+.ck-form label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-mid); display: block; margin-bottom: 8px; font-weight: 600; }
 
-.ck-next-btn { margin-top: 16px; padding: 20px; text-align: center; width: 100%; }
-.ck-btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
-.ck-btn-row .btn-primary { flex: 1; padding: 20px; text-align: center; }
-.ck-btn-row .btn-outline { padding: 20px 32px; }
+.ck-next-btn { margin-top: 24px; padding: 20px; text-align: center; width: 100%; font-size: 1rem; border-radius: 8px; }
+.ck-btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+.ck-btn-row .btn-primary { flex: 1; padding: 20px; text-align: center; border-radius: 8px; font-size: 1rem; }
+.ck-btn-row .btn-outline { padding: 20px 32px; border-radius: 8px; }
 
+.ck-option-group { margin-top: 8px; }
 .ck-option-card {
-  display: flex; align-items: center; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--border); cursor: pointer;
+  display: flex; align-items: center; gap: 16px; padding: 20px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s; background: var(--white);
 }
-.ck-option-card input[type="radio"] { accent-color: var(--text); }
+.ck-option-card:hover { border-color: var(--gold-light); }
+.ck-option-card:has(input:checked) { border-color: var(--gold); background: var(--bg); }
+.ck-option-card input[type="radio"] { accent-color: var(--gold); width: 18px; height: 18px; }
 .ck-option-body { flex: 1; display: flex; justify-content: space-between; align-items: center; }
-.ck-option-body strong { font-size: 1rem; font-weight: 400; }
-.ck-option-body span { font-size: 0.8rem; color: var(--muted); margin-top: 4px; display: block; }
-.ck-option-price { font-family: var(--font-body); font-size: 1rem; }
+.ck-option-body strong { font-size: 1.05rem; font-weight: 500; color: var(--text); }
+.ck-option-body span { font-size: 0.85rem; color: var(--muted); margin-top: 6px; display: block; }
+.ck-option-price { font-family: var(--font-body); font-size: 1.05rem; color: var(--text); }
+.free-badge { color: var(--gold); font-weight: 600; }
 
-.ck-summary-box { background: var(--bg); padding: 48px; position: sticky; top: 120px; }
-.ck-summary-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 32px; }
-.ck-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.ck-summary-box { background: var(--card); padding: 40px; position: sticky; top: 100px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border-radius: 16px; border: 1px solid var(--border-soft); }
+.ck-summary-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 400; margin-bottom: 24px; color: var(--text); }
+.ck-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border-soft); align-items: center; }
+.ck-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
 .ck-item-info { flex: 1; }
-.ck-item-name { font-size: 0.9rem; }
-.ck-item-qty { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-.ck-item-price { font-family: var(--font-body); }
-.ck-summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
-.ck-total-row { font-family: var(--font-display); font-size: 1.5rem; color: var(--text); font-weight: 300; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px; }
+.ck-item-name { font-size: 0.95rem; font-weight: 500; color: var(--text); line-height: 1.4; }
+.ck-item-qty { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+.ck-item-price { font-family: var(--font-body); font-size: 1rem; color: var(--text); font-weight: 600; }
+.ck-summary-row { display: flex; justify-content: space-between; font-size: 0.95rem; color: var(--text-mid); margin-bottom: 16px; }
+.ck-total-row { font-family: var(--font-display); font-size: 1.8rem; color: var(--text); font-weight: 500; margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px; }
+
+.ck-coupon-row { display: flex; gap: 12px; margin: 24px 0; }
+.ck-coupon-row input { flex: 1; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; outline: none; transition: border-color 0.3s; }
+.ck-coupon-row input:focus { border-color: var(--gold); }
+.ck-coupon-row button { padding: 14px 24px; border-radius: 8px; font-weight: 600; }
 
 /* ── Account Page ── */
 .account-main { padding: calc(var(--nav-h) + 100px) 0 100px; min-height: 100vh; background: #ffffff; }

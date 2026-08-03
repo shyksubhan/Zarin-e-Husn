@@ -32,7 +32,7 @@ async function seedFirestore(db) {
 /* ── GET /api/products ── */
 router.get('/', async (req, res) => {
   try {
-    const { category, featured, search, limit: lim } = req.query;
+    const { category, featured, search, limit: lim, admin } = req.query;
 
     if (isFirebaseAvailable()) {
       try {
@@ -43,6 +43,7 @@ router.get('/', async (req, res) => {
         if (featured === 'true') query = query.where('featured', '==', true);
         const snap = await query.get();
         let products = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+        if (admin !== 'true') products = products.filter(p => !p.hidden);
         if (search) { const q = search.toLowerCase(); products = products.filter(p => p.name?.toLowerCase().includes(q) || p.category?.toLowerCase().includes(q)); }
         // For products we also need to sort by createdAt descending like the others if we want
         products.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
@@ -55,6 +56,7 @@ router.get('/', async (req, res) => {
 
     /* In-memory (shared store) */
     let products = [...store.products];
+    if (admin !== 'true') products = products.filter(p => !p.hidden);
     if (category && category !== 'all') products = products.filter(p => p.category === category);
     if (featured === 'true') products = products.filter(p => p.featured);
     if (search) { const q = search.toLowerCase(); products = products.filter(p => p.name?.toLowerCase().includes(q) || p.category?.toLowerCase().includes(q)); }
@@ -89,7 +91,7 @@ router.get('/:id', async (req, res) => {
 /* ── POST /api/products (super_admin + admin only — product catalogue is not supervisor's job) ── */
 router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
   try {
-    const { name, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, inStock, featured, images, video } = req.body;
+    const { name, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, inStock, featured, hidden, images, video } = req.body;
     if (!name || !category || !price) return res.status(400).json({ error: 'Name, category, and price are required.' });
     if (purchasePrice === undefined || purchasePrice === null || purchasePrice === '') {
       return res.status(400).json({ error: 'Purchase price is required.' });
@@ -119,7 +121,8 @@ router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
       images:      Array.isArray(images) ? images.filter(Boolean) : [],
       video:       video || null,
       inStock:     inStock !== false,
-      featured:    featured === true || featured === 'true',
+      featured:    !!featured,
+      hidden:      !!hidden,
       createdAt:   new Date().toISOString(),
     };
 

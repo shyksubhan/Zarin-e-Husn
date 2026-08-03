@@ -1,21 +1,36 @@
 /* ============================================================
-   VELORRA — Upload Routes
+   ZARIN-E-HUSN — Upload Routes
    Admin-only endpoint to upload product images/videos.
-   Files are sent from the browser as multipart/form-data,
-   held in memory briefly, then streamed to Cloudinary.
+   Files are saved to local disk (images/products).
    ============================================================ */
 const express = require('express');
 const multer  = require('multer');
-const { cloudinary, isCloudinaryAvailable } = require('../utils/cloudinary');
+const path    = require('path');
+const fs      = require('fs');
 const { requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 
-/* ── Multer: keep file in memory (not saved to disk — disk is wiped on every
-   Render restart/redeploy, so we stream straight to Cloudinary instead) ── */
+const uploadDir = path.join(__dirname, '..', '..', 'images', 'products');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+/* ── Multer: save file to disk ── */
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
 const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 100 * 1024 * 1024 },  /* 100MB max (covers product videos comfortably) */
+  storage: storage,
+  limits: { fileSize: 100 * 1024 * 1024 },  /* 100MB max */
   fileFilter: (req, file, cb) => {
     const okImage = file.mimetype.startsWith('image/');
     const okVideo = file.mimetype.startsWith('video/');
@@ -23,17 +38,6 @@ const upload = multer({
     cb(new Error('Only image or video files are allowed.'));
   },
 });
-
-/* ── Helper: stream a buffer to Cloudinary ── */
-function streamUpload(buffer, resourceType) {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: 'velorra/products', resource_type: resourceType },
-      (err, result) => (err ? reject(err) : resolve(result))
-    );
-    stream.end(buffer);
-  });
-}
 
 /* ── POST /api/upload — single file (image or video), super_admin + admin only ── */
 router.post('/', requireRole('super_admin', 'admin'), (req, res) => {
@@ -46,20 +50,18 @@ router.post('/', requireRole('super_admin', 'admin'), (req, res) => {
     }
     if (!req.file) return res.status(400).json({ error: 'No file provided.' });
 
-    if (!isCloudinaryAvailable()) {
-      return res.status(503).json({ error: 'Image/video uploads are not configured on the server yet.' });
-    }
-
     try {
       const resourceType = req.file.mimetype.startsWith('video/') ? 'video' : 'image';
-      const result = await streamUpload(req.file.buffer, resourceType);
+      // Returns a relative URL path that express.static can serve
+      const fileUrl = `/images/products/${req.file.filename}`;
+      
       return res.status(201).json({
-        url:  result.secure_url,
+        url:  fileUrl,
         type: resourceType,
-        publicId: result.public_id,
+        publicId: req.file.filename,
       });
     } catch (e) {
-      console.error('Cloudinary upload error:', e);
+      console.error('Local upload error:', e);
       return res.status(500).json({ error: 'Failed to upload file. Please try again.' });
     }
   });
