@@ -38,9 +38,9 @@ const store = {
   adminUsers: [
     {
       id:          'super-admin-1',
-      username:    null,     /* filled from process.env.ADMIN_USERNAME at runtime */
-      email:       null,     /* filled from process.env.ADMIN_USERNAME at runtime */
-      passwordHash: null,    /* filled from process.env.ADMIN_PASSWORD at runtime */
+      username:    (process.env.ADMIN_USERNAME || 'admin').toLowerCase(),
+      email:       (process.env.ADMIN_USERNAME || 'admin').toLowerCase(),
+      passwordHash: null,    /* hashed on first login attempt via initSuperAdmin */
       role:        'ceo',
       fname:       'Super',
       lname:       'Admin',

@@ -245,16 +245,37 @@ router.post('/login', async (req, res) => {
 router.get('/me', requireAuth, async (req, res) => {
   try {
     if (req.user.isAdmin) {
-      if (req.user.uid === 'super-admin-1') await initSuperAdmin();
+      /* Always reinit super admin on /me — covers Render restarts where
+         store resets to null values but token is still valid */
+      await initSuperAdmin();
+
       let u = req.user.uid === 'super-admin-1'
         ? store.adminUsers.find(u => u.id === 'super-admin-1')
         : store.findAdminUserById(req.user.uid);
+
+      /* If super-admin-1 still missing (extreme edge case), rebuild it now */
+      if (!u && req.user.uid === 'super-admin-1') {
+        u = {
+          id: 'super-admin-1',
+          username: (process.env.ADMIN_USERNAME || 'admin').toLowerCase(),
+          email: (process.env.ADMIN_USERNAME || 'admin').toLowerCase(),
+          passwordHash: null,
+          role: 'ceo',
+          fname: 'Super',
+          lname: 'Admin',
+          active: true,
+          createdAt: new Date().toISOString(),
+          lastLogin: null,
+        };
+        store.adminUsers.push(u);
+      }
+
       if (!u && isFirebaseAvailable()) {
         try {
           const doc = await getDB().collection('adminUsers').doc(req.user.uid).get();
-          if (doc.exists) {
+          if (doc && doc.exists) {
             u = { ...doc.data(), id: doc.id };
-            store.adminUsers.push(u); /* Cache it so it's there next time */
+            store.adminUsers.push(u);
           }
         } catch (err) {
           console.error('Failed to fetch admin user from FB in /me', err.message);
