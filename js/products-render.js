@@ -65,7 +65,6 @@ function zarinehusnProductCardHTML(p) {
       <div class="product-img-wrap">
         ${badge}
         <a href="product.html?id=${p.id}">${mediaHTML}</a>
-        <button class="product-action-btn" onclick="openQuickView('${p.id}')" aria-label="Quick View"><i class="fa-regular fa-eye"></i></button>
       </div>
       <div class="product-info">
         <p class="product-cat">${velorCatLabel(subcat || cat)}</p>

@@ -338,7 +338,7 @@ section { padding: 100px 0; }
 .cat-cta-pill { display: none; }
 .cat-row-3 { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .premium-cat-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 80px; text-align: center; }
-.premium-cat-grid .premium-cat-card { width: 100%; max-width: 320px; text-decoration: none; }
+.premium-cat-grid .premium-cat-card { width: 320px; max-width: 100%; text-decoration: none; }
 .premium-cat-card .cat-img-wrap {
   border-radius: 50%; aspect-ratio: 1; overflow: hidden; margin: 0 auto 24px;
 }
