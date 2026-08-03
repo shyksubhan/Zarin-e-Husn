@@ -8,7 +8,7 @@ const cors    = require('cors');
 const path    = require('path');
 
 const { initFirebase, getDB } = require('./utils/firebase');
-const { initCloudinary } = require('./utils/cloudinary');
+
 const store            = require('./utils/store');
 
 /* ── Route modules ── */
@@ -76,8 +76,7 @@ app.use('/api/', (req, res, next) => {
 /* ── Firebase init ── */
 initFirebase();
 
-/* ── Cloudinary init (image/video uploads) ── */
-initCloudinary();
+
 
 /* ── Serve static frontend (clean URLs — .html extension hidden) ──
    extensions: ['html'] lets express.static resolve /shop -> shop.html
