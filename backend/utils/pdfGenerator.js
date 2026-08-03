@@ -11,7 +11,7 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
   let logoBuffer = null;
   let localPngLogo = null;
   try {
-    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo-dark.png');
+    const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo.png');
     if (fs.existsSync(localLogoPath)) {
       localPngLogo = localLogoPath;
     }
@@ -52,7 +52,7 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
     let startY = 50;
     if (localPngLogo) {
       try {
-        doc.image(localPngLogo, 50, startY - 10, { width: 140 });
+        doc.image(localPngLogo, 50, startY - 20, { width: 140 });
       } catch(e) {
         doc.fontSize(24).fillColor(C_GOLD).font('Helvetica-Bold').text(company.name, 50, startY);
       }
@@ -74,15 +74,17 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
     const fInsta = company.instagram || 'zarin_e_husn';
     const fAddr = company.address || 'Lahore, Punjab, Pakistan';
 
-    doc.text(fWeb, 50, startY + 40, { link: 'https://' + fWeb.replace(/^https?:\/\//, '') });
-    doc.text(fEmail, 50, startY + 52, { link: 'mailto:' + fEmail });
-    doc.text(fPhone, 50, startY + 64, { link: 'https://wa.me/' + fPhone.replace(/[\+\s]/g, '') });
+    const logoYOffset = startY + 60; // Shift down to make room for logo
+
+    doc.text(fWeb, 50, logoYOffset, { link: 'https://' + fWeb.replace(/^https?:\/\//, '') });
+    doc.text(fEmail, 50, logoYOffset + 12, { link: 'mailto:' + fEmail });
+    doc.text(fPhone, 50, logoYOffset + 24, { link: 'https://wa.me/' + fPhone.replace(/[\+\s]/g, '') });
     
     const instaSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`;
-    SVGtoPDF(doc, instaSvg, 50, startY + 74, { width: 10, height: 10 });
-    doc.text(fInsta, 65, startY + 76, { link: 'https://instagram.com/' + fInsta.replace('@', '') });
+    SVGtoPDF(doc, instaSvg, 50, logoYOffset + 34, { width: 10, height: 10 });
+    doc.text(fInsta, 65, logoYOffset + 36, { link: 'https://instagram.com/' + fInsta.replace('@', '') });
     
-    doc.text(fAddr, 50, startY + 88, { width: 200 });
+    doc.text(fAddr, 50, logoYOffset + 48, { width: 200 });
     
     // Divider
     doc.moveTo(50, startY + 125).lineTo(545, startY + 125).stroke(C_GOLD);
