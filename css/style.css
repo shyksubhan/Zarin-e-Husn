@@ -138,13 +138,16 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
   position: absolute; top: 100%; left: 0;
   background: #ffffff;
   border: 1px solid var(--border);
-  padding: 20px 0;
-  min-width: 220px;
+  border-top: 3px solid var(--gold);
+  padding: 10px 0;
+  min-width: 240px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   opacity: 0; visibility: hidden;
-  transform: translateY(10px);
-  transition: all var(--transition);
+  transform: translateY(15px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex; flex-direction: column;
   z-index: 1000;
+  border-radius: 0 0 8px 8px;
 }
 .nav-dropdown:hover .dropdown-menu,
 .nav-dropdown .dropdown-menu.open,
@@ -153,15 +156,20 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
   transform: translateY(0);
 }
 .nav-dropdown .dropdown-menu a {
-  padding: 12px 32px;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  padding: 14px 24px;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  font-family: var(--font-body);
   color: var(--text-mid) !important;
   text-transform: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 .nav-dropdown .dropdown-menu a:hover {
-  background: var(--bg);
+  background: rgba(212,175,55,0.05);
   color: var(--gold) !important;
+  padding-left: 32px;
 }
 @media (max-width: 900px) {
   .nav-dropdown .dropdown-menu {
@@ -201,7 +209,7 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
 
 .hero-video-overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(250,248,245,0.7) 0%, rgba(250,248,245,0) 50%);
+  background: rgba(0,0,0,0.5); /* Added dark overlay for text visibility */
 }
 .hero-content {
   position: relative; z-index: 2;
@@ -220,14 +228,14 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 6vw, 6rem);
   font-weight: 300; line-height: 1.1;
-  color: var(--text);
+  color: #ffffff; /* Explicitly white for dark overlay */
   margin-bottom: 24px;
   opacity: 0; animation: fadeUp 1.2s 0.5s forwards;
 }
 .hero-title em { font-style: italic; color: var(--gold); }
 .hero-sub, .hero-title-sub {
   font-size: 0.85rem; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--text-mid);
+  text-transform: uppercase; color: #f0f0f0; /* Explicitly light for dark overlay */
   opacity: 0; animation: fadeUp 1.2s 0.7s forwards;
   margin-bottom: 0;
 }

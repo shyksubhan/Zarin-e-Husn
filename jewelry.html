@@ -74,14 +74,47 @@
   </div>
 </div>
 
-<section style="padding:60px 0 100px;">
-  <div class="container">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All Jewelry</button>                        <button class="filter-btn" data-filter="bracelets">Bracelets</button>                        <button class="filter-btn" data-filter="rings">Rings</button>                        <button class="filter-btn" data-filter="earrings">Earrings</button>                        <button class="filter-btn" data-filter="necklace">Necklace</button>                        <button class="filter-btn" data-filter="bangles">Bangles</button>                        <button class="filter-btn" data-filter="jewelry-sets">Jewelry Sets</button>                        <button class="filter-btn" data-filter="sale">Sale</button>
-    </div>
-    <div class="products-grid" id="shop-products-grid" data-main-cat="jewelry">
-      <p style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:0.5;">Loading products…</p>
-    </div>
+<section class="shop-section">
+  <div class="container shop-layout">
+    <!-- Sidebar -->
+    <aside class="shop-sidebar">
+      <div class="sidebar-block">
+        <h3 class="sidebar-title">Collections</h3>
+        <ul class="sidebar-list" id="sidebar-collections">
+          <li><button class="sidebar-link" data-main-filter="all">All Collections</button></li>
+          <li><button class="sidebar-link active" data-main-filter="jewelry">Jewelry</button></li>
+          <li><button class="sidebar-link" data-main-filter="cosmetics">Cosmetics</button></li>
+        </ul>
+      </div>
+      
+      <div class="sidebar-block" id="sub-filter-container">
+        <h3 class="sidebar-title">Categories</h3>
+        <ul class="sidebar-list" id="sidebar-sub-collections">
+          <!-- Dynamic injected -->
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <h3 class="sidebar-title">Sort By</h3>
+        <ul class="sidebar-list" id="sidebar-sort">
+          <li><button class="sidebar-link active" data-sort="featured">Featured</button></li>
+          <li><button class="sidebar-link" data-sort="price-asc">Price: Low to High</button></li>
+          <li><button class="sidebar-link" data-sort="price-desc">Price: High to Low</button></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="shop-main">
+      <!-- Mobile sidebar toggle -->
+      <div class="shop-mobile-controls">
+        <button id="mobile-sidebar-toggle" class="btn-outline"><i class="fa-solid fa-filter"></i> Filters & Sort</button>
+      </div>
+
+      <div class="products-grid" id="shop-products-grid" data-main-cat="jewelry">
+        <p style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:0.5;">Loading products…</p>
+      </div>
+    </main>
   </div>
 </section>
 
@@ -127,13 +160,15 @@
           <li><a href="policy?page=shipping">Shipping</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p>&#9993; <span data-zarinehusn="email">zarinehusn@gmail.com</span></p>
-        <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></p>
-        <p>&#128205; <span data-zarinehusn="location">Lahore, Pakistan</span></p>
-        <p data-zarinehusn="hours">Mon&ndash;Sat: 10am &ndash; 7pm</p>
-      </div>
+      <div class="footer-col get-in-touch-col">
+          <h4>Get In Touch</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 2.2;">
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-regular fa-envelope" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="email">zarinehusn@gmail.com</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-brands fa-whatsapp" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-solid fa-location-dot" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="location">Lahore, Pakistan</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; color: var(--muted);"><i class="fa-regular fa-clock" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="hours">Mon-Sat: 10am - 7pm</span></li>
+          </ul>
+        </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 <span class="gold-text">Zarin-e-Husn</span>. All rights reserved.</p>
@@ -190,23 +225,6 @@ window.updateShopHero = function(cat) {
     window.history.replaceState(null, '', 'jewelry.html?cat=' + cat);
   }
 };
-
-/* -- Auto-filter from URL ?cat= parameter -- */
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  let cat = params.get('cat');
-  if (cat === 'catchers') cat = 'clips';
-  if (cat) {
-    const btn = document.querySelector(`.filter-btn[data-filter="${cat}"]`);
-    if (btn) {
-      btn.click();
-      const grid = document.querySelector('.product-grid');
-      if (grid) setTimeout(() => grid.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-    }
-  } else {
-    window.updateShopHero('all');
-  }
-});
 </script>
 
 </body>

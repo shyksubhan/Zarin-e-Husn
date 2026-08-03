@@ -96,64 +96,167 @@ function zarinehusnReInitCards(container) {
 
 function zarinehusnSetupShopFilters(products, grid, mainCat) {
   const urlParams = new URLSearchParams(window.location.search);
-  let initialCat = urlParams.get('cat') || 'all';
+  let activeMain = mainCat || 'all';
+  let activeSub = urlParams.get('cat');
 
-  // If this page belongs to a main category, 'all' means all subcats inside this mainCat
-  const validSubcats = mainCat ? CATEGORY_HIERARCHY[mainCat] : null;
+  if (activeSub === 'catchers') activeSub = 'clips';
 
-  const btns = document.querySelectorAll('.filter-bar .filter-btn');
-  btns.forEach(b => {
-    b.addEventListener('click', () => {
-      btns.forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      const f = b.getAttribute('data-filter');
-      
-      const cards = grid.querySelectorAll('.product-card');
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const c = card.getAttribute('data-cat');
-        let show = false;
-        
-        if (f === 'all') {
-          // If on a specific main category page, "all" means everything in that hierarchy
-          if (validSubcats) {
-            show = validSubcats.includes(c);
-          } else {
-            show = true;
-          }
-        } else if (f === 'sale') {
-          const bdg = card.querySelector('.product-badge');
-          show = bdg && bdg.innerText.toLowerCase().includes('sale');
-        } else {
-          const additional = card.dataset.additionalCats ? card.dataset.additionalCats.split(',') : [];
-          show = (c === f) || additional.includes(f);
-        }
-
-        card.style.display = show ? '' : 'none';
-        if (show) visibleCount++;
-      });
-      
-      const emptyMsg = grid.querySelector('.empty-state-filter');
-      if (visibleCount === 0) {
-        if (!emptyMsg) grid.insertAdjacentHTML('beforeend', '<div class="empty-state-filter" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No products found in this category.</div>');
-      } else {
-        if (emptyMsg) emptyMsg.remove();
+  // If initial URL param is actually a main category
+  if (activeSub === 'jewelry' || activeSub === 'cosmetics') {
+    activeMain = activeSub;
+    activeSub = null;
+  }
+  // Check if initial URL param is actually a subcategory
+  if (activeSub) {
+    for (const [mc, subs] of Object.entries(CATEGORY_HIERARCHY)) {
+      if (subs.includes(activeSub)) {
+        activeMain = mc;
+        break;
       }
-      
-      window.history.replaceState(null, '', f === 'all' ? window.location.pathname : window.location.pathname + '?cat=' + f);
-    });
-  });
-
-  if (initialCat && initialCat !== 'all') {
-    const btn = document.querySelector(`.filter-btn[data-filter="${initialCat}"]`);
-    if (btn) btn.click();
-    else {
-      const allBtn = document.querySelector('.filter-btn[data-filter="all"]');
-      if (allBtn) allBtn.click();
     }
+  }
+
+  const collectionsBtns = document.querySelectorAll('#sidebar-collections .sidebar-link');
+  const subContainer = document.getElementById('sub-filter-container');
+  const subList = document.getElementById('sidebar-sub-collections');
+  const sortBtns = document.querySelectorAll('#sidebar-sort .sidebar-link');
+  const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+  const sidebar = document.querySelector('.shop-sidebar');
+
+  if (mobileToggle && sidebar) {
+    mobileToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+    // close on clicking outside
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== mobileToggle && !mobileToggle.contains(e.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+  }
+
+  function renderSubFilters(mc) {
+    if (mc === 'all' || !CATEGORY_HIERARCHY[mc]) {
+      if (subContainer) subContainer.style.display = 'none';
+      if (subList) subList.innerHTML = '';
+      return;
+    }
+    const subs = CATEGORY_HIERARCHY[mc];
+    if (subList) {
+      subList.innerHTML = `<li><button class="sidebar-link ${!activeSub ? 'active' : ''}" data-sub-filter="all-${mc}">All ${mc.charAt(0).toUpperCase() + mc.slice(1)}</button></li>` + 
+      subs.map(s => {
+        const isActive = activeSub === s ? 'active' : '';
+        return `<li><button class="sidebar-link ${isActive}" data-sub-filter="${s}">${ZARINEHUSN_CAT_LABELS[s.toLowerCase()] || s}</button></li>`;
+      }).join('');
+      
+      subContainer.style.display = 'block';
+
+      // Bind sub buttons
+      subList.querySelectorAll('.sidebar-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+          subList.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeSub = btn.dataset.subFilter;
+          if (activeSub.startsWith('all-')) activeSub = null;
+          applyFiltersAndSort();
+          if (window.innerWidth <= 991 && sidebar) sidebar.classList.remove('active'); // auto-close on mobile
+        });
+      });
+    }
+  }
+
+  let activeSort = 'featured';
+
+  function applyFiltersAndSort() {
+    let filtered = products.filter(p => {
+      const c = p.category === 'catchers' ? 'clips' : p.category;
+      const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
+      const additional = p.additionalCategories || [];
+      
+      let show = false;
+      if (activeMain === 'all') {
+        show = true;
+      } else {
+        const inMain = CATEGORY_HIERARCHY[activeMain]?.includes(s) || CATEGORY_HIERARCHY[activeMain]?.includes(c) || additional.some(a => CATEGORY_HIERARCHY[activeMain]?.includes(a));
+        if (inMain) {
+          if (!activeSub) show = true;
+          else show = (s === activeSub || c === activeSub || additional.includes(activeSub));
+        }
+      }
+      return show;
+    });
+
+    if (activeSort === 'price-asc') {
+      filtered.sort((a, b) => Number(a.price) - Number(b.price));
+    } else if (activeSort === 'price-desc') {
+      filtered.sort((a, b) => Number(b.price) - Number(a.price));
+    }
+
+    if (filtered.length === 0) {
+      grid.innerHTML = zarinehusnEmptyState('No products found in this category.');
+    } else {
+      grid.innerHTML = filtered.map(zarinehusnProductCardHTML).join('');
+      zarinehusnReInitCards(grid);
+    }
+
+    // Update Hero Text if function exists
+    if (window.updateShopHero) {
+      window.updateShopHero(activeSub || activeMain);
+    }
+    
+    // Update URL
+    const newCat = activeSub || activeMain;
+    if (newCat === 'all' || newCat === mainCat) {
+      window.history.replaceState(null, '', window.location.pathname);
+    } else {
+      window.history.replaceState(null, '', window.location.pathname + '?cat=' + newCat);
+    }
+  }
+
+  if (collectionsBtns.length > 0) {
+    // Bind Main buttons
+    collectionsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetMain = btn.dataset.mainFilter;
+        const isJewelryPage = window.location.pathname.includes('jewelry.html');
+        const isCosmeticsPage = window.location.pathname.includes('cosmetics.html');
+
+        if (targetMain === 'jewelry' && !isJewelryPage) { window.location.href = 'jewelry.html'; return; }
+        if (targetMain === 'cosmetics' && !isCosmeticsPage) { window.location.href = 'cosmetics.html'; return; }
+        if (targetMain === 'all' && (isJewelryPage || isCosmeticsPage)) { window.location.href = 'shop.html'; return; }
+
+        collectionsBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeMain = targetMain;
+        activeSub = null;
+        renderSubFilters(activeMain);
+        applyFiltersAndSort();
+        if (window.innerWidth <= 991 && sidebar) sidebar.classList.remove('active');
+      });
+    });
+
+    // Bind Sort buttons
+    sortBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sortBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSort = btn.dataset.sort;
+        applyFiltersAndSort();
+        if (window.innerWidth <= 991 && sidebar) sidebar.classList.remove('active');
+      });
+    });
+
+    // Init
+    if (activeMain) {
+      collectionsBtns.forEach(b => b.classList.remove('active'));
+      const b = Array.from(collectionsBtns).find(x => x.dataset.mainFilter === activeMain);
+      if (b) b.classList.add('active');
+    }
+    renderSubFilters(activeMain);
+    applyFiltersAndSort();
   } else {
-    const allBtn = document.querySelector('.filter-btn[data-filter="all"]');
-    if (allBtn) allBtn.click();
+    // Fallback if no sidebar is found (just render all)
+    applyFiltersAndSort();
   }
 }
 
@@ -167,22 +270,14 @@ async function zarinehusnRenderShopGrid() {
     const data = await apiGet('/products');
     let products = data.products || [];
     
-    if (mainCat && CATEGORY_HIERARCHY[mainCat]) {
-      const allowed = CATEGORY_HIERARCHY[mainCat];
-      products = products.filter(p => {
-        const cat = p.category === 'catchers' ? 'clips' : p.category;
-        const subcat = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
-        const additional = p.additionalCategories || [];
-        return allowed.includes(subcat) || allowed.includes(cat) || additional.some(a => allowed.includes(a));
-      });
-    }
+    // We do NOT pre-filter products here anymore, so that the sidebar "All Collections" works correctly on any page!
+    // The sorting/filtering logic inside zarinehusnSetupShopFilters will handle all filtering!
 
     if (!products.length) {
       grid.innerHTML = zarinehusnEmptyState('No products available right now. Please check back soon.');
       return;
     }
-    grid.innerHTML = products.map(zarinehusnProductCardHTML).join('');
-    zarinehusnReInitCards(grid);
+
     zarinehusnSetupShopFilters(products, grid, mainCat);
   } catch (err) {
     console.error('Failed to load products:', err);
@@ -218,31 +313,31 @@ async function zarinehusnRenderHomepageGrids() {
           section.style.padding = '40px 0 0 0';
 
           const catUrl = (() => {
-            if (CATEGORY_HIERARCHY['jewelry'].includes(pin.id)) return `jewelry.html?cat=${pin.id}`;
-            if (CATEGORY_HIERARCHY['cosmetics'].includes(pin.id)) return `cosmetics.html?cat=${pin.id}`;
-            return `shop.html?cat=${pin.id}`;
+            if (CATEGORY_HIERARCHY['jewelry'].includes(pin.id)) return \`jewelry.html?cat=\${pin.id}\`;
+            if (CATEGORY_HIERARCHY['cosmetics'].includes(pin.id)) return \`cosmetics.html?cat=\${pin.id}\`;
+            return \`shop.html?cat=\${pin.id}\`;
           })();
 
-          const rowId = `pinrow-${pin.id}`;
-          section.innerHTML = `
+          const rowId = \`pinrow-\${pin.id}\`;
+          section.innerHTML = \`
             <div class="container">
               <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                <h2 style="font-size:1.6rem;margin:0;">${pin.name}</h2>
-                <a href="${catUrl}" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui);">View All →</a>
+                <h2 style="font-size:1.6rem;margin:0;">\${pin.name}</h2>
+                <a href="\${catUrl}" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui);">View All →</a>
               </div>
-              <div class="pinned-scroll-track" id="${rowId}" style="display:flex;overflow-x:auto;gap:12px;padding-bottom:20px;scroll-snap-type:x mandatory;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;">
-                ${pinProducts.map(p => {
+              <div class="pinned-scroll-track" id="\${rowId}" style="display:flex;overflow-x:auto;gap:12px;padding-bottom:20px;scroll-snap-type:x mandatory;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;">
+                \${pinProducts.map(p => {
                   let html = zarinehusnProductCardHTML(p);
                   return html.replace('class="product-card"', 'class="product-card pin-card" style="flex:0 0 220px;min-width:220px;scroll-snap-align:start;"');
                 }).join('')}
               </div>
             </div>
-          `;
+          \`;
           pinnedContainer.appendChild(section);
           zarinehusnReInitCards(section);
 
           /* ── Mouse drag-to-scroll ── */
-          const track = section.querySelector(`#${rowId}`);
+          const track = section.querySelector(\`#\${rowId}\`);
           if (track) {
             let isDown = false, startX, scrollLeft;
             track.addEventListener('mousedown', e => {
@@ -271,12 +366,12 @@ async function zarinehusnRenderHomepageGrids() {
     if (jewGrid) {
       const jProds = featuredProducts.filter(p => CATEGORY_HIERARCHY['jewelry'].includes(p.subcategory || p.category));
       
-if (jProds.length) {
-  jewGrid.innerHTML = jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
-  document.getElementById('featured-jewelry').style.display = 'block';
-} else {
-  document.getElementById('featured-jewelry').style.display = 'none';
-}
+      if (jProds.length) {
+        jewGrid.innerHTML = jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
+        document.getElementById('featured-jewelry').style.display = 'block';
+      } else {
+        document.getElementById('featured-jewelry').style.display = 'none';
+      }
       zarinehusnReInitCards(jewGrid);
     }
 
@@ -288,12 +383,12 @@ if (jProds.length) {
         return CATEGORY_HIERARCHY['cosmetics'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['cosmetics'].includes(a));
       });
       
-if (cProds.length) {
-  cosGrid.innerHTML = cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
-  document.getElementById('featured-cosmetics').style.display = 'block';
-} else {
-  document.getElementById('featured-cosmetics').style.display = 'none';
-}
+      if (cProds.length) {
+        cosGrid.innerHTML = cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
+        document.getElementById('featured-cosmetics').style.display = 'block';
+      } else {
+        document.getElementById('featured-cosmetics').style.display = 'none';
+      }
       zarinehusnReInitCards(cosGrid);
     }
 
@@ -303,7 +398,7 @@ if (cProds.length) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('shop-products-grid') || document.querySelector('.filter-bar')) {
+  if (document.getElementById('shop-products-grid') || document.querySelector('.shop-layout')) {
     zarinehusnRenderShopGrid();
   }
   if (document.getElementById('featured-jewelry')) {

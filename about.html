@@ -63,46 +63,43 @@
   </div>
 </div>
 
-<section style="background: var(--deep); padding-bottom:80px; position:relative; overflow:hidden;">
-  <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1630019852942-f89202989a59?w=1600&q=50&fit=crop') center/cover no-repeat;opacity:0.06;pointer-events:none;z-index:0;"></div>
-  <div class="container about-container" style="position:relative;z-index:1;">
-    <div class="about-hero-text reveal">
-      <p class="section-label">Our Story</p>
-      <h1>Zarin-e-Husn — Fashion & Accessories Brand<br>Born in <em>Lahore, Pakistan</em></h1>
-      <p>Zarin-e-Husn was born from the idea that every woman deserves fashion and accessories that make her feel seen, celebrated, and effortlessly beautiful — every single day.</p>
-    </div>
+<style>
+  .about-hero { display: flex; min-height: 80vh; padding: 0; background: var(--bg); }
+  .about-hero-image { flex: 1; background: url('images/hero_beauty.jpg') center/cover; position: relative; min-height: 400px; }
+  .about-hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); }
+  .about-hero-content { flex: 1; display: flex; align-items: center; padding: 60px 8%; }
+  .about-hero-text h1 { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 30px; line-height: 1.2; color: var(--text); }
+  
+  @media (max-width: 991px) {
+    .about-hero { flex-direction: column; }
+    .about-hero-image { width: 100%; height: 50vh; }
+    .about-hero-content { padding: 40px 20px; }
+    .about-hero-text h1 { font-size: 2.2rem; }
+  }
+</style>
+
+<section class="about-hero">
+  <div class="about-hero-image">
+     <div class="about-hero-overlay"></div>
+  </div>
+  <div class="about-hero-content">
+     <div class="about-hero-text reveal">
+       <p class="section-label">Our Story</p>
+       <h1>Born From a Passion for <em style="color: var(--gold);">Beauty</em></h1>
+       <div class="gold-rule" style="margin-left: 0; margin-bottom: 30px;"></div>
+       <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.8; margin-bottom: 20px;">
+         Zarin-e-Husn was founded in the heart of Lahore with one simple belief — that every woman deserves premium fashion and accessories that are as beautiful as she is. Every necklace, lipstick, and blush is curated with intention, so you don't just dress up — you express your soul.
+       </p>
+       <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.8;">
+         We partner with skilled artisans and carefully selected suppliers to bring you pieces that elevate your entire look. We believe in quality over quantity, pieces that last beyond a season, and customer trust above all.
+       </p>
+     </div>
   </div>
 </section>
 
-<!-- Story Full -->
-<section>
+<!-- Values Section -->
+<section style="background: var(--deep); padding: 80px 0;">
   <div class="container">
-    <div class="story-grid">
-      <div class="story-visual reveal">
-        <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=700&q=85&fit=crop" alt="Zarin-e-Husn — Premium Fashion and Accessories Brand from Lahore Pakistan" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />
-        <div class="story-accent"></div>
-      </div>
-      <div class="story-text reveal reveal-delay-2">
-        <p class="section-label">How We Started</p>
-        <h2 class="section-title">Lahore to <em>Everywhere</em></h2>
-        <div class="gold-rule"></div>
-        <p>Founded in the heart of Lahore, Zarin-e-Husn started as a dream to bring world-class fashion & accessories to Pakistani women. We saw a gap — either cheap, mass-produced items or overpriced imports with no middle ground. <strong>Zarin-e-Husn fills that gap.</strong></p>
-        <p>We partner with skilled artisans and carefully selected suppliers to bring you pieces that elevate your entire look — from stunning dresses and fine jewelry to the perfect hair accessories — at prices that make sense for our market.</p>
-        <p>Every item in our collection passes through a rigorous curation process. We believe in <strong>quality over quantity</strong>, pieces that last beyond a season, and customer trust above all.</p>
-        <div class="story-stats">
-          <div><div class="stat-num">2008</div><div class="stat-label">Founded</div></div>
-          <div><div class="stat-num">200+</div><div class="stat-label">Accessories</div></div>
-          <div><div class="stat-num">5K+</div><div class="stat-label">Customers</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Values -->
-<section style="background: var(--deep); position:relative; overflow:hidden;">
-  <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=1600&q=40&fit=crop') center/cover no-repeat;opacity:0.05;pointer-events:none;z-index:0;"></div>
-  <div class="container" style="position:relative;z-index:1;">
     <div style="text-align:center; margin-bottom:56px;" class="reveal">
       <p class="section-label">What We Stand For</p>
       <h2 class="section-title">Our <em>Values</em></h2>
@@ -110,25 +107,25 @@
     <div class="values-grid">
       <div class="value-card reveal">
         <div class="value-icon">❈</div>
-        <h3>Premium Comfort & Quality</h3>
-        <p>Every piece of clothing, jewelry, and hair accessory is selected because it's not just beautiful, but comfortable and kind to you. No snagging, no fading — just gorgeous, effortless style.</p>
+        <h3>Premium Quality</h3>
+        <p>Every piece of jewelry and cosmetic item is selected because it's not just beautiful, but comfortable and kind to you.</p>
       </div>
       <div class="value-card reveal reveal-delay-2">
         <div class="value-icon">◇</div>
-        <h3>Timeless Over Trendy</h3>
-        <p>We curate clothing, jewelry, and accessories that last beyond a season. Pieces that become part of your signature look — not something you forget about next month.</p>
+        <h3>Timeless Elegance</h3>
+        <p>We curate accessories that last beyond a season. Pieces that become part of your signature look.</p>
       </div>
       <div class="value-card reveal reveal-delay-3">
         <div class="value-icon">❋</div>
-        <h3>Customer First, Always</h3>
-        <p>From packaging to delivery to returns — every touchpoint is designed to make you feel like our most important customer. Because you are.</p>
+        <h3>Customer First</h3>
+        <p>From packaging to delivery — every touchpoint is designed to make you feel like our most important customer.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section style="text-align:center;">
+<section style="text-align:center; padding: 80px 0; background: var(--bg);">
   <div class="container reveal">
     <p class="section-label">Ready to Explore?</p>
     <h2 class="section-title" style="margin-bottom:36px;">Discover the <em>Collection</em></h2>
@@ -163,13 +160,15 @@
           <li><a href="policy?page=shipping">Shipping</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p>&#9993; <span data-zarinehusn="email">zarinehusn@gmail.com</span></p>
-        <p><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></p>
-        <p>&#128205; <span data-zarinehusn="location">Lahore, Pakistan</span></p>
-        <p data-zarinehusn="hours">Mon&ndash;Sat: 10am &ndash; 7pm</p>
-      </div>
+      <div class="footer-col get-in-touch-col">
+          <h4>Get In Touch</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 2.2;">
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-regular fa-envelope" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="email">zarinehusn@gmail.com</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-brands fa-whatsapp" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="phone">+92 315 0727131</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted);"><i class="fa-solid fa-location-dot" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="location">Lahore, Pakistan</span></li>
+            <li style="display: flex; align-items: center; gap: 12px; color: var(--muted);"><i class="fa-regular fa-clock" style="color:var(--gold); width: 16px; text-align: center; font-size: 1.1rem;"></i> <span data-zarinehusn="hours">Mon-Sat: 10am - 7pm</span></li>
+          </ul>
+        </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 <span class="gold-text">Zarin-e-Husn</span>. All rights reserved.</p>
