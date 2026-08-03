@@ -89,14 +89,14 @@ body > nav.scrolled, header > nav.scrolled {
 }
 .nav-links a:hover { color: var(--gold); }
 
-/* Ensure logo and icons are dark on home unless specified */
+/* Ensure logo and icons are light on home since hero is dark */
 body.page-home nav:not(.scrolled) .nav-logo-link,
 body.page-home nav:not(.scrolled) .nav-links a, 
 body.page-home nav:not(.scrolled) .nav-icons button,
 body.page-home nav:not(.scrolled) .nav-icons a {
-  color: var(--text) !important;
+  color: #fff !important;
 }
-body.page-home nav:not(.scrolled) .nav-logo-link em { color: var(--text) !important; }
+body.page-home nav:not(.scrolled) .nav-logo-link em { color: #fff !important; }
 
 .nav-icons { display: flex; gap: 24px; align-items: center; }
 .nav-icons button, .nav-icons a {
@@ -824,8 +824,10 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   border-radius: 50% !important;
   aspect-ratio: 1 !important;
   width: 100% !important;
+  max-width: 300px !important;
+  margin: 0 auto !important;
   height: auto !important;
-  box-shadow: 0 10px 30px var(--shadow) !important;
+  box-shadow: none !important;
   overflow: hidden !important;
   display: block !important;
 }
