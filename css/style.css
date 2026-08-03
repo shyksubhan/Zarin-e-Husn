@@ -209,7 +209,7 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
 
 .hero-video-overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: rgba(0,0,0,0.5); /* Added dark overlay for text visibility */
+  background: rgba(0,0,0,0.45);
 }
 .hero-content {
   position: relative; z-index: 2;
@@ -228,14 +228,14 @@ body.page-home nav:not(.scrolled) .hamburger span { background: var(--text); }
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 6vw, 6rem);
   font-weight: 300; line-height: 1.1;
-  color: #ffffff; /* Explicitly white for dark overlay */
+  color: #ffffff;
   margin-bottom: 24px;
   opacity: 0; animation: fadeUp 1.2s 0.5s forwards;
 }
 .hero-title em { font-style: italic; color: var(--gold); }
 .hero-sub, .hero-title-sub {
-  font-size: 0.85rem; letter-spacing: 0.3em;
-  text-transform: uppercase; color: #f0f0f0; /* Explicitly light for dark overlay */
+  font-size: 1rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: rgba(255,255,255,0.85);
   opacity: 0; animation: fadeUp 1.2s 0.7s forwards;
   margin-bottom: 0;
 }
@@ -591,19 +591,7 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
 
 
 
-/* Better Hero Text Visibility */
-.hero-video-overlay {
-  background: linear-gradient(to top, rgba(250, 248, 245, 0.95) 0%, rgba(250, 248, 245, 0.4) 100%) !important;
-}
-.hero-title-main {
-  color: var(--text) !important;
-  text-shadow: 0 0 20px rgba(255,255,255,1);
-}
-.hero-title-sub {
-  color: var(--text-mid) !important;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(255,255,255,1);
-}
+/* Hero overrides removed — single source of truth at end of file */
 .cat-img-info .cat-name {
   color: #fff !important;
   text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -623,15 +611,7 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   border-radius: 12px !important;
 }
 
-/* Hero Adjustments */
-#hero {
-  height: 60vh !important;
-  min-height: 400px !important;
-  border-radius: 0 !important;
-}
-.hero-carousel, #hero-video {
-  border-radius: 0 !important;
-}
+/* Hero height override removed — single source of truth at end of file */
 
 /* Elegant Buttons */
 .btn-primary, .btn-secondary {
@@ -664,16 +644,7 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   border-color: var(--gold) !important;
 }
 
-/* Ensure secondary buttons don't have hardcoded inline backgrounds overriding */
-.hero-cta a {
-  background: transparent !important;
-  color: var(--text) !important;
-  border: 1px solid var(--text) !important;
-}
-.hero-cta a:hover {
-  color: #fff !important;
-  border-color: var(--gold) !important;
-}
+/* Hero CTA overrides removed — single source of truth at end of file */
 
 /* Category Circles Restore */
 .premium-cat-card .cat-img-wrap {
@@ -883,45 +854,67 @@ footer { background: #ffffff; padding: 100px 0 40px; border-top: 1px solid var(-
   box-shadow: 0 15px 35px rgba(0,0,0,0.05) !important;
 }
 
-/* Flat Hero Overlay for Perfect Visibility */
+/* ══════════════════════════════════════════════════
+   HERO SECTION — SINGLE SOURCE OF TRUTH
+   All hero styles consolidated here. No other
+   hero overrides exist in this file.
+   ══════════════════════════════════════════════════ */
+#hero {
+  height: 100vh !important;
+  min-height: 600px !important;
+  max-height: 900px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+.hero-carousel, #hero-video {
+  border-radius: 0 !important;
+}
 .hero-video-overlay {
-  background: rgba(250, 248, 245, 0.6) !important;
+  background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 100%) !important;
 }
-.hero-title-main, .hero-sub, .hero-eyebrow {
-  color: var(--text) !important;
-  text-shadow: none !important;
+.hero-content {
+  padding: 0 60px !important;
+  max-width: 750px !important;
+  text-align: left !important;
 }
-
-/* Fix Hero Buttons */
-.hero-cta .btn-primary, .hero-cta .btn-secondary {
-  padding: 14px 32px !important;
-  border-radius: 4px !important;
+.hero-title-main {
+  font-family: var(--font-display) !important;
+  font-size: clamp(3rem, 5vw, 5rem) !important;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3) !important;
+  line-height: 1.1 !important;
+  margin-bottom: 16px !important;
+}
+.hero-title-sub {
+  font-size: 1rem !important;
+  letter-spacing: 0.2em !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
-  font-size: 0.85rem !important;
-  transition: all 0.3s !important;
-  border: 1px solid var(--gold) !important;
-  z-index: 2 !important;
-  position: relative !important;
-  display: inline-block !important;
+  color: rgba(255,255,255,0.85) !important;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.3) !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
 }
-
-.hero-cta .btn-primary {
-  background: var(--gold) !important;
-  color: #fff !important;
-}
-.hero-cta .btn-primary:hover {
-  background: transparent !important;
+#hero .btn-primary {
+  background: #ffffff !important;
   color: var(--text) !important;
-  border-color: var(--text) !important;
+  border: none !important;
+  padding: 16px 40px !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.15em !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
 }
-
-.hero-cta .btn-secondary {
-  background: transparent !important;
-  color: var(--text) !important;
-}
-.hero-cta .btn-secondary:hover {
+#hero .btn-primary:hover {
   background: var(--gold) !important;
-  color: #fff !important;
-  border-color: var(--gold) !important;
+  color: #ffffff !important;
+}
+@media (max-width: 768px) {
+  #hero { height: 100svh !important; min-height: 500px !important; align-items: flex-end !important; }
+  .hero-content { padding: 0 24px 60px 24px !important; }
+  .hero-title-main { font-size: 2.5rem !important; }
+  .hero-title-sub { font-size: 0.85rem !important; }
 }
