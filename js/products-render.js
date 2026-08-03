@@ -60,6 +60,15 @@ function zarinehusnProductCardHTML(p) {
       ? `<video src="${p.video}#t=0.1" muted preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;"></video>`
       : `<div style="width:100%;height:100%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--gold);">${emoji}</div>`;
 
+  // Encode data safely for data-attributes (JSON encoded)
+  const cardData = encodeURIComponent(JSON.stringify({
+    name: p.name,
+    price: p.price,
+    emoji: emoji,
+    variant: variant,
+    image: mainImage || ''
+  }));
+
   return `
     <div class="product-card" data-cat="${resolvedCat}" data-main-cat="${mainCat}" data-additional-cats="${(p.additionalCategories || []).join(',')}">
       <div class="product-img-wrap">
@@ -71,8 +80,8 @@ function zarinehusnProductCardHTML(p) {
         <h3 class="product-name"><a href="product.html?id=${p.id}">${p.name}</a></h3>
         <div class="product-price">PKR ${Number(p.price).toLocaleString()} ${oldPrice}</div>
         <div class="product-action-row" style="display:flex;gap:8px;margin-top:12px;">
-          <button class="btn-primary product-add" style="flex:1;font-size:0.8rem;padding:8px;" onclick="addToCart('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Add to Bag</button>
-          <button class="btn-outline product-buy" style="flex:1;font-size:0.8rem;padding:8px;" onclick="buyNow('${safeName}', ${p.price}, '${emoji}', '${variant}', '${mainImage || ''}')">Buy it Now</button>
+          <button class="btn-primary product-add" style="flex:1;font-size:0.8rem;padding:8px;" data-card="${cardData}" data-action="add">Add to Bag</button>
+          <button class="btn-outline product-buy" style="flex:1;font-size:0.8rem;padding:8px;" data-card="${cardData}" data-action="buy">Buy it Now</button>
         </div>
       </div>
     </div>
@@ -84,12 +93,35 @@ function zarinehusnEmptyState(msg) {
 }
 
 function zarinehusnReInitCards(container) {
+  // Video hover
   container.querySelectorAll('.product-img-wrap').forEach(wrap => {
     const vid = wrap.querySelector('video');
     if (vid) {
       wrap.addEventListener('mouseenter', () => vid.play().catch(e=>e));
       wrap.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime=0; });
     }
+  });
+
+  // Button clicks via data attributes — avoids all inline onclick quoting issues
+  container.querySelectorAll('button[data-card]').forEach(btn => {
+    // Remove old listeners by cloning
+    const fresh = btn.cloneNode(true);
+    btn.parentNode.replaceChild(fresh, btn);
+    fresh.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      try {
+        const d = JSON.parse(decodeURIComponent(fresh.dataset.card));
+        const action = fresh.dataset.action;
+        if (action === 'add' && typeof window.addToCart === 'function') {
+          window.addToCart(d.name, d.price, d.emoji, d.variant, d.image);
+        } else if (action === 'buy' && typeof window.buyNow === 'function') {
+          window.buyNow(d.name, d.price, d.emoji, d.variant, d.image);
+        }
+      } catch(err) {
+        console.error('Button action error:', err);
+      }
+    });
   });
 }
 

@@ -15,8 +15,12 @@ function isFirebaseAvailable() {
   try { return !!getDB(); } catch { return false; }
 }
 
+const JWT_SECRET = process.env.JWT_SECRET || 'zarinehusn_secret_jwt_key_2024_fallback';
+
 function signToken(payload, expiresIn = '30d') {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+  const secret = process.env.JWT_SECRET || JWT_SECRET;
+  if (!secret) throw new Error('JWT_SECRET is not configured.');
+  return jwt.sign(payload, secret, { expiresIn });
 }
 
 const VALID_ROLES = ['super_admin', 'admin', 'supervisor'];
