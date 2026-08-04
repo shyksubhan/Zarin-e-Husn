@@ -1377,6 +1377,21 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
       <input type="hidden" id="product-edit-id"/>
       <div class="form-row">
         <div class="form-group"><label>Product Name *</label><input id="p-name" placeholder="e.g. Ivory Silk Gown"/></div>
+        <div class="form-group">
+          <label>Brand</label>
+          <select id="p-brand">
+            <option value="">No Brand</option>
+            <option value="Vaseline">Vaseline</option>
+            <option value="Medora">Medora</option>
+            <option value="Rivaj">Rivaj</option>
+            <option value="Huda beauty">Huda beauty</option>
+            <option value="Mac Cosmetics">Mac Cosmetics</option>
+            <option value="Miss Rose">Miss Rose</option>
+            <option value="Maybelline">Maybelline</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
         <div class="form-group"><label>Product Icon</label>
           <div id="emoji-picker" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;"></div>
           <input type="hidden" id="p-emoji" value="👗"/>
@@ -4271,6 +4286,7 @@ function openProductModal(product = null) {
   document.getElementById('product-modal-title').textContent = product ? 'Edit Product' : 'Add Product';
   document.getElementById('product-edit-id').value = product?.id || '';
   document.getElementById('p-name').value       = product?.name || '';
+  document.getElementById('p-brand').value      = product?.brand || '';
   document.getElementById('p-emoji').value      = product?.emoji || '';
   document.getElementById('p-category').value   = product?.category || '';
   const additionalContainer = document.getElementById('p-additional-categories');
@@ -4386,7 +4402,7 @@ async function saveProduct() {
   const additionalCategories = Array.from(additionalCheckboxes).map(cb => cb.value);
 
   const payload = {
-    name, category: cat,
+    name, brand: document.getElementById('p-brand').value, category: cat,
     additionalCategories,
     emoji:       document.getElementById('p-emoji').value || '🛍️',
     badge:       document.getElementById('p-badge').value || null,

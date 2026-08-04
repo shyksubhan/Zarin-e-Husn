@@ -91,7 +91,7 @@ router.get('/:id', async (req, res) => {
 /* ── POST /api/products (super_admin + admin only — product catalogue is not supervisor's job) ── */
 router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
   try {
-    const { name, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, inStock, featured, hidden, images, video } = req.body;
+    const { name, brand, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, inStock, featured, hidden, images, video } = req.body;
     if (!name || !category || !price) return res.status(400).json({ error: 'Name, category, and price are required.' });
     if (purchasePrice === undefined || purchasePrice === null || purchasePrice === '') {
       return res.status(400).json({ error: 'Purchase price is required.' });
@@ -107,6 +107,7 @@ router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
     const productData = {
       id:          slug,
       name:        name.trim(),
+      brand:       brand || '',
       category,
       subcategory: subcategory || '',
       additionalCategories: additionalCategories || [],

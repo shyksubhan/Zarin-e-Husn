@@ -135,6 +135,7 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
   const urlParams = new URLSearchParams(window.location.search);
   let activeMain = mainCat || 'all';
   let activeSub = urlParams.get('cat');
+  let activeBrand = urlParams.get('brand');
 
   if (activeSub === 'catchers') activeSub = 'clips';
 
@@ -220,6 +221,11 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
           else show = (s === activeSub || c === activeSub || additional.includes(activeSub));
         }
       }
+      
+      if (show && activeBrand) {
+        show = (p.brand && p.brand.toLowerCase() === activeBrand.toLowerCase());
+      }
+      
       return show;
     });
 
@@ -242,12 +248,21 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
     }
     
     // Update URL
+    let urlStr = window.location.pathname;
     const newCat = activeSub || activeMain;
-    if (newCat === 'all' || newCat === mainCat) {
-      window.history.replaceState(null, '', window.location.pathname);
-    } else {
-      window.history.replaceState(null, '', window.location.pathname + '?cat=' + newCat);
+    let params = new URLSearchParams();
+    
+    if (newCat && newCat !== 'all' && newCat !== mainCat) {
+      params.set('cat', newCat);
     }
+    if (activeBrand) {
+      params.set('brand', activeBrand);
+    }
+    
+    const qs = params.toString();
+    if (qs) urlStr += '?' + qs;
+    
+    window.history.replaceState(null, '', urlStr);
   }
 
   if (collectionsBtns.length > 0) {
