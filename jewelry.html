@@ -73,6 +73,18 @@
     </p>
   </div>
 </div>
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const brand = params.get('brand');
+    if (brand) {
+      const titleEl = document.getElementById('shop-hero-title');
+      const descEl = document.getElementById('shop-hero-desc');
+      if (titleEl) titleEl.innerHTML = `${brand} <em style="color: var(--gold);">&amp;</em> You`;
+      if (descEl) descEl.innerHTML = `Discover premium ${brand} jewelry, carefully curated to enhance your natural beauty.`;
+    }
+  })();
+</script>
 
 <section class="shop-section">
   <div class="container shop-layout">
@@ -103,6 +115,17 @@
         </ul>
       </div>
     </aside>
+    <script>
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('brand')) {
+          const collectionsBlock = document.getElementById('sidebar-collections')?.closest('.sidebar-block');
+          if (collectionsBlock) collectionsBlock.style.display = 'none';
+          const subContainer = document.getElementById('sub-filter-container');
+          if (subContainer) subContainer.style.display = 'none';
+        }
+      })();
+    </script>
 
     <!-- Main Content -->
     <main class="shop-main">
