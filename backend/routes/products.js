@@ -199,19 +199,26 @@ router.put('/:id', requireRole('super_admin', 'admin'), async (req, res) => {
       updates.purchasePrice = Number(updates.purchasePrice);
     }
 
+    let updatedProductData = null;
+
     if (isFirebaseAvailable()) {
       const db = getDB();
       const ref = db.collection('products').doc(req.params.id);
       const doc = await ref.get();
       if (!doc.exists) return res.status(404).json({ error: 'Product not found.' });
       await ref.update(updates);
-      return res.json({ message: 'Product updated.', product: { ...doc.data(), ...updates } });
+      updatedProductData = { ...doc.data(), ...updates };
     }
 
     const idx = store.products.findIndex(p => p.id === req.params.id);
-    if (idx < 0) return res.status(404).json({ error: 'Product not found.' });
-    store.products[idx] = { ...store.products[idx], ...updates };
-    return res.json({ message: 'Product updated.', product: store.products[idx] });
+    if (idx >= 0) {
+      store.products[idx] = { ...store.products[idx], ...updates };
+      updatedProductData = updatedProductData || store.products[idx];
+    } else if (!isFirebaseAvailable()) {
+      return res.status(404).json({ error: 'Product not found.' });
+    }
+
+    return res.json({ message: 'Product updated.', product: updatedProductData });
   } catch (err) {
     return res.status(500).json({ error: 'Failed to update product.' });
   }
@@ -228,11 +235,14 @@ router.delete('/:id', requireRole('super_admin', 'admin'), async (req, res) => {
       if (!doc.exists) return res.status(404).json({ error: 'Product not found.' });
       productName = doc.data().name;
       await ref.delete();
-    } else {
-      const idx = store.products.findIndex(p => p.id === req.params.id);
-      if (idx < 0) return res.status(404).json({ error: 'Product not found.' });
-      productName = store.products[idx].name;
+    } 
+    
+    const idx = store.products.findIndex(p => p.id === req.params.id);
+    if (idx >= 0) {
+      if (productName === 'Unknown') productName = store.products[idx].name;
       store.products.splice(idx, 1);
+    } else if (!isFirebaseAvailable()) {
+      return res.status(404).json({ error: 'Product not found.' });
     }
     
     store.logActivity({
