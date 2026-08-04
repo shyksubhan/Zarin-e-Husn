@@ -159,6 +159,17 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
   const subList = document.getElementById('sidebar-sub-collections');
   const sortBtns = document.querySelectorAll('#sidebar-sort .sidebar-link');
   const mobileToggle = document.getElementById('mobile-sidebar-toggle');
+  
+  // Hide Collections sidebar block if a brand is selected
+  const collectionsBlock = document.getElementById('sidebar-collections')?.closest('.sidebar-block');
+  if (collectionsBlock) {
+    if (activeBrand) {
+      collectionsBlock.style.display = 'none';
+      subContainer.style.display = 'none';
+    } else {
+      collectionsBlock.style.display = 'block';
+    }
+  }
   const sidebar = document.querySelector('.shop-sidebar');
 
   if (mobileToggle && sidebar) {
@@ -244,7 +255,7 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
 
     // Update Hero Text if function exists
     if (window.updateShopHero) {
-      window.updateShopHero(activeSub || activeMain);
+      window.updateShopHero(activeSub || activeMain, activeBrand);
     }
     
     // Update URL

@@ -201,10 +201,24 @@
 <script src="js/search.js"></script>
 <script src="js/products-render.js"></script>
 <script>
-window.updateShopHero = function(cat) {
+window.updateShopHero = function(cat, brand) {
   const titleEl = document.getElementById('shop-hero-title');
   const descEl = document.getElementById('shop-hero-desc');
   if (!titleEl || !descEl) return;
+
+  if (brand) {
+    titleEl.innerHTML = `${brand} <em style="color: var(--gold);">&amp;</em> You`;
+    descEl.innerHTML = `Discover premium ${brand} jewelry, carefully curated to enhance your natural beauty.`;
+    
+    let urlStr = 'jewelry.html';
+    if (cat && cat !== 'all') {
+      urlStr += '?cat=' + cat + '&brand=' + encodeURIComponent(brand);
+    } else {
+      urlStr += '?brand=' + encodeURIComponent(brand);
+    }
+    window.history.replaceState(null, '', urlStr);
+    return;
+  }
 
   const data = {
     'all': { title: 'Premium <em style="color: var(--gold);">Jewelry</em>', desc: "Discover Pakistan's finest online selection of beautifully crafted jewelry pieces for every occasion." },
