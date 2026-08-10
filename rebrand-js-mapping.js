@@ -27,18 +27,18 @@ const newDict = `const ZARINEHUSN_CAT_LABELS = {
   'necklace':    'Necklaces',
   'bangles':     'Bangles',
   
-  'winter-collection': 'Foundations',
-  'daily-pret':        'Lipsticks',
-  'unstitched':        'Concealers',
-  'g-prints':          'Blush',
-  'new-arrivals':      'Mascara',
-  'trending-now':      'Eyeliner',
+  'winter-collection': 'Face Cosmetics',
+  'daily-pret':        'Eye Makeup',
+  'unstitched':        'Lip Makeup',
+  'g-prints':          'Nail Cosmetics',
+  'new-arrivals':      'Skin Care',
+  'trending-now':      'Hand & Foot Care',
   'sale':              'Sale',
-  'fancy-wear':        'Perfumes',
-  'kaftan':            'Body Lotions',
-  'casual':            'Face Powders',
-  'party-wear':        'Highlighters',
-  'summer-collection': 'Bronzers'
+  'fancy-wear':        'Makeup Tools & Brushes',
+  'kaftan':            'Makeup Accessories',
+  'casual':            'Face Cosmetics',
+  'party-wear':        'Eye Makeup',
+  'summer-collection': 'Lip Makeup'
 };`;
 
 jsContent = jsContent.replace(/const ZARINEHUSN_CAT_LABELS = {[\s\S]*?};\n/, newDict + '\n');

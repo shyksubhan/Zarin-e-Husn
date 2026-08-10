@@ -4,13 +4,14 @@
 
 const ZARINEHUSN_CAT_LABELS = {
   // Cosmetics
-  'lipsticks': 'Lipsticks',
-  'foundations': 'Foundations',
-  'blush': 'Blush',
-  'mascara': 'Mascara',
-  'eyeliner': 'Eyeliner',
-  'face-powders': 'Face Powders',
-  'highlighters': 'Highlighters',
+  'face-cosmetics': 'Face Cosmetics',
+  'eye-makeup': 'Eye Makeup',
+  'lip-makeup': 'Lip Makeup',
+  'nail-cosmetics': 'Nail Cosmetics',
+  'skin-care': 'Skin Care',
+  'hand-foot-care': 'Hand & Foot Care',
+  'makeup-tools': 'Makeup Tools & Brushes',
+  'makeup-accessories': 'Makeup Accessories',
   
   // Jewelry
   'bracelets':   'Bracelets',
@@ -23,7 +24,7 @@ const ZARINEHUSN_CAT_LABELS = {
 
 const CATEGORY_HIERARCHY = {
   'jewelry': ['bracelets', 'rings', 'earrings', 'necklace', 'bangles', 'jewelry-sets'],
-  'cosmetics': ['lipsticks', 'foundations', 'blush', 'mascara', 'eyeliner', 'face-powders', 'highlighters']
+  'cosmetics': ['face-cosmetics', 'eye-makeup', 'lip-makeup', 'nail-cosmetics', 'skin-care', 'hand-foot-care', 'makeup-tools', 'makeup-accessories']
 };
 
 function velorCatLabel(cat) {

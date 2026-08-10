@@ -351,13 +351,14 @@ const HIERARCHY = {
   ],
   'cosmetics': [
     { label: 'All Cosmetics', filter: 'all-cosmetics' },
-    { label: 'Lipsticks', filter: 'lipsticks' },
-    { label: 'Foundations', filter: 'foundations' },
-    { label: 'Blush', filter: 'blush' },
-    { label: 'Mascara', filter: 'mascara' },
-    { label: 'Eyeliner', filter: 'eyeliner' },
-    { label: 'Face Powders', filter: 'face-powders' },
-    { label: 'Highlighters', filter: 'highlighters' }
+    { label: 'Face Cosmetics', filter: 'face-cosmetics' },
+    { label: 'Eye Makeup', filter: 'eye-makeup' },
+    { label: 'Lip Makeup', filter: 'lip-makeup' },
+    { label: 'Nail Cosmetics', filter: 'nail-cosmetics' },
+    { label: 'Skin Care', filter: 'skin-care' },
+    { label: 'Hand & Foot Care', filter: 'hand-foot-care' },
+    { label: 'Makeup Tools & Brushes', filter: 'makeup-tools' },
+    { label: 'Makeup Accessories', filter: 'makeup-accessories' }
   ]
 };
 document.addEventListener('DOMContentLoaded', () => {
@@ -478,13 +479,14 @@ window.updateShopHero = function(cat) {
   <div class="container">
     <div class="luxury-filter-bar">
       <button class="filter-btn active" data-filter="all">All Cosmetics</button>
-      <button class="filter-btn" data-filter="lipsticks">Lipsticks</button>
-      <button class="filter-btn" data-filter="foundations">Foundations</button>
-      <button class="filter-btn" data-filter="blush">Blush</button>
-      <button class="filter-btn" data-filter="mascara">Mascara</button>
-      <button class="filter-btn" data-filter="eyeliner">Eyeliner</button>
-      <button class="filter-btn" data-filter="face-powders">Face Powders</button>
-      <button class="filter-btn" data-filter="highlighters">Highlighters</button>
+      <button class="filter-btn" data-filter="face-cosmetics">Face Cosmetics</button>
+      <button class="filter-btn" data-filter="eye-makeup">Eye Makeup</button>
+      <button class="filter-btn" data-filter="lip-makeup">Lip Makeup</button>
+      <button class="filter-btn" data-filter="nail-cosmetics">Nail Cosmetics</button>
+      <button class="filter-btn" data-filter="skin-care">Skin Care</button>
+      <button class="filter-btn" data-filter="hand-foot-care">Hand & Foot Care</button>
+      <button class="filter-btn" data-filter="makeup-tools">Makeup Tools</button>
+      <button class="filter-btn" data-filter="makeup-accessories">Makeup Accessories</button>
     </div>
     <div class="luxury-product-grid" id="shop-products-grid" data-main-cat="cosmetics">
       <p style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:0.5;">Loading products…</p>
@@ -497,14 +499,15 @@ window.updateShopHero = function(cat) {
   const descEl = document.getElementById('shop-hero-desc');
   if (!titleEl || !descEl) return;
   const data = {
-    'all': { title: 'Cosmetics', desc: "Discover Pakistan's finest online selection of premium cosmetics." },
-    'lipsticks': { title: 'Lipsticks', desc: 'Vibrant and long-lasting lip colors.' },
-    'foundations': { title: 'Foundations', desc: 'Flawless base for every skin tone.' },
-    'blush': { title: 'Blush', desc: 'Add a natural flush of color to your cheeks.' },
-    'mascara': { title: 'Mascara', desc: 'Volumizing and lengthening formulas.' },
-    'eyeliner': { title: 'Eyeliner', desc: 'Define your eyes with precision.' },
-    'face-powders': { title: 'Face Powders', desc: 'Set your makeup for all-day wear.' },
-    'highlighters': { title: 'Highlighters', desc: 'Achieve a radiant, luminous glow.' }
+    'all': { title: 'Cosmetics', desc: "Discover Pakistan's finest online selection of premium cosmetics — from face makeup to skincare, nail art to professional brushes." },
+    'face-cosmetics': { title: 'Face Cosmetics', desc: 'Discover premium foundations, powders, blush & highlighters for a flawless complexion.' },
+    'eye-makeup': { title: 'Eye Makeup', desc: 'Define your eyes with premium mascaras, eyeliners, eyeshadows & brow kits.' },
+    'lip-makeup': { title: 'Lip Makeup', desc: 'From matte lipsticks to glossy lip balms — find your perfect lip shade.' },
+    'nail-cosmetics': { title: 'Nail Cosmetics', desc: 'Explore nail polishes, nail art kits & nail care essentials.' },
+    'skin-care': { title: 'Skin Care', desc: 'Nourish your skin with premium cleansers, serums, moisturizers & sunscreens.' },
+    'hand-foot-care': { title: 'Hand & Foot Care', desc: 'Pamper your hands and feet with premium creams, scrubs & care essentials.' },
+    'makeup-tools': { title: 'Makeup Tools', desc: 'Shop premium makeup brushes, sponges, applicators & blending tools.' },
+    'makeup-accessories': { title: 'Makeup Accessories', desc: 'From makeup bags to mirrors and organizers — find all your makeup essentials.' }
   };
   const info = data[cat] || data['all'];
   titleEl.innerHTML = info.title;
