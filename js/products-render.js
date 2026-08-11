@@ -19,12 +19,16 @@ const ZARINEHUSN_CAT_LABELS = {
   'earrings':    'Earrings',
   'necklace':    'Necklaces',
   'bangles':     'Bangles',
-  'jewelry-sets': 'Jewelry Sets'
+  'jewelry-sets': 'Jewelry Sets',
+  
+  // Deals
+  'deals': 'Deals'
 };
 
 const CATEGORY_HIERARCHY = {
   'jewelry': ['bracelets', 'rings', 'earrings', 'necklace', 'bangles', 'jewelry-sets'],
-  'cosmetics': ['face-cosmetics', 'eye-makeup', 'lip-makeup', 'nail-cosmetics', 'skin-care', 'hand-foot-care', 'makeup-tools', 'makeup-accessories']
+  'cosmetics': ['face-cosmetics', 'eye-makeup', 'lip-makeup', 'nail-cosmetics', 'skin-care', 'hand-foot-care', 'makeup-tools', 'makeup-accessories'],
+  'deals': ['deals']
 };
 
 function velorCatLabel(cat) {

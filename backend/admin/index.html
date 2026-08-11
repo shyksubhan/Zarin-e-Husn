@@ -931,6 +931,9 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
           <option value="makeup-tools">Makeup Tools & Brushes</option>
           <option value="makeup-accessories">Makeup Accessories</option>
         </optgroup>
+        <optgroup label="Deals">
+          <option value="deals">Deals</option>
+        </optgroup>
 
       </select>
       <select class="filter-sel" id="product-sort-order" onchange="filterProductsTable()" title="Sort by time added">
@@ -1352,6 +1355,9 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
           <option value="makeup-tools">Makeup Tools & Brushes</option>
           <option value="makeup-accessories">Makeup Accessories</option>
         </optgroup>
+        <optgroup label="Deals">
+          <option value="deals">Deals</option>
+        </optgroup>
 
         </select>
         <button class="btn btn-outline" onclick="addPinnedCollection()">Add</button>
@@ -1430,6 +1436,9 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
           <option value="makeup-tools">Makeup Tools & Brushes</option>
           <option value="makeup-accessories">Makeup Accessories</option>
         </optgroup>
+        <optgroup label="Deals">
+          <option value="deals">Deals</option>
+        </optgroup>
 
           </select>
         </div>
@@ -1454,6 +1463,9 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="hand-foot-care"> Hand & Foot Care</label>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="makeup-tools"> Makeup Tools & Brushes</label>
             <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="makeup-accessories"> Makeup Accessories</label>
+
+            <strong style="font-size:0.8rem; color:var(--muted); margin-top:8px;">Deals</strong>
+            <label style="font-size:0.9rem; display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:0;"><input type="checkbox" value="deals"> Deals</label>
 
           </div>
         </div>
@@ -3841,7 +3853,8 @@ function exportProductsExcel() {
     { key: 'skin-care',          label: 'Skin Care',            color: '34495e' },
     { key: 'hand-foot-care',     label: 'Hand & Foot Care',     color: 'bdc3c7' },
     { key: 'makeup-tools',       label: 'Makeup Tools',         color: 'f1c40f' },
-    { key: 'makeup-accessories', label: 'Makeup Accessories',   color: '8E44AD' }
+    { key: 'makeup-accessories', label: 'Makeup Accessories',   color: '8E44AD' },
+    { key: 'deals',              label: 'Deals',                color: 'E74C3C' }
   ];
 
   categories.forEach(({ key, label, color }) => {
