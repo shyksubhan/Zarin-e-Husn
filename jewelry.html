@@ -266,6 +266,22 @@ window.updateShopHero = function(cat, brand) {
     window.history.replaceState(null, '', 'jewelry.html?cat=' + cat);
   }
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+  const brandParam = params.get('brand');
+  if (catParam || brandParam) window.updateShopHero(catParam || 'all', brandParam);
+  
+  if (catParam) {
+    const btn = document.querySelector(`.sidebar-link[data-main-filter="${catParam}"]`);
+    if (btn) {
+      document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  }
+});
+
 </script>
 
 </body>
