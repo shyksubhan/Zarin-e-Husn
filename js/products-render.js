@@ -190,7 +190,7 @@ function zarinehusnSetupShopFilters(products, grid, mainCat) {
   }
 
   function renderSubFilters(mc) {
-    if (mc === 'all' || !CATEGORY_HIERARCHY[mc]) {
+    if (mc === 'all' || mc === 'deals' || !CATEGORY_HIERARCHY[mc]) {
       if (subContainer) subContainer.style.display = 'none';
       if (subList) subList.innerHTML = '';
       return;
