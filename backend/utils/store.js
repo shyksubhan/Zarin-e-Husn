@@ -202,6 +202,11 @@ const store = {
 
   /* Statement for one calendar day (dateStr = 'YYYY-MM-DD', server local time) */
   dailyStatement(target) {
+    if (!target) {
+      const d = new Date();
+      d.setTime(d.getTime() + (5 * 60 * 60 * 1000));
+      target = d.toISOString().slice(0, 10);
+    }
     const stmt = this._buildStatement(o => {
       if (!o.createdAt) return false;
       const d = new Date(o.createdAt);
