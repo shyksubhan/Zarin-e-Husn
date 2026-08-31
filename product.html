@@ -333,6 +333,7 @@
           </button>
           <div class="pd-wishlist"><i class="fa-regular fa-heart"></i></div>
         </div>
+        <button id="pd-whatsapp-btn" class="btn-primary" style="margin-top:15px; padding:12px 24px; font-size:0.9rem; background:#25D366; border:1px solid #25D366; color:#fff; width:100%;"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>
       </div>
     </div>`;
 
@@ -398,9 +399,9 @@
       const itemName = product.name;
       const itemLink = window.location.href;
       
-      let msg = `Hi Zarin-e-Husn! I would like to order: *${itemName}*`;
-      if (variant) msg += `\nVariant/Size/Color: ${variant}`;
-      msg += `\n\nProduct Link: ${itemLink}`;
+      let msg = `Hello, I would like to buy this product: ${itemName}`;
+      if (variant) msg += ` - ${variant}`;
+      msg += ` ${itemLink}`;
       
       // Use whatsapp number from global WHATSAPP_NUMBER if defined, or a fallback
       const waNum = window.ZARINEHUSN_CONFIG?.whatsapp?.number || '923150727131';
@@ -450,8 +451,8 @@
     if (related.length) {
       document.getElementById('pd-related').style.display = '';
       const grid = document.getElementById('pd-related-grid');
-      grid.innerHTML = related.map(golnisaProductCardHTML).join('');
-      golnisaReInitCards(grid);
+      grid.innerHTML = related.map(zarinehusnProductCardHTML).join('');
+      zarinehusnReInitCards(grid);
     }
   } catch (err) {
     console.error('Failed to load related products:', err);
