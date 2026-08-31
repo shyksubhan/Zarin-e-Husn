@@ -412,14 +412,17 @@
 
   /* Add-on Boxes */
   const hierarchy = window.CATEGORY_HIERARCHY || {};
-  const isJewelry = hierarchy['jewelry'] && hierarchy['jewelry'].includes(product.subcategory || product.category);
-  const isRing = (product.subcategory || product.category) === 'rings';
+  const catToCheck = product.subcategory || product.category || '';
+  const isJewelry = hierarchy['jewelry'] && hierarchy['jewelry'].includes(catToCheck);
+  const isRing = catToCheck === 'rings';
   
   if (isJewelry) {
     const boxCat = isRing ? 'ring-boxes' : 'jewelry-boxes';
-    const boxes = allProducts.filter(p => (p.subcategory || p.category) === boxCat && p.inStock !== false && !p.hidden);
-    
-    if (boxes.length > 0) {
+    try {
+      const boxData = await apiGet(`/products?category=${boxCat}`);
+      const boxes = (boxData.products || []).filter(p => p.inStock !== false && !p.hidden);
+      
+      if (boxes.length > 0) {
       let boxesHTML = '<h3 style="font-family:var(--font-heading);font-size:1.3rem;margin:30px 0 15px 0;">Premium Gift Boxes</h3>';
       boxesHTML += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;">';
       
@@ -442,6 +445,7 @@
         addRow.parentNode.insertBefore(boxContainer, addRow.nextSibling);
       }
     }
+    } catch(err) { console.error('Addon boxes fetch error:', err); }
   }
 
   /* Related products (same category, excluding this one) */

@@ -30,7 +30,9 @@ const ZARINEHUSN_CAT_LABELS = {
   'jewelry-boxes': 'Jewelry Boxes'
 };
 
-const CATEGORY_HIERARCHY = {
+window.CATEGORY_HIERARCHY = { 
+  // assigned to window so product.html can use it
+
   'jewelry': ['bracelets', 'rings', 'earrings', 'necklace', 'bangles', 'jewelry-sets'],
   'cosmetics': ['face-cosmetics', 'eye-makeup', 'lip-makeup', 'nail-cosmetics', 'skin-care', 'hand-foot-care', 'makeup-tools', 'makeup-accessories'],
   'deals': ['deals'],
@@ -456,11 +458,12 @@ async function zarinehusnRenderHomepageGrids() {
         let currentSlide = 0;
         const slides = hotSection.querySelectorAll('.hot-slide');
         setInterval(() => {
-          slides[currentSlide].style.display = 'none';
+          
+          slides[currentSlide].style.opacity = '0';
+          slides[currentSlide].style.pointerEvents = 'none';
           currentSlide = (currentSlide + 1) % slides.length;
-          // Use fadeIn effect
-          slides[currentSlide].style.display = 'block';
-          slides[currentSlide].style.animation = 'fadeUp 0.5s ease forwards';
+          slides[currentSlide].style.opacity = '1';
+          slides[currentSlide].style.pointerEvents = 'auto';
         }, 4000);
       }
     }
