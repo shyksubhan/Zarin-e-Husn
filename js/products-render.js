@@ -395,38 +395,57 @@ async function zarinehusnRenderHomepageGrids() {
       let slidesHTML = hotAds.map((p, idx) => {
         const productUrl = 'product.html?id=' + (p.id || p.name);
         const media = (p.video) 
-          ? `<video src="${p.video}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.location.href='${productUrl}'"></video>`
+          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.location.href='${productUrl}'"></video>`
           : `<img src="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.location.href='${productUrl}'"/>`;
           
-        return `<div class="hot-slide" style="display:${idx===0?'block':'none'}; width:100%; max-width:1200px; margin:0 auto; position:relative; border-radius:16px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.15); background:#000;">
-          <!-- 16:9 aspect ratio on desktop, 4:5 on mobile via CSS trick or just a fixed max-height -->
-          <div style="position:relative; width:100%; aspect-ratio:16/9; min-height:400px; max-height:80vh;">
-            ${media}
-            <!-- Gradient Overlay -->
-            <div style="position:absolute; bottom:0; left:0; width:100%; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%); padding:50px 30px 30px 30px; color:#fff; text-align:center; pointer-events:none;">
-              
-              <!-- Content Wrapper with pointer-events:auto so buttons work -->
-              <div style="pointer-events:auto; max-width: 600px; margin: 0 auto;">
-                <div style="display:inline-block; background:rgba(255,0,0,0.85); color:white; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:bold; letter-spacing:1px; margin-bottom:12px; text-transform:uppercase; backdrop-filter:blur(4px);">🔥 Hot Selling</div>
-                <h3 style="font-size:clamp(1.5rem, 4vw, 2.5rem); margin:0 0 10px 0; font-family:var(--font-heading); color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.5); cursor:pointer;" onclick="window.location.href='${productUrl}'">${p.name}</h3>
-                <p style="font-size:1.3rem; margin:0 0 24px 0; font-weight:600; color:var(--gold); text-shadow:0 1px 3px rgba(0,0,0,0.5);">PKR ${Number(p.price).toLocaleString()}</p>
+        return `<div class="hot-slide" style="display:${idx===0?'block':'none'}; width:100%; max-width:1200px; margin:0 auto; animation: fadeIn 0.5s ease-out;">
+          <div style="display:flex; flex-direction:column; background:var(--bg); border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.08); border:1px solid rgba(184,136,58,0.2);">
+            
+            <style>
+              @media (min-width: 768px) {
+                .hot-selling-split-${idx} { flex-direction: row !important; min-height: 500px; }
+                .hot-selling-media-${idx} { flex: 1.2 !important; min-height: 500px; }
+                .hot-selling-content-${idx} { flex: 1 !important; padding: 60px !important; justify-content: center !important; text-align: left !important; }
+                .hot-selling-btns-${idx} { justify-content: flex-start !important; }
+              }
+              @keyframes pulseBadge { 0% { box-shadow: 0 0 0 0 rgba(225,48,108,0.4); } 70% { box-shadow: 0 0 0 10px rgba(225,48,108,0); } 100% { box-shadow: 0 0 0 0 rgba(225,48,108,0); } }
+            </style>
+
+            <div class="hot-selling-split-${idx}" style="display:flex; flex-direction:column-reverse; width:100%;">
+              <!-- Content Side -->
+              <div class="hot-selling-content-${idx}" style="flex:1; padding:30px 20px; display:flex; flex-direction:column; justify-content:center; text-align:center; background:linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(250,247,242,1) 100%); position:relative;">
                 
-                <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
-                  <button onclick="window.addToCart('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:140px; padding:14px 24px; font-size:0.95rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:#fff; backdrop-filter:blur(5px); border-radius:8px; transition:all 0.3s;">Add to Cart</button>
-                  <button onclick="window.buyNow('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:140px; padding:14px 24px; font-size:0.95rem; background:var(--gold); border:1px solid var(--gold); color:#000; font-weight:bold; border-radius:8px; transition:all 0.3s; box-shadow:0 4px 15px rgba(184,136,58,0.4);">Buy it Now</button>
+                <div style="margin-bottom:20px;">
+                  <span style="display:inline-block; background:linear-gradient(45deg, #ff416c, #ff4b2b); color:white; padding:6px 16px; border-radius:30px; font-size:0.75rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; animation: pulseBadge 2s infinite;">🔥 Trending Now</span>
                 </div>
-                <button onclick="window.open('https://wa.me/${(window.ZARINEHUSN_CONFIG?.whatsapp?.number || '923150727131').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I would like to buy this product: ' + p.name + ' ' + window.location.origin + '/product.html?id=' + (p.id||p.name))}', '_blank')" class="btn-primary" style="margin-top:12px; padding:14px 24px; font-size:0.95rem; background:#25D366; border:1px solid #25D366; color:#fff; width:100%; border-radius:8px; font-weight:bold; box-shadow:0 4px 15px rgba(37,211,102,0.3);"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>
+                
+                <h3 style="font-size:clamp(1.8rem, 5vw, 3rem); line-height:1.2; margin:0 0 15px 0; font-family:var(--font-heading); color:#111; cursor:pointer;" onclick="window.location.href='${productUrl}'">${p.name}</h3>
+                <div style="width:60px; height:3px; background:var(--gold); margin: 0 auto 20px auto; border-radius:2px;" class="hot-selling-btns-${idx}"></div>
+                <p style="font-size:1.5rem; margin:0 0 30px 0; font-weight:700; color:var(--gold);">PKR ${Number(p.price).toLocaleString()}</p>
+                
+                <div class="hot-selling-btns-${idx}" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; width:100%;">
+                  <button onclick="window.buyNow('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:200px; padding:16px 24px; font-size:1rem; background:var(--gold); border:1px solid var(--gold); color:#000; font-weight:700; border-radius:12px; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 8px 20px rgba(184,136,58,0.3);"><i class="fa-solid fa-bolt" style="margin-right:6px"></i> Buy it Now</button>
+                  <button onclick="window.addToCart('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:200px; padding:16px 24px; font-size:1rem; background:transparent; border:2px solid var(--gold); color:var(--gold); font-weight:700; border-radius:12px; transition:all 0.2s;"><i class="fa-solid fa-cart-plus" style="margin-right:6px"></i> Add to Cart</button>
+                </div>
+                <button onclick="window.open('https://wa.me/${(window.ZARINEHUSN_CONFIG?.whatsapp?.number || '923150727131').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I would like to buy this product: ' + p.name + ' ' + window.location.origin + '/product.html?id=' + (p.id||p.name))}', '_blank')" class="btn-primary" style="margin-top:12px; padding:16px 24px; font-size:1rem; background:#25D366; border:none; color:#fff; width:100%; border-radius:12px; font-weight:700; box-shadow:0 8px 20px rgba(37,211,102,0.3); transition:transform 0.2s;"><i class="fa-brands fa-whatsapp" style="font-size:1.2rem; margin-right:8px"></i> Order on WhatsApp</button>
+              
+              </div>
+
+              <!-- Media Side -->
+              <div class="hot-selling-media-${idx}" style="flex:1; position:relative; aspect-ratio:4/3;">
+                ${media}
               </div>
             </div>
+
           </div>
         </div>`;
       }).join('');
       
       hotSection.innerHTML = `
-        <div class="container" style="max-width:1200px; padding:0 20px;">
-          <div style="text-align:center; margin-bottom:30px;">
-            <h2 style="font-family:var(--font-heading); font-size:2.5rem; margin-bottom:10px;">Our Hot Selling Products</h2>
-            <p style="color:var(--muted); font-size:1.1rem; max-width:600px; margin:0 auto;">Discover the absolute favorites trending right now. Grab them before they're gone!</p>
+        <div class="container" style="max-width:1250px; padding:0 20px;">
+          <div style="text-align:center; margin-bottom:40px;">
+            <h2 style="font-family:var(--font-heading); font-size:2.8rem; margin-bottom:10px; color:#111;">Our Hot Selling Products</h2>
+            <p style="color:var(--muted); font-size:1.15rem; max-width:600px; margin:0 auto;">Discover the absolute favorites trending right now. Grab them before they're gone!</p>
           </div>
           ${slidesHTML}
         </div>

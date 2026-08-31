@@ -1447,6 +1447,10 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
         <optgroup label="Deals">
           <option value="deals">Deals</option>
         </optgroup>
+        <optgroup label="Add-on Boxes">
+          <option value="ring-boxes">Ring Boxes</option>
+          <option value="jewelry-boxes">Jewelry Boxes</option>
+        </optgroup>
 
           </select>
         </div>
@@ -2856,6 +2860,7 @@ async function openWebOrderEdit(orderId) {
   
   document.getElementById('soc-items-container').innerHTML = '';
   o.items.forEach(it => addSocialItem(it));
+  recalcSocialTotal();
   
   openModal('social-order-modal');
 }
