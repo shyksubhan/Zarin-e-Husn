@@ -1362,6 +1362,10 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
         <optgroup label="Deals">
           <option value="deals">Deals</option>
         </optgroup>
+        <optgroup label="Add-on Boxes">
+          <option value="ring-boxes">Ring Boxes</option>
+          <option value="jewelry-boxes">Jewelry Boxes</option>
+        </optgroup>
 
         </select>
         <button class="btn btn-outline" onclick="addPinnedCollection()">Add</button>
@@ -1494,6 +1498,7 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
         <div class="form-group"><label>Featured on Homepage?</label>
           <select id="p-featured"><option value="false">No</option><option value="true">Yes</option></select>
         </div>
+        <div class="form-group"><label>Hot Selling Ads Section?</label><select id="p-hot-selling"><option value="false">No</option><option value="true">Yes</option></select></div>
         <div class="form-group"><label>In Stock?</label>
           <select id="p-instock"><option value="true">Yes</option><option value="false">No</option></select>
         </div>
@@ -2850,7 +2855,7 @@ async function openWebOrderEdit(orderId) {
   document.getElementById('soc-custom-discount-val').value = '';
   
   document.getElementById('soc-items-container').innerHTML = '';
-  o.items.forEach(it => addSocialOrderItem(it));
+  o.items.forEach(it => addSocialItem(it));
   
   openModal('social-order-modal');
 }
@@ -4522,7 +4527,8 @@ async function saveProduct() {
     price:       Number(price),
     purchasePrice: Number(purchasePrice),
     priceOld:    document.getElementById('p-price-old').value ? Number(document.getElementById('p-price-old').value) : null,
-    featured:    document.getElementById('p-featured').value === 'true',
+    featured:      document.getElementById('p-featured').value === 'true',
+    hotSelling:    document.getElementById('p-hot-selling').value === 'true',
     inStock:     document.getElementById('p-instock').value !== 'false',
     hidden:      document.getElementById('p-hidden').checked,
     description: document.getElementById('p-desc').value,
