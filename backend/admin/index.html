@@ -4416,6 +4416,7 @@ function openProductModal(product = null) {
   document.getElementById('p-purchase-price').value = product?.purchasePrice ?? '';
   document.getElementById('p-price-old').value  = product?.priceOld || '';
   document.getElementById('p-featured').value   = product?.featured ? 'true' : 'false';
+  document.getElementById('p-hot-selling').value = product?.hotSelling ? 'true' : 'false';
   document.getElementById('p-instock').value    = product?.inStock !== false ? 'true' : 'false';
   document.getElementById('p-hidden').checked   = product?.hidden ? true : false;
   document.getElementById('p-desc').value       = product?.description || '';
