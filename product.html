@@ -386,6 +386,63 @@
     });
   }
 
+  /* Order on WhatsApp */
+  const waBtn = document.getElementById('pd-whatsapp-btn');
+  if (waBtn) {
+    waBtn.addEventListener('click', () => {
+      const size = root.querySelector('.size-opt.active')?.dataset.size;
+      const color = root.querySelector('.color-opt.active')?.dataset.color;
+      const pdVariant = root.querySelector('.variant-opt.active')?.dataset.variant;
+      const variant = [pdVariant, size, color].filter(Boolean).join(' — ');
+      
+      const itemName = product.name;
+      const itemLink = window.location.href;
+      
+      let msg = `Hi Zarin-e-Husn! I would like to order: *${itemName}*`;
+      if (variant) msg += `\nVariant/Size/Color: ${variant}`;
+      msg += `\n\nProduct Link: ${itemLink}`;
+      
+      // Use whatsapp number from global WHATSAPP_NUMBER if defined, or a fallback
+      const waNum = window.ZARINEHUSN_CONFIG?.whatsapp?.number || '923150727131';
+      const url = `https://wa.me/${waNum.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    });
+  }
+
+  /* Add-on Boxes */
+  const hierarchy = window.CATEGORY_HIERARCHY || {};
+  const isJewelry = hierarchy['jewelry'] && hierarchy['jewelry'].includes(product.subcategory || product.category);
+  const isRing = (product.subcategory || product.category) === 'rings';
+  
+  if (isJewelry) {
+    const boxCat = isRing ? 'ring-boxes' : 'jewelry-boxes';
+    const boxes = allProducts.filter(p => (p.subcategory || p.category) === boxCat && p.inStock !== false && !p.hidden);
+    
+    if (boxes.length > 0) {
+      let boxesHTML = '<h3 style="font-family:var(--font-heading);font-size:1.3rem;margin:30px 0 15px 0;">Premium Gift Boxes</h3>';
+      boxesHTML += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;">';
+      
+      boxes.forEach(box => {
+        boxesHTML += `<div style="border:1px solid #eee;border-radius:8px;padding:10px;text-align:center;">
+          <img src="${box.images?.[0] || 'images/placeholder.jpg'}" alt="${box.name}" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:8px;"/>
+          <div style="font-size:0.8rem;font-weight:600;margin-bottom:4px;">${box.name}</div>
+          <div style="font-size:0.8rem;color:var(--gold);margin-bottom:8px;">PKR ${box.price}</div>
+          <button onclick="window.addToCart('${box.name.replace(/'/g, "\\'")}', ${Number(box.price)}, '${box.emoji||''}', 'Standard', '${(box.images&&box.images[0])||''}')" style="background:#000;color:#fff;border:none;border-radius:4px;padding:6px 12px;font-size:0.75rem;cursor:pointer;width:100%;">Add Box</button>
+        </div>`;
+      });
+      
+      boxesHTML += '</div>';
+      
+      // Insert after pd-add-row
+      const addRow = document.querySelector('.pd-add-row');
+      if (addRow) {
+        const boxContainer = document.createElement('div');
+        boxContainer.innerHTML = boxesHTML;
+        addRow.parentNode.insertBefore(boxContainer, addRow.nextSibling);
+      }
+    }
+  }
+
   /* Related products (same category, excluding this one) */
   try {
     const relData = await apiGet(`/products?category=${encodeURIComponent(product.category)}&limit=5`);

@@ -1510,6 +1510,18 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
       </div>
 
       <!-- ── Gallery: Images ── -->
+            <div class="form-row">
+        <div class="form-group">
+          <label>Variants / Designs <span style="color:var(--muted);font-weight:400">(press Enter to add)</span></label>
+          <div class="tag-input-wrap" id="p-variants-wrap">
+            <div class="tag-chips" id="p-variants-chips"></div>
+            <input id="p-variants-text" placeholder="e.g. Design 1, press Enter" onkeydown="handleTagKeydown(event,'variants')"/>
+          </div>
+        </div>
+        <div class="form-group"></div>
+      </div>
+
+      <!-- ── Gallery: Images ── -->
       <div class="form-group">
         <label>Product Images (gallery — first image is the main photo)</label>
         <input type="file" id="p-image-input" accept="image/*" multiple style="display:none" onchange="handleImageSelect(event)"/>
@@ -2784,7 +2796,61 @@ let _socItemCount = 0;
 let _editingSocialOrderId = null;
 let _convertingAbandonedId = null;
 
+
+let _isEditingWebOrder = false;
+let _editingWebOrderId = null;
+
+async function openWebOrderEdit(orderId) {
+  _isEditingWebOrder = true;
+  _editingWebOrderId = orderId;
+  _socItemCount = 0;
+  _socSearchMatches = {};
+  _socAppliedCoupon = null;
+  
+  const o = allOrders.find(x => x.id === orderId);
+  if (!o) return;
+
+  if (o.items && allProducts) {
+    o.items.forEach(it => {
+      if (!it.purchasePrice) {
+        const match = allProducts.find(p => p.name === it.name || p.id === it.productId);
+        if (match && match.purchasePrice != null) {
+          it.purchasePrice = match.purchasePrice;
+        }
+      }
+    });
+  }
+
+  document.getElementById('social-order-modal-title').innerHTML = `<i class="fa-solid fa-globe" style="color:var(--gold);margin-right:8px"></i>Edit Web Order ${orderId}`;
+  document.getElementById('save-social-btn').innerHTML = `<i class="fa-solid fa-check"></i> Save Web Order Changes`;
+
+  document.getElementById('soc-cname').value   = `${o.delivery?.fname || ''} ${o.delivery?.lname || ''}`.trim();
+  document.getElementById('soc-email').value   = o.delivery?.email || '';
+  document.getElementById('soc-phone').value   = o.delivery?.phone || '';
+  document.getElementById('soc-city').value    = o.delivery?.city || '';
+  document.getElementById('soc-address').value = o.delivery?.address || o.delivery?.street || '';
+  
+  document.getElementById('soc-source').value  = 'website';
+  document.getElementById('soc-source').disabled = true; // prevent changing source
+  
+  document.getElementById('soc-payment').value = o.paymentMethod || 'cod';
+  document.getElementById('soc-status').value  = o.status || 'Pending';
+  document.getElementById('soc-notes').value   = o.notes || '';
+  document.getElementById('soc-advance-paid').value = o.advanceAmount || '';
+  
+  // Hide coupon and custom discount for web order edits to keep it simple, or leave them
+  document.getElementById('soc-coupon-code').value = '';
+  document.getElementById('soc-custom-discount-val').value = '';
+  
+  document.getElementById('soc-items-container').innerHTML = '';
+  o.items.forEach(it => addSocialOrderItem(it));
+  
+  openModal('social-order-modal');
+}
+
 async function openSocialOrderModal(orderId = null, prefillAban = null) {
+  _isEditingWebOrder = false;
+  document.getElementById('soc-source').disabled = false;
   _editingSocialOrderId = orderId;
   _convertingAbandonedId = prefillAban ? prefillAban.id : null;
   _socItemCount = 0;
@@ -3220,7 +3286,26 @@ async function saveSocialOrder() {
   btn.innerHTML = '<span class="spinner"></span>'; btn.disabled = true;
 
   try {
+    
+    if (_isEditingWebOrder) {
+      const url = `/orders/${_editingWebOrderId}`;
+      const res = await apiFetch(url, {
+        method: 'PUT',
+        body: JSON.stringify({ customerName, customerEmail, phone, city, address, items, paymentMethod, status, notes }),
+      });
+      if (res.ok) {
+        toast('✓ Web order updated', 'success');
+        closeModal('social-order-modal');
+        loadOrders();
+      } else {
+        const d = await res.json();
+        toast(d.error || 'Failed to update web order', 'error');
+      }
+      btn.innerHTML = orig; btn.disabled = false;
+      return;
+    }
     const isEdit = !!_editingSocialOrderId;
+
     const url = isEdit ? `/social-orders/${_editingSocialOrderId}` : '/social-orders';
     const method = isEdit ? 'PUT' : 'POST';
 

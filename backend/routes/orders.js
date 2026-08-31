@@ -425,4 +425,73 @@ router.delete('/:id', requireAdmin, async (req, res) => {
   }
 });
 
+
+/* ── PUT /api/orders/:id — Edit Web Order ── */
+router.put('/:id', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { customerName, customerEmail, phone, city, address, items, paymentMethod, status, notes } = req.body;
+    
+    // Find existing order
+    const idx = store.orders.findIndex(o => o.id === id);
+    if (idx === -1) return res.status(404).json({ error: 'Order not found' });
+    const existing = store.orders[idx];
+    
+    // Parse customer name
+    const parts = (customerName || '').trim().split(' ');
+    const fname = parts[0] || '';
+    const lname = parts.slice(1).join(' ') || '';
+
+    // Calculate new totals
+    let subtotal = 0;
+    const resolvedItems = items.map(it => {
+      let cost = 0;
+      if (it.productId) {
+        const p = store.products.find(x => x.id === it.productId);
+        if (p) cost = p.purchasePrice || 0;
+      } else {
+        cost = Number(it.purchasePrice) || 0;
+      }
+      const finalPrice = Number(it.price) || 0;
+      const qty = Number(it.qty) || 1;
+      subtotal += (finalPrice * qty);
+      return { ...it, price: finalPrice, qty, purchasePrice: cost };
+    });
+
+    const deliveryFee = existing.deliveryFee || 0;
+    const discount = existing.discount || 0;
+    const total = Math.max(0, subtotal + deliveryFee - discount);
+
+    const updates = {
+      items: resolvedItems,
+      subtotal,
+      total,
+      paymentMethod: paymentMethod || existing.paymentMethod,
+      status: status || existing.status,
+      notes: notes !== undefined ? notes : existing.notes,
+      delivery: {
+        ...existing.delivery,
+        fname,
+        lname,
+        email: customerEmail || existing.delivery.email,
+        phone: phone || existing.delivery.phone,
+        city: city || existing.delivery.city,
+        street: address || existing.delivery.street,
+        address: address || existing.delivery.address
+      },
+      updatedAt: new Date().toISOString()
+    };
+
+    if (isFirebaseAvailable()) {
+      await getDB().collection('orders').doc(id).update(updates);
+    }
+    
+    store.orders[idx] = { ...existing, ...updates };
+    return res.json({ message: 'Order updated', order: store.orders[idx] });
+  } catch (err) {
+    console.error('Update web order error:', err);
+    res.status(500).json({ error: 'Failed to update order' });
+  }
+});
+
 module.exports = router;

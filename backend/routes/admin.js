@@ -217,14 +217,16 @@ router.get('/stats', requireRole('super_admin', 'admin'), async (req, res) => {
     if (isFirebaseAvailable()) {
       const db = getDB();
       try {
-        const [reviewsSnap, resellersSnap, abandonedSnap, msgsSnap, prodsSnap, subsSnap, usersSnap] = await Promise.all([
+        const [reviewsSnap, resellersSnap, abandonedSnap, msgsSnap, prodsSnap, subsSnap, usersSnap, webPendingSnap, socPendingSnap] = await Promise.all([
           db.collection('reviews').where('approved', '==', false).count().get(),
           db.collection('resellers').where('read', '==', false).count().get(),
           db.collection('abandoned').where('status', '==', 'abandoned').count().get(),
           db.collection('contact_messages').where('read', '==', false).count().get(),
           db.collection('products').count().get(),
           db.collection('subscribers').count().get(),
-          db.collection('users').count().get()
+          db.collection('users').count().get(),
+          db.collection('orders').where('status', '==', 'Pending').count().get(),
+          db.collection('social_orders').where('status', '==', 'Pending').count().get()
         ]);
         base.pendingReviews = reviewsSnap.data().count;
         base.unreadResellers = resellersSnap.data().count;
@@ -233,6 +235,14 @@ router.get('/stats', requireRole('super_admin', 'admin'), async (req, res) => {
         base.products = { total: prodsSnap.data().count };
         base.subscribers = { total: subsSnap.data().count };
         base.users = { total: usersSnap.data().count };
+        
+        if (!base.orders) base.orders = { statuses: {} };
+        if (!base.orders.statuses) base.orders.statuses = {};
+        base.orders.statuses.Pending = webPendingSnap.data().count;
+        
+        if (!base.socialOrders) base.socialOrders = { statuses: {} };
+        if (!base.socialOrders.statuses) base.socialOrders.statuses = {};
+        base.socialOrders.statuses.Pending = socPendingSnap.data().count;
       } catch (err) {
         console.error('Failed to fetch extra counts for stats:', err);
       }
