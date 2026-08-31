@@ -91,7 +91,7 @@ router.get('/:id', async (req, res) => {
 /* ── POST /api/products (super_admin + admin only — product catalogue is not supervisor's job) ── */
 router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
   try {
-    const { name, brand, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, inStock, featured, hidden, images, video } = req.body;
+    const { name, brand, category, subcategory, additionalCategories, price, priceOld, purchasePrice, emoji, badge, description, sizes, colors, variants, inStock, featured, hidden, hotSelling, images, video } = req.body;
     if (!name || !category || !price) return res.status(400).json({ error: 'Name, category, and price are required.' });
     if (purchasePrice === undefined || purchasePrice === null || purchasePrice === '') {
       return res.status(400).json({ error: 'Purchase price is required.' });
@@ -119,11 +119,13 @@ router.post('/', requireRole('super_admin', 'admin'), async (req, res) => {
       description: description || '',
       sizes:       Array.isArray(sizes) ? sizes : (sizes || '').split(',').map(s => s.trim()).filter(Boolean),
       colors:      Array.isArray(colors) ? colors : (colors || '').split(',').map(s => s.trim()).filter(Boolean),
+      variants:    Array.isArray(variants) ? variants : (variants || '').split(',').map(s => s.trim()).filter(Boolean),
       images:      Array.isArray(images) ? images.filter(Boolean) : [],
       video:       video || null,
       inStock:     inStock !== false,
       featured:    !!featured,
       hidden:      !!hidden,
+      hotSelling:  !!hotSelling,
       createdAt:   new Date().toISOString(),
     };
 

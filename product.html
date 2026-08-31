@@ -266,6 +266,15 @@
        </div>`
     : '';
 
+  const variantsHTML = (product.variants && product.variants.length)
+    ? `<div class="option-group">
+         <p class="option-label">Variant / Design</p>
+         <div class="color-options">
+         ${product.variants.map((v, i) => `<div class="variant-opt${i === 0 ? ' active' : ''}" data-variant="${v}" style="padding:8px 12px;border:1px solid #ddd;border-radius:4px;cursor:pointer;background:#f9f9f9;font-size:0.9rem;">${v}</div>`).join('')}
+         </div>
+       </div>`
+    : '';
+
   const colorsHTML = (product.colors && product.colors.length)
     ? `<p class="pd-option-label">Color</p>
        <div class="color-options">

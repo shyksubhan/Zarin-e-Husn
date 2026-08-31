@@ -343,7 +343,7 @@ async function zarinehusnRenderShopGrid() {
       const c = p.category === 'catchers' ? 'clips' : p.category;
       const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
       const resolvedCat = s || c;
-      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat);
+      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat) || (CATEGORY_HIERARCHY['deals'] && CATEGORY_HIERARCHY['deals'].includes(resolvedCat));
     });
 
     // We do NOT pre-filter products here anymore, so that the sidebar "All Collections" works correctly on any page!
@@ -375,8 +375,57 @@ async function zarinehusnRenderHomepageGrids() {
       const c = p.category === 'catchers' ? 'clips' : p.category;
       const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
       const resolvedCat = s || c;
-      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat);
+      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat) || (CATEGORY_HIERARCHY['deals'] && CATEGORY_HIERARCHY['deals'].includes(resolvedCat));
     });
+
+    
+    // --- 0. Render Hot Selling Ads ---
+    const hotAds = data.products.filter(p => p.hotSelling === true);
+    const hotSection = document.getElementById('hot-selling-ads');
+    if (hotSection && hotAds.length > 0) {
+      hotSection.style.display = 'block';
+      hotSection.style.padding = '40px 0';
+      
+      let slidesHTML = hotAds.map((p, idx) => {
+        const media = (p.video) 
+          ? `<video src="${p.video}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>`
+          : `<img src="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;"/>`;
+          
+        return `<div class="hot-slide" style="display:${idx===0?'block':'none'}; width:100%; max-width:800px; margin:0 auto; position:relative; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); background:#000;">
+          <div style="position:relative; width:100%; aspect-ratio:4/5; max-height:70vh;">
+            ${media}
+            <div style="position:absolute; bottom:0; left:0; width:100%; background:linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding:40px 20px 20px 20px; color:#fff; text-align:center;">
+              <div style="display:inline-block; background:red; color:white; padding:4px 10px; border-radius:4px; font-size:0.75rem; font-weight:bold; letter-spacing:1px; margin-bottom:10px; text-transform:uppercase;">🔥 Hot Selling</div>
+              <h3 style="font-size:1.8rem; margin:0 0 10px 0; font-family:var(--font-heading); color:#fff;">${p.name}</h3>
+              <p style="font-size:1.2rem; margin:0 0 20px 0; font-weight:600; color:var(--gold);">PKR ${Number(p.price).toLocaleString()}</p>
+              <div style="display:flex; gap:10px; justify-content:center;">
+                <button onclick="window.addToCart('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="padding:12px 24px; font-size:0.9rem; background:transparent; border:1px solid #fff; color:#fff;">Add to Cart</button>
+                <button onclick="window.buyNow('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="padding:12px 24px; font-size:0.9rem; background:var(--gold); border:1px solid var(--gold); color:#000;">Buy it Now</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      
+      hotSection.innerHTML = `
+        <div class="container">
+          ${slidesHTML}
+        </div>
+      `;
+      
+      // Auto-play logic
+      if (hotAds.length > 1) {
+        let currentSlide = 0;
+        const slides = hotSection.querySelectorAll('.hot-slide');
+        setInterval(() => {
+          slides[currentSlide].style.display = 'none';
+          currentSlide = (currentSlide + 1) % slides.length;
+          // Use fadeIn effect
+          slides[currentSlide].style.display = 'block';
+          slides[currentSlide].style.animation = 'fadeUp 0.5s ease forwards';
+        }, 4000);
+      }
+    }
 
     // --- 1. Render Pinned Collections ---
     const pinnedRes = await apiGet('/admin/pinned').catch(e => null);

@@ -166,6 +166,11 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <!-- HOT SELLING ADS -->
+  <section id="hot-selling-ads" style="display:none; width:100%; background:var(--bg);">
+    <!-- Container dynamically populated by JS -->
+  </section>
+
   <!-- CATEGORIES -->
   <section id="categories">
     <div class="container">
@@ -203,6 +208,40 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
       </div>
     </div>
   </section>
+
+  <!-- FEATURED PRODUCTS -->
+  
+<div id="pinned-collections-wrapper"></div>
+
+<!-- Featured Jewelry -->
+<section id="featured-jewelry" style="padding:60px 0; background:var(--bg);">
+  <div class="container">
+    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Jewelry</em></h2>
+      <div style="display:flex; gap: 8px; align-items:center;">
+        <a href="jewelry.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
+      </div>
+    </div>
+    <div class="horizontal-scroll-grid" id="featured-jewelry-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
+      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Cosmetics -->
+<section id="featured-cosmetics" style="padding:0 0 60px 0; background:var(--bg);">
+  <div class="container">
+    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Cosmetics</em></h2>
+      <div style="display:flex; gap: 8px; align-items:center;">
+        <a href="cosmetics.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
+      </div>
+    </div>
+    <div class="horizontal-scroll-grid" id="featured-cosmetics-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
+      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
+    </div>
+  </div>
+</section>
 
   <!-- BRANDS -->
   <section id="brands" style="padding-bottom: 60px;">
@@ -278,40 +317,6 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
       </div>
     </div>
   </section>
-  <!-- FEATURED PRODUCTS -->
-  
-<div id="pinned-collections-wrapper"></div>
-
-<!-- Featured Jewelry -->
-<section id="featured-jewelry" style="padding:60px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Jewelry</em></h2>
-      <div style="display:flex; gap: 8px; align-items:center;">
-        <a href="jewelry.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
-      </div>
-    </div>
-    <div class="horizontal-scroll-grid" id="featured-jewelry-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Cosmetics -->
-<section id="featured-cosmetics" style="padding:0 0 60px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Cosmetics</em></h2>
-      <div style="display:flex; gap: 8px; align-items:center;">
-        <a href="cosmetics.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
-      </div>
-    </div>
-    <div class="horizontal-scroll-grid" id="featured-cosmetics-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
-    </div>
-  </div>
-</section>
-
   <!-- BRAND STORY -->
   <section id="story">
     <div class="container">
