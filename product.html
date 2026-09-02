@@ -324,6 +324,7 @@
         <p class="pd-desc">${product.description || ''}</p>
         ${sizesHTML}
         ${colorsHTML}
+        ${variantsHTML}
         <div class="pd-add-row">
           <button class="btn-primary" id="pd-add-btn" ${product.inStock === false ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
             ${product.inStock === false ? 'Out of Stock' : 'Add to Bag'}
@@ -358,6 +359,7 @@
       opt.classList.add('active');
     });
   });
+  
   root.querySelectorAll('.color-opt').forEach(opt => {
     opt.addEventListener('click', () => {
       root.querySelectorAll('.color-opt').forEach(o => o.classList.remove('active'));
@@ -365,13 +367,22 @@
     });
   });
 
+  root.querySelectorAll('.variant-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      root.querySelectorAll('.variant-opt').forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+    });
+  });
+
+
   /* Add to bag */
   const addBtn = document.getElementById('pd-add-btn');
   if (addBtn && product.inStock !== false) {
     addBtn.addEventListener('click', () => {
       const size = root.querySelector('.size-opt.active')?.dataset.size;
       const color = root.querySelector('.color-opt.active')?.dataset.color;
-      const variant = [size, color].filter(Boolean).join(' — ') || 'Standard';
+      const varOpt = root.querySelector('.variant-opt.active')?.dataset.variant;
+      const variant = [varOpt, size, color].filter(Boolean).join(' — ') || 'Standard';
       window.addToCart(product.name, Number(product.price), emoji, variant, (product.images && product.images[0]) || '');
     });
   }
@@ -382,7 +393,8 @@
     buyNowBtn.addEventListener('click', () => {
       const size = root.querySelector('.size-opt.active')?.dataset.size;
       const color = root.querySelector('.color-opt.active')?.dataset.color;
-      const variant = [size, color].filter(Boolean).join(' — ') || 'Standard';
+      const varOpt = root.querySelector('.variant-opt.active')?.dataset.variant;
+      const variant = [varOpt, size, color].filter(Boolean).join(' — ') || 'Standard';
       window.buyNow(product.name, Number(product.price), emoji, variant, (product.images && product.images[0]) || '');
     });
   }

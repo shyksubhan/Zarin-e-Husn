@@ -210,7 +210,7 @@
 /* ── Product Detail ── */
 .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-top: calc(var(--nav-h) + 60px); }
 .product-gallery-main { aspect-ratio: 4/5; background: var(--bg); }
-.product-gallery-main img, .product-gallery-main video { width: 100%; height: 100%; object-fit: cover; }
+.product-gallery-main img, .product-gallery-main video { width: 100%; height: 100%; object-fit: contain; }
 .product-gallery-thumbs { display: flex; gap: 16px; margin-top: 16px; }
 .gallery-thumb { width: 80px; height: 100px; background: var(--bg); cursor: pointer; border: 1px solid transparent; transition: border-color 0.3s; }
 .gallery-thumb.active, .gallery-thumb:hover { border-color: var(--text); }

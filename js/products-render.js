@@ -397,10 +397,10 @@ async function zarinehusnRenderHomepageGrids() {
       let slidesHTML = hotAds.map((p, idx) => {
         const productUrl = 'product.html?id=' + (p.id || p.name);
         const media = (p.video) 
-          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.location.href='${productUrl}'"></video>`
-          : `<img src="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onclick="window.location.href='${productUrl}'"/>`;
+          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" style="width:100%;height:100%;object-fit:contain;cursor:pointer;" onclick="window.location.href='${productUrl}'"></video>`
+          : `<img src="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;cursor:pointer;" onclick="window.location.href='${productUrl}'"/>`;
           
-        return `<div class="hot-slide" style="display:${idx===0?'block':'none'}; width:100%; max-width:1200px; margin:0 auto; animation: fadeIn 0.5s ease-out;">
+        return `<div class="hot-slide" style="grid-area: 1 / 1; opacity:${idx===0?1:0}; pointer-events:${idx===0?'auto':'none'}; transition: opacity 0.6s ease-in-out; width:100%; max-width:1200px; margin:0 auto;">
           <div style="display:flex; flex-direction:column; background:var(--bg); border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.08); border:1px solid rgba(184,136,58,0.2);">
             
             <style>
@@ -449,7 +449,7 @@ async function zarinehusnRenderHomepageGrids() {
             <h2 style="font-family:var(--font-heading); font-size:2.8rem; margin-bottom:10px; color:#111;">Our Hot Selling Products</h2>
             <p style="color:var(--muted); font-size:1.15rem; max-width:600px; margin:0 auto;">Discover the absolute favorites trending right now. Grab them before they're gone!</p>
           </div>
-          ${slidesHTML}
+          <div style="display:grid; width:100%; position:relative;">${slidesHTML}</div>
         </div>
       `;
       
