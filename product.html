@@ -298,16 +298,16 @@
   const totalMediaCount = images.length + (hasVideo ? 1 : 0);
   const galleryThumbsHTML = (totalMediaCount > 1)
     ? `<div class="product-gallery-thumbs" id="pd-thumbs">
-        ${images.map((url, i) => `<div class="gallery-thumb${(i===0 && hasImages) ? ' active' : ''}" data-idx="${i}" onclick="golnisaSwitchGalleryImage(${i})"><img src="${url}" style="width:100%;height:100%;object-fit:cover;"/></div>`).join('')}
+        ${images.map((url, i) => `<div class="gallery-thumb${(i===0 && hasImages) ? ' active' : ''}" data-idx="${i}" onclick="golnisaSwitchGalleryImage(${i})"><img src="${url}" style="width:100%;"/></div>`).join('')}
         ${hasVideo ? `<div class="gallery-thumb${!hasImages ? ' active' : ''}" data-idx="video" onclick="golnisaSwitchGalleryImage('video')"><i class="fa-solid fa-circle-play" style="font-size:1.3rem;"></i></div>` : ''}
       </div>`
     : '';
 
   /* Main media: prefer first image; if there are no images at all but a video exists, show the video itself as the main media */
   const mainMediaHTML = hasImages
-    ? `<img src="${images[0]}" id="pd-main-image" style="width:100%;height:100%;object-fit:cover;"/>`
+    ? `<img src="${images[0]}" id="pd-main-image" style="width:100%;"/>`
     : hasVideo
-      ? `<video src="${product.video}" id="pd-main-image" controls muted style="width:100%;height:100%;object-fit:cover;"></video>`
+      ? `<video src="${product.video}" id="pd-main-image" controls muted style="width:100%;"></video>`
       : `<span class="emoji-placeholder">${emoji}</span>`;
 
   root.innerHTML = `
@@ -344,9 +344,9 @@
   window.golnisaSwitchGalleryImage = function (idx) {
     const main = document.getElementById('pd-gallery-main');
     if (idx === 'video' && window.golnisaGalleryVideo) {
-      main.innerHTML = `<video src="${window.golnisaGalleryVideo}" controls autoplay muted style="width:100%;height:100%;object-fit:cover;"></video>`;
+      main.innerHTML = `<video src="${window.golnisaGalleryVideo}" controls autoplay muted style="width:100%;"></video>`;
     } else if (typeof idx === 'number' && window.golnisaGalleryImages[idx]) {
-      main.innerHTML = `<img src="${window.golnisaGalleryImages[idx]}" style="width:100%;height:100%;object-fit:cover;"/>`;
+      main.innerHTML = `<img src="${window.golnisaGalleryImages[idx]}" style="width:100%;"/>`;
     }
     document.querySelectorAll('#pd-thumbs .gallery-thumb').forEach(t => t.classList.remove('active'));
     document.querySelector(`#pd-thumbs .gallery-thumb[data-idx="${idx}"]`)?.classList.add('active');
