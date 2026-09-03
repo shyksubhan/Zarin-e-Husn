@@ -67,11 +67,12 @@ function zarinehusnProductCardHTML(p) {
     }
   }
 
+  const fallbackEmoji = `<div style="width:100%;height:100%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--gold);">${emoji}</div>`;
   const mediaHTML = mainImage
-    ? `<img src="${mainImage}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>`
+    ? `<img src="${mainImage}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.outerHTML='\${fallbackEmoji}'" />`
     : hasVideo
-      ? `<video src="${p.video}#t=0.1" muted preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;"></video>`
-      : `<div style="width:100%;height:100%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--gold);">${emoji}</div>`;
+      ? `<video src="${p.video}#t=0.1" muted preload="metadata" playsinline style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML='\${fallbackEmoji}'"></video>`
+      : fallbackEmoji;
 
   // Encode data safely for data-attributes (JSON encoded)
   const cardData = encodeURIComponent(JSON.stringify({
@@ -396,9 +397,10 @@ async function zarinehusnRenderHomepageGrids() {
       
       let slidesHTML = hotAds.map((p, idx) => {
         const productUrl = 'product.html?id=' + (p.id || p.name);
+        const fbHTML = `<div style="width:100%;height:100%;background:#f9f9f9;display:flex;align-items:center;justify-content:center;font-size:5rem;" onclick="window.location.href='\${productUrl}'">${p.emoji || '💎'}</div>`;
         const media = (p.video) 
-          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="this.style.display='none'" onclick="window.location.href='${productUrl}'"></video>`
-          : `<img src="${(p.images && p.images[0]) || 'images/placeholder.jpg'}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="this.style.display='none'" onclick="window.location.href='${productUrl}'"/>`;
+          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || ''}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="this.outerHTML='\${fbHTML}'" onclick="window.location.href='${productUrl}'"></video>`
+          : `<img src="${(p.images && p.images[0]) || ''}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="this.outerHTML='\${fbHTML}'" onclick="window.location.href='${productUrl}'"/>`;
           
         return `<div class="hot-slide" style="grid-area: 1 / 1; opacity:${idx===0?1:0}; pointer-events:${idx===0?'auto':'none'}; transition: opacity 0.6s ease-in-out; width:100%; max-width:1200px; margin:0 auto;">
           <div style="display:flex; flex-direction:column; background:var(--bg); border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.08); border:1px solid rgba(184,136,58,0.2);">
