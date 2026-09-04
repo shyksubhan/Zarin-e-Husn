@@ -2,6 +2,20 @@
    ZARINEHUSN — Main JavaScript
    ============================================================ */
 
+
+/* ── Fallback Image Helper ── */
+window.zhHandleImageError = function(imgElement, emoji, type, url) {
+  let html = '';
+  if (type === 'hotselling') {
+    html = `<div style="width:100%;height:100%;background:#f9f9f9;display:flex;align-items:center;justify-content:center;font-size:5rem;" onclick="window.location.href='${url}'">${emoji || '💎'}</div>`;
+  } else if (type === 'grid') {
+    html = `<div style="width:100%;height:100%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--gold);">${emoji || '💎'}</div>`;
+  } else if (type === 'product-main') {
+    html = `<div style="width:100%;aspect-ratio:4/5;background:#f9f9f9;display:flex;align-items:center;justify-content:center;font-size:5rem;">${emoji || '💎'}</div>`;
+  }
+  imgElement.outerHTML = html;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Sticky Nav ── */

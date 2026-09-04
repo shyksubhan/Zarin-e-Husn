@@ -305,12 +305,11 @@
     : '';
 
   /* Main media: prefer first image; if there are no images at all but a video exists, show the video itself as the main media */
-  const fbHTML = `<div style="width:100%;aspect-ratio:4/5;background:#f9f9f9;display:flex;align-items:center;justify-content:center;font-size:5rem;">${emoji || '💎'}</div>`;
   const mainMediaHTML = hasImages
-    ? `<img src="${images[0]}" id="pd-main-image" style="width:100%;" onerror="this.outerHTML='\${fbHTML}'"/>`
+    ? `<img src="${images[0]}" id="pd-main-image" style="width:100%;" onerror="window.zhHandleImageError(this, '${emoji}', 'product-main')"/>`
     : hasVideo
-      ? `<video src="${product.video}" id="pd-main-image" controls muted style="width:100%;" onerror="this.outerHTML='\${fbHTML}'"></video>`
-      : fbHTML;
+      ? `<video src="${product.video}" id="pd-main-image" controls muted style="width:100%;" onerror="window.zhHandleImageError(this, '${emoji}', 'product-main')"></video>`
+      : `<div style="width:100%;aspect-ratio:4/5;background:#f9f9f9;display:flex;align-items:center;justify-content:center;font-size:5rem;">${emoji || '💎'}</div>`;
 
   root.innerHTML = `
     <div class="product-detail-grid">
@@ -348,7 +347,7 @@
     if (idx === 'video' && window.golnisaGalleryVideo) {
       main.innerHTML = `<video src="${window.golnisaGalleryVideo}" controls autoplay muted style="width:100%;"></video>`;
     } else if (typeof idx === 'number' && window.golnisaGalleryImages[idx]) {
-      main.innerHTML = `<img src="${window.golnisaGalleryImages[idx]}" style="width:100%;" onerror="this.outerHTML='\${fbHTML}'"/>`;
+      main.innerHTML = `<img src="${window.golnisaGalleryImages[idx]}" style="width:100%;" onerror="window.zhHandleImageError(this, '${emoji}', 'product-main')"/>`;
     }
     document.querySelectorAll('#pd-thumbs .gallery-thumb').forEach(t => t.classList.remove('active'));
     document.querySelector(`#pd-thumbs .gallery-thumb[data-idx="${idx}"]`)?.classList.add('active');
