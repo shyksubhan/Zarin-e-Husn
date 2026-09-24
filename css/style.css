@@ -1295,7 +1295,7 @@ body.page-home nav:not(.scrolled) .nav-icons a {
 body.page-home nav:not(.scrolled) .nav-logo-link em { color: #333 !important; }
 
 /* New nav: always white bg, not fixed/transparent */
-body.page-home nav {
+nav {
   position: relative !important;
   background: #fff !important;
   height: auto !important;
@@ -1317,4 +1317,64 @@ body.page-home .hero-content { display: none !important; }
 
 /* Fix section padding for #categories since old styles have 100px */
 body.page-home #categories { padding: 50px 0 !important; }
+
+
+/* NEW FIXES FOR NAVBAR, CATEGORIES AND INSTAGRAM */
+
+/* Nav links styling */
+.nav-links > li > a {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: #222 !important;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-links > li > a:hover {
+  color: var(--gold) !important;
+}
+.nav-links > li > a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-links > li > a:hover::after {
+  width: 100%;
+}
+
+/* Category Circles Scrolling Fix */
+.category-circles-scroll {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  gap: 30px !important;
+  padding: 20px 10px 30px !important;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.category-circles-scroll::-webkit-scrollbar {
+  display: none;
+}
+.cat-circle-card {
+  flex: 0 0 110px !important;
+}
+
+/* Instagram Section Enhancements */
+#instagram-section {
+  background: linear-gradient(to bottom, #fff, #faf8f5) !important;
+  padding: 80px 0 !important;
+}
+.insta-grid {
+  gap: 15px !important;
+  padding: 30px 0 !important;
+}
+.insta-grid img {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
 

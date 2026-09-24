@@ -1183,6 +1183,50 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
   </div>
 </div>
 
+<!-- ── HERO VIDEOS ── -->
+<div id="page-hero-videos" class="page" style="display:none">
+  <div class="page-header">
+    <h1><i class="fa-solid fa-video" style="color:var(--gold);margin-right:8px"></i>Hero Videos</h1>
+    <div class="ml-auto">
+      <button class="btn btn-gold" onclick="openHeroVideoModal()"><i class="fa-solid fa-plus"></i> Add Video</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Preview</th>
+        <th>Video URL</th>
+        <th>Order</th>
+        <th>Action</th>
+      </tr></thead>
+      <tbody id="hero-videos-body"><tr><td colspan="4" class="empty-state"><div class="spinner"></div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── REVIEW SCREENSHOTS ── -->
+<div id="page-review-images" class="page" style="display:none">
+  <div class="page-header">
+    <h1><i class="fa-solid fa-images" style="color:var(--gold);margin-right:8px"></i>Review Screenshots</h1>
+    <div class="ml-auto">
+      <button class="btn btn-gold" onclick="openReviewImageModal()"><i class="fa-solid fa-plus"></i> Add Review</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Preview</th>
+        <th>Label</th>
+        <th>Order</th>
+        <th>Action</th>
+      </tr></thead>
+      <tbody id="review-images-body"><tr><td colspan="4" class="empty-state"><div class="spinner"></div></td></tr></tbody>
+    </table>
+  </div>
+</div>
+
 <!-- ── SETTINGS ── -->
 <div id="page-settings" class="page" style="display:none">
   <div class="page-header"><h1>Settings</h1></div>
@@ -1687,6 +1731,74 @@ select.filter-sel{background:var(--bg);border:1px solid var(--border);border-rad
 </div>
 
 <!-- Toast Container -->
+<!-- ── HERO VIDEO MODAL ── -->
+<div class="modal-overlay" id="hero-video-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <h3 id="hero-video-modal-title"><i class="fa-solid fa-video" style="color:var(--gold);margin-right:8px"></i>Add Hero Video</h3>
+      <button class="btn btn-outline btn-sm" onclick="closeModal('hero-video-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Video Upload</label>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="file" id="hero-video-file" accept="video/*" style="flex:1;" />
+          <button class="btn btn-outline" onclick="uploadHeroVideoFile()" id="btn-hero-video-upload"><i class="fa-solid fa-upload"></i> Upload</button>
+        </div>
+        <small style="color:var(--muted)">Or provide a direct URL below</small>
+      </div>
+      <div class="form-group">
+        <label>Video URL *</label>
+        <input id="hv-url" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Display Order (1-4) *</label>
+        <input type="number" id="hv-order" min="1" max="4" placeholder="1" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('hero-video-modal')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveHeroVideo()"><i class="fa-solid fa-check"></i> Save Video</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── REVIEW IMAGE MODAL ── -->
+<div class="modal-overlay" id="review-image-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <h3 id="review-image-modal-title"><i class="fa-solid fa-images" style="color:var(--gold);margin-right:8px"></i>Add Review Screenshot</h3>
+      <button class="btn btn-outline btn-sm" onclick="closeModal('review-image-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Image Upload</label>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="file" id="review-image-file" accept="image/*" style="flex:1;" />
+          <button class="btn btn-outline" onclick="uploadReviewImageFile()" id="btn-review-image-upload"><i class="fa-solid fa-upload"></i> Upload</button>
+        </div>
+        <small style="color:var(--muted)">Or provide a direct URL below</small>
+      </div>
+      <div class="form-group">
+        <label>Image URL *</label>
+        <input id="ri-url" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Label</label>
+        <input id="ri-label" placeholder="e.g. Great product!" />
+      </div>
+      <div class="form-group">
+        <label>Order</label>
+        <input type="number" id="ri-order" min="1" placeholder="1" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('review-image-modal')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveReviewImage()"><i class="fa-solid fa-check"></i> Save Review</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <!-- ════════════════════════════ JAVASCRIPT ═════════════════════ -->
@@ -2122,6 +2234,8 @@ function showPage(name) {
   if (name === 'social-orders') loadSocialOrders();
   if (name === 'coupons')       loadCoupons();
   if (name === 'invoices')      loadInvoices();
+  if (name === 'hero-videos')   loadHeroVideos();
+  if (name === 'review-images') loadReviewImages();
 }
 
 /* ═══════════════════ DASHBOARD ═══════════════════ */
@@ -5695,6 +5809,217 @@ async function saveCompanySettings() {
     msg.textContent = 'Network error while saving settings.';
   }
   btn.textContent = 'Save Company Settings';
+}
+/* ── HERO VIDEOS MANAGEMENT ── */
+async function loadHeroVideos() {
+  const tbody = document.getElementById('hero-videos-body');
+  try {
+    const res = await fetch(`${API}/admin/hero-videos`, { headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` } });
+    if (!res.ok) throw new Error('Failed to load');
+    const videos = await res.json();
+    if(videos.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fa-solid fa-video-slash"></i><p>No hero videos uploaded yet.</p></td></tr>`;
+      return;
+    }
+    let html = '';
+    videos.sort((a,b) => (a.order || 99) - (b.order || 99)).forEach(v => {
+      html += `<tr>
+        <td><video src="${v.url}" style="height:60px;border-radius:6px" muted></video></td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+          <a href="${v.url}" target="_blank" style="color:var(--blue)">${v.url}</a>
+        </td>
+        <td>${v.order || '-'}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteHeroVideo('${v._id || v.id}')"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML = html;
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:red;text-align:center">Error loading videos</td></tr>`;
+  }
+}
+
+function openHeroVideoModal() {
+  document.getElementById('hv-url').value = '';
+  document.getElementById('hv-order').value = '';
+  document.getElementById('hero-video-file').value = '';
+  document.getElementById('hero-video-modal').classList.add('open');
+}
+
+async function uploadHeroVideoFile() {
+  const fileInput = document.getElementById('hero-video-file');
+  if(!fileInput.files[0]) return showToast('Please select a video file first', 'error');
+  const btn = document.getElementById('btn-hero-video-upload');
+  btn.textContent = 'Uploading...';
+  btn.disabled = true;
+  const fd = new FormData();
+  fd.append('file', fileInput.files[0]);
+  try {
+    const res = await fetch(`${API}/upload`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` },
+      body: fd
+    });
+    const data = await res.json();
+    if(data.url) {
+      document.getElementById('hv-url').value = data.url;
+      showToast('Video uploaded successfully', 'success');
+    } else {
+      showToast(data.error || 'Upload failed', 'error');
+    }
+  } catch(e) {
+    showToast('Network error during upload', 'error');
+  }
+  btn.textContent = 'Upload';
+  btn.disabled = false;
+}
+
+async function saveHeroVideo() {
+  const url = document.getElementById('hv-url').value.trim();
+  const order = parseInt(document.getElementById('hv-order').value) || 1;
+  if(!url) return showToast('Video URL is required', 'error');
+  try {
+    const res = await fetch(`${API}/admin/hero-videos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getCookie('admin_token')}` },
+      body: JSON.stringify({ url, order })
+    });
+    const data = await res.json();
+    if(res.ok) {
+      showToast('Video saved successfully', 'success');
+      closeModal('hero-video-modal');
+      loadHeroVideos();
+    } else {
+      showToast(data.error || 'Failed to save', 'error');
+    }
+  } catch(e) {
+    showToast('Network error', 'error');
+  }
+}
+
+async function deleteHeroVideo(id) {
+  if(!confirm('Are you sure you want to delete this video?')) return;
+  try {
+    const res = await fetch(`${API}/admin/hero-videos/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` }
+    });
+    if(res.ok) {
+      showToast('Video deleted', 'success');
+      loadHeroVideos();
+    } else {
+      showToast('Failed to delete', 'error');
+    }
+  } catch(e) {
+    showToast('Network error', 'error');
+  }
+}
+
+/* ── REVIEW IMAGES MANAGEMENT ── */
+async function loadReviewImages() {
+  const tbody = document.getElementById('review-images-body');
+  try {
+    const res = await fetch(`${API}/admin/review-images`, { headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` } });
+    if (!res.ok) throw new Error('Failed to load');
+    const images = await res.json();
+    if(images.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fa-solid fa-images"></i><p>No review screenshots uploaded yet.</p></td></tr>`;
+      return;
+    }
+    let html = '';
+    images.sort((a,b) => (a.order || 99) - (b.order || 99)).forEach(r => {
+      html += `<tr>
+        <td><img src="${r.url}" style="height:60px;border-radius:6px;object-fit:cover" /></td>
+        <td>${r.label || '-'}</td>
+        <td>${r.order || '-'}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" onclick="deleteReviewImage('${r._id || r.id}')"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML = html;
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:red;text-align:center">Error loading images</td></tr>`;
+  }
+}
+
+function openReviewImageModal() {
+  document.getElementById('ri-url').value = '';
+  document.getElementById('ri-label').value = '';
+  document.getElementById('ri-order').value = '';
+  document.getElementById('review-image-file').value = '';
+  document.getElementById('review-image-modal').classList.add('open');
+}
+
+async function uploadReviewImageFile() {
+  const fileInput = document.getElementById('review-image-file');
+  if(!fileInput.files[0]) return showToast('Please select an image file first', 'error');
+  const btn = document.getElementById('btn-review-image-upload');
+  btn.textContent = 'Uploading...';
+  btn.disabled = true;
+  const fd = new FormData();
+  fd.append('file', fileInput.files[0]);
+  try {
+    const res = await fetch(`${API}/upload`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` },
+      body: fd
+    });
+    const data = await res.json();
+    if(data.url) {
+      document.getElementById('ri-url').value = data.url;
+      showToast('Image uploaded successfully', 'success');
+    } else {
+      showToast(data.error || 'Upload failed', 'error');
+    }
+  } catch(e) {
+    showToast('Network error during upload', 'error');
+  }
+  btn.textContent = 'Upload';
+  btn.disabled = false;
+}
+
+async function saveReviewImage() {
+  const url = document.getElementById('ri-url').value.trim();
+  const label = document.getElementById('ri-label').value.trim();
+  const order = parseInt(document.getElementById('ri-order').value) || 1;
+  if(!url) return showToast('Image URL is required', 'error');
+  try {
+    const res = await fetch(`${API}/admin/review-images`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getCookie('admin_token')}` },
+      body: JSON.stringify({ url, label, order })
+    });
+    const data = await res.json();
+    if(res.ok) {
+      showToast('Review image saved successfully', 'success');
+      closeModal('review-image-modal');
+      loadReviewImages();
+    } else {
+      showToast(data.error || 'Failed to save', 'error');
+    }
+  } catch(e) {
+    showToast('Network error', 'error');
+  }
+}
+
+async function deleteReviewImage(id) {
+  if(!confirm('Are you sure you want to delete this review?')) return;
+  try {
+    const res = await fetch(`${API}/admin/review-images/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` }
+    });
+    if(res.ok) {
+      showToast('Review deleted', 'success');
+      loadReviewImages();
+    } else {
+      showToast('Failed to delete', 'error');
+    }
+  } catch(e) {
+    showToast('Network error', 'error');
+  }
 }
 </script>
 

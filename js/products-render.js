@@ -412,20 +412,21 @@ async function zarinehusnRenderHomepageGrids() {
     const catContainer = document.getElementById('category-circles');
     if (catContainer) {
       const subcats = [
-        // Jewelry subcategories
+        // Jewelry
         { id: 'necklace', name: 'Necklaces', img: 'images/categories/necklace.jpg', href: 'jewelry.html?cat=necklace' },
         { id: 'earrings', name: 'Earrings', img: 'images/categories/earrings.jpg', href: 'jewelry.html?cat=earrings' },
         { id: 'rings', name: 'Rings', img: 'images/categories/rings.jpg', href: 'jewelry.html?cat=rings' },
         { id: 'bracelets', name: 'Bracelets', img: 'images/categories/bracelets.jpg', href: 'jewelry.html?cat=bracelets' },
-        { id: 'bangles', name: 'Bangles', img: 'images/categories/bracelets.jpg', href: 'jewelry.html?cat=bangles' },
-        { id: 'jewelry-sets', name: 'Jewelry Sets', img: 'images/categories/jewelry-new.jpg', href: 'jewelry.html?cat=jewelry-sets' },
-        // Cosmetics subcategories
-        { id: 'face-cosmetics', name: 'Face', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=face-cosmetics' },
-        { id: 'eye-makeup', name: 'Eye Makeup', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=eye-makeup' },
-        { id: 'lip-makeup', name: 'Lip Makeup', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=lip-makeup' },
+        { id: 'bangles', name: 'Bangles', img: 'images/categories/bangles.jpg', href: 'jewelry.html?cat=bangles' },
+        { id: 'jewelry-sets', name: 'Sets', img: 'images/categories/sets.jpg', href: 'jewelry.html?cat=jewelry-sets' },
+        // Cosmetics
+        { id: 'face-cosmetics', name: 'Face', img: 'images/categories/face.jpg', href: 'cosmetics.html?cat=face-cosmetics' },
+        { id: 'eye-makeup', name: 'Eyes', img: 'images/categories/eyes.jpg', href: 'cosmetics.html?cat=eye-makeup' },
+        { id: 'lip-makeup', name: 'Lips', img: 'images/categories/lips.jpg', href: 'cosmetics.html?cat=lip-makeup' },
         { id: 'skin-care', name: 'Skin Care', img: 'images/categories/skincare.jpg', href: 'cosmetics.html?cat=skin-care' },
+        { id: 'nail-cosmetics', name: 'Nails', img: 'images/categories/nails.jpg', href: 'cosmetics.html?cat=nail-cosmetics' },
         // Deals
-        { id: 'deals', name: 'Deals', img: 'images/hero_deals.jpg', href: 'shop.html?cat=deals' },
+        { id: 'deals', name: 'Deals', img: 'images/categories/deals.jpg', href: 'shop.html?cat=deals' },
         // Shop All
         { id: 'all', name: 'Shop All', img: '', href: 'shop.html', isShopAll: true },
       ];
@@ -502,25 +503,13 @@ async function zarinehusnRenderHomepageGrids() {
                 <h2>${pin.name}</h2>
                 <a href="${catUrl}" class="see-all-link">View All →</a>
               </div>
-              <div class="pinned-scroll-track" id="${rowId}" style="display:flex;overflow-x:auto;gap:12px;padding-bottom:20px;scroll-snap-type:x mandatory;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;">
-                ${pinProducts.map(p => {
-                  let html = zarinehusnProductCardHTML(p);
-                  return html.replace('class="product-card"', 'class="product-card pin-card" style="flex:0 0 220px;min-width:220px;scroll-snap-align:start;"');
-                }).join('')}
+              <div class="product-grid-4" id="${rowId}">
+                ${pinProducts.map(p => zarinehusnProductCardHTML(p)).join('')}
               </div>
             </div>
           `;
           pinnedContainer.appendChild(section);
           zarinehusnReInitCards(section);
-          /* Mouse drag-to-scroll */
-          const track = section.querySelector(`#${rowId}`);
-          if (track) {
-            let isDown = false, startX, scrollLeft;
-            track.addEventListener('mousedown', e => { isDown = true; track.style.cursor = 'grabbing'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
-            track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.5; });
-          }
         }
       });
     }
