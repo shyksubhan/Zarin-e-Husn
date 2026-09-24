@@ -515,31 +515,36 @@ async function zarinehusnRenderHomepageGrids() {
     }
 
     // --- 5. Render Featured Spotlight ---
-    const spotlightSection = document.getElementById('featured-spotlight');
-    const spotlightContent = document.getElementById('spotlight-content');
-    if (spotlightSection && spotlightContent) {
-      const spotlightProduct = allProducts.find(p => p.featuredSpotlight === true) || allProducts.find(p => p.featured === true);
-      if (spotlightProduct) {
-        const sp = spotlightProduct;
-        const productUrl = 'product.html?id=' + (sp.id || sp.name);
-        const img = (sp.images && sp.images[0]) || '';
-        spotlightContent.innerHTML = `
-          <div class="spotlight-image">
-            <img src="${img}" alt="${sp.name}" onerror="window.zhHandleImageError(this, '${sp.emoji||''}', 'product-main')" />
-          </div>
-          <div class="spotlight-details">
-            <p class="spotlight-label">Featured Spotlight</p>
-            <h3 class="spotlight-name">${sp.name}</h3>
-            <p class="spotlight-price">PKR ${Number(sp.price).toLocaleString()}</p>
-            <p class="spotlight-desc">${sp.description || ''}</p>
-            <a href="${productUrl}" class="spotlight-btn">Shop Now</a>
-          </div>
-        `;
-        spotlightSection.style.display = 'block';
+      const spotlightRes = await apiGet('/admin/spotlight').catch(e => null);
+      const spotlightIds = spotlightRes && spotlightRes.spotlight ? spotlightRes.spotlight : [];
+      
+      const spotlightSection = document.getElementById('featured-spotlight');
+      
+      if (spotlightSection && spotlightIds.length > 0) {
+        const spotlightProducts = spotlightIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean);
+        
+        if (spotlightProducts.length > 0) {
+          spotlightSection.className = 'collection-section product-section';
+          spotlightSection.innerHTML = `
+            <div class="container">
+              <div class="section-header-row" style="justify-content:center; text-align:center;">
+                <h2 style="font-family: 'Amiri', 'Playfair Display', serif; font-size: 2.5rem; text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 5px; display: inline-block;">Spotlight</h2>
+              </div>
+              <div class="product-grid-4">
+                ${spotlightProducts.map(p => zarinehusnCreateProductCard(p)).join('')}
+              </div>
+            </div>
+          `;
+          zarinehusnReInitCards(spotlightSection);
+          spotlightSection.style.display = 'block';
+        } else {
+          spotlightSection.style.display = 'none';
+        }
+      } else if (spotlightSection) {
+        spotlightSection.style.display = 'none';
       }
-    }
-
-    // --- 6. Render Reviews Highlights ---
+      
+      // --- 6. Render Reviews Highlights ---
     const reviewsContainer = document.getElementById('reviews-highlights');
     if (reviewsContainer) {
       try {
