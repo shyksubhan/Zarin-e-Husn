@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getDB } = require('../firebase');
+const { getDB } = require('../utils/firebase');
 
 const requireAdmin = (req, res, next) => next();
 
