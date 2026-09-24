@@ -1,4 +1,8 @@
-/* ============================================================
+const fs = require('fs');
+const file = 'c:\\Users\\Muhammad Subhan\\Desktop\\Me\\Zarin-e-Husn\\js\\search.js';
+let content = fs.readFileSync(file, 'utf8');
+
+const replacementJs = `/* ============================================================
    ZARIN-E-HUSN - Search System
    Searches all products, pages, categories, keywords
    ============================================================ */
@@ -80,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).slice(0, 8); // limit to top 8 products
 
     if (staticMatches.length === 0 && productMatches.length === 0) {
-      results.innerHTML = `<div class="search-no-results">No results for "<em>${q}</em>"</div>`;
+      results.innerHTML = \`<div class="search-no-results">No results for "<em>\${q}</em>"</div>\`;
       return;
     }
 
@@ -88,34 +92,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render Products First (since users usually search for products)
     if (productMatches.length > 0) {
-      html += `<div class="search-section-title" style="padding: 8px 12px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #888; font-weight: 700; background: #faf8f5; border-bottom: 1px solid #eee;">Products</div>`;
+      html += \`<div class="search-section-title">Products</div>\`;
       productMatches.forEach(p => {
         const imgUrl = p.images && p.images[0] ? p.images[0] : 'images/placeholder.jpg';
-        const price = p.price ? `PKR ${Number(p.price).toLocaleString()}` : '';
-        html += `
-        <a href="product.html?id=${p.id || p.name}" class="search-result-item product-result" onclick="closeSearchOverlay()" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none;">
-          <img src="${imgUrl}" alt="${p.name || p.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.src='images/placeholder.jpg'"/>
+        const price = p.price ? \`PKR \${Number(p.price).toLocaleString()}\` : '';
+        html += \`
+        <a href="product.html?id=\${p.id || p.name}" class="search-result-item product-result" onclick="closeSearchOverlay()" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none;">
+          <img src="\${imgUrl}" alt="\${p.name || p.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.src='images/placeholder.jpg'"/>
           <div style="flex: 1; display: flex; flex-direction: column;">
-            <span class="sr-title" style="color: #111; font-weight: 600; font-size: 0.95rem;">${highlight(p.name || p.title || '', q)}</span>
-            <span class="sr-price" style="color: #888; font-size: 0.85rem;">${price}</span>
+            <span class="sr-title" style="color: #111; font-weight: 600; font-size: 0.95rem;">\${highlight(p.name || p.title || '', q)}</span>
+            <span class="sr-price" style="color: #888; font-size: 0.85rem;">\${price}</span>
           </div>
-        </a>`;
+        </a>\`;
       });
     }
 
     // Render Categories & Pages
     if (staticMatches.length > 0) {
-      if (productMatches.length > 0) html += `<div class="search-section-title" style="padding: 8px 12px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #888; font-weight: 700; background: #faf8f5; border-bottom: 1px solid #eee; border-top: 1px solid #eee; margin-top: 10px;">Pages & Categories</div>`;
+      if (productMatches.length > 0) html += \`<div class="search-section-title" style="margin-top:15px;">Pages & Categories</div>\`;
       staticMatches.forEach(item => {
         const icon = item.type === 'category' ? '<i class="fa-solid fa-layer-group"></i>' : '<i class="fa-solid fa-file"></i>';
-        html += `
-        <a href="${item.url}" class="search-result-item" onclick="closeSearchOverlay()" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none;">
-          <span style="color: #888; font-size: 1.1rem; width: 20px; text-align: center;">${icon}</span>
+        html += \`
+        <a href="\${item.url}" class="search-result-item" onclick="closeSearchOverlay()" style="display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid #eee; text-decoration: none;">
+          <span style="color: #888; font-size: 1.1rem; width: 20px; text-align: center;">\${icon}</span>
           <div style="flex: 1; display: flex; flex-direction: column;">
-            <span class="sr-title" style="color: #111; font-weight: 600; font-size: 0.95rem;">${highlight(item.title, q)}</span>
-            <span class="sr-badge" style="color: #888; font-size: 0.8rem;">${item.badge}</span>
+            <span class="sr-title" style="color: #111; font-weight: 600; font-size: 0.95rem;">\${highlight(item.title, q)}</span>
+            <span class="sr-badge" style="color: #888; font-size: 0.8rem;">\${item.badge}</span>
           </div>
-        </a>`;
+        </a>\`;
       });
     }
 
@@ -134,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* highlight matched text */
 function highlight(text, query) {
   if (!text) return '';
-  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const re = new RegExp(\`(\${query.replace(/[.*+?^\${}()|[\\]\\\\]/g, '\\\\$&')})\`, 'gi');
   return text.replace(re, '<mark style="background: rgba(196,153,108,0.3); color: inherit;">$1</mark>');
 }
 
@@ -142,3 +146,7 @@ function highlight(text, query) {
 window.closeSearchOverlay = function() {
   document.getElementById('search-overlay')?.classList.remove('active');
 }
+`;
+
+fs.writeFileSync(file, replacementJs);
+console.log('Fixed search.js');
