@@ -1441,3 +1441,5 @@ body.page-home #categories { padding: 50px 0 !important; }
   .nav-right { gap: 10px !important; }
   .nav-right a, .nav-right button, .nav-left button { font-size: 1.15rem !important; }
 }
+
+@keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
