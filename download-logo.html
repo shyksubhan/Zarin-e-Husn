@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Zarin-e-Husn Logo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #faf8f5; margin: 0; }
+    canvas { border: 1px solid #ddd; background: transparent; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    button { background: #c4996c; color: white; border: none; padding: 12px 24px; font-size: 1.2rem; cursor: pointer; border-radius: 6px; font-weight: bold; }
+    button:hover { background: #b0885f; }
+  </style>
+</head>
+<body>
+
+  <h2 style="color: #333; margin-bottom: 30px;">Zarin-e-Husn Logo Generator</h2>
+  
+  <canvas id="logoCanvas" width="1000" height="400"></canvas>
+  
+  <button onclick="downloadLogo()">Download High-Res PNG</button>
+
+  <script>
+    window.onload = () => {
+      // Wait for font to load
+      document.fonts.ready.then(() => {
+        const canvas = document.getElementById('logoCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Clear background (transparent)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw Text
+        ctx.fillStyle = '#111111';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 180px "Cairo"'; // Ultra HD size
+        
+        // The exact diacritics text
+        const text = 'زَرِین حسن';
+        
+        ctx.fillText(text, canvas.width / 2, canvas.height / 2 + 20); // slightly offset for baseline
+      });
+    };
+
+    function downloadLogo() {
+      const canvas = document.getElementById('logoCanvas');
+      const dataURL = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = dataURL;
+      a.download = 'zarin-e-husn-logo-hd.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
