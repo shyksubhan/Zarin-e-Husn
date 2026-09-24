@@ -5852,10 +5852,11 @@ async function saveCompanySettings() {
 async function loadHeroVideos() {
   const tbody = document.getElementById('hero-videos-body');
   try {
-    const res = await fetch(`${API}/admin/hero-videos`, { headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` } });
+    const res = await apiFetch('/admin/hero-videos');
     if (!res.ok) throw new Error('Failed to load');
-    const videos = await res.json();
-    if(videos.length === 0) {
+    let videosData = await res.json();
+      const videos = Array.isArray(videosData) ? videosData : (videosData.videos || []);
+      if(videos.length === 0) {
       tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fa-solid fa-video-slash"></i><p>No hero videos uploaded yet.</p></td></tr>`;
       return;
     }
@@ -5887,27 +5888,23 @@ function openHeroVideoModal() {
 
 async function uploadHeroVideoFile() {
   const fileInput = document.getElementById('hero-video-file');
-  if(!fileInput.files[0]) return showToast('Please select a video file first', 'error');
+  if(!fileInput.files[0]) return toast('Please select a video file first', 'error');
   const btn = document.getElementById('btn-hero-video-upload');
   btn.textContent = 'Uploading...';
   btn.disabled = true;
   const fd = new FormData();
   fd.append('file', fileInput.files[0]);
   try {
-    const res = await fetch(`${API}/upload`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` },
-      body: fd
-    });
+    const res = await fetch(`${API}/upload`, { method: 'POST', headers: { 'Authorization': `Bearer ${adminToken}` }, body: fd });
     const data = await res.json();
     if(data.url) {
       document.getElementById('hv-url').value = data.url;
-      showToast('Video uploaded successfully', 'success');
+      toast('Video uploaded successfully', 'success');
     } else {
-      showToast(data.error || 'Upload failed', 'error');
+      toast(data.error || 'Upload failed', 'error');
     }
   } catch(e) {
-    showToast('Network error during upload', 'error');
+    toast('Network error during upload', 'error');
   }
   btn.textContent = 'Upload';
   btn.disabled = false;
@@ -5916,41 +5913,34 @@ async function uploadHeroVideoFile() {
 async function saveHeroVideo() {
   const url = document.getElementById('hv-url').value.trim();
   const order = parseInt(document.getElementById('hv-order').value) || 1;
-  if(!url) return showToast('Video URL is required', 'error');
+  if(!url) return toast('Video URL is required', 'error');
   try {
-    const res = await fetch(`${API}/admin/hero-videos`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getCookie('admin_token')}` },
-      body: JSON.stringify({ url, order })
-    });
+    const res = await apiFetch('/admin/hero-videos', { method: 'POST', body: JSON.stringify({ url, order }) });
     const data = await res.json();
     if(res.ok) {
-      showToast('Video saved successfully', 'success');
+      toast('Video saved successfully', 'success');
       closeModal('hero-video-modal');
       loadHeroVideos();
     } else {
-      showToast(data.error || 'Failed to save', 'error');
+      toast(data.error || 'Failed to save', 'error');
     }
   } catch(e) {
-    showToast('Network error', 'error');
+    toast('Network error', 'error');
   }
 }
 
 async function deleteHeroVideo(id) {
   if(!confirm('Are you sure you want to delete this video?')) return;
   try {
-    const res = await fetch(`${API}/admin/hero-videos/${id}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` }
-    });
+    const res = await apiFetch(`/admin/hero-videos/${id}`, { method: 'DELETE' });
     if(res.ok) {
-      showToast('Video deleted', 'success');
+      toast('Video deleted', 'success');
       loadHeroVideos();
     } else {
-      showToast('Failed to delete', 'error');
+      toast('Failed to delete', 'error');
     }
   } catch(e) {
-    showToast('Network error', 'error');
+    toast('Network error', 'error');
   }
 }
 
@@ -5958,10 +5948,11 @@ async function deleteHeroVideo(id) {
 async function loadReviewImages() {
   const tbody = document.getElementById('review-images-body');
   try {
-    const res = await fetch(`${API}/admin/review-images`, { headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` } });
+    const res = await apiFetch('/admin/review-images');
     if (!res.ok) throw new Error('Failed to load');
-    const images = await res.json();
-    if(images.length === 0) {
+    let imagesData = await res.json();
+      const images = Array.isArray(imagesData) ? imagesData : (imagesData.reviews || imagesData.images || []);
+      if(images.length === 0) {
       tbody.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fa-solid fa-images"></i><p>No review screenshots uploaded yet.</p></td></tr>`;
       return;
     }
@@ -5992,27 +5983,23 @@ function openReviewImageModal() {
 
 async function uploadReviewImageFile() {
   const fileInput = document.getElementById('review-image-file');
-  if(!fileInput.files[0]) return showToast('Please select an image file first', 'error');
+  if(!fileInput.files[0]) return toast('Please select an image file first', 'error');
   const btn = document.getElementById('btn-review-image-upload');
   btn.textContent = 'Uploading...';
   btn.disabled = true;
   const fd = new FormData();
   fd.append('file', fileInput.files[0]);
   try {
-    const res = await fetch(`${API}/upload`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` },
-      body: fd
-    });
+    const res = await fetch(`${API}/upload`, { method: 'POST', headers: { 'Authorization': `Bearer ${adminToken}` }, body: fd });
     const data = await res.json();
     if(data.url) {
       document.getElementById('ri-url').value = data.url;
-      showToast('Image uploaded successfully', 'success');
+      toast('Image uploaded successfully', 'success');
     } else {
-      showToast(data.error || 'Upload failed', 'error');
+      toast(data.error || 'Upload failed', 'error');
     }
   } catch(e) {
-    showToast('Network error during upload', 'error');
+    toast('Network error during upload', 'error');
   }
   btn.textContent = 'Upload';
   btn.disabled = false;
@@ -6022,41 +6009,34 @@ async function saveReviewImage() {
   const url = document.getElementById('ri-url').value.trim();
   const label = document.getElementById('ri-label').value.trim();
   const order = parseInt(document.getElementById('ri-order').value) || 1;
-  if(!url) return showToast('Image URL is required', 'error');
+  if(!url) return toast('Image URL is required', 'error');
   try {
-    const res = await fetch(`${API}/admin/review-images`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getCookie('admin_token')}` },
-      body: JSON.stringify({ url, label, order })
-    });
+    const res = await apiFetch('/admin/review-images', { method: 'POST', body: JSON.stringify({ url, label, order }) });
     const data = await res.json();
     if(res.ok) {
-      showToast('Review image saved successfully', 'success');
+      toast('Review image saved successfully', 'success');
       closeModal('review-image-modal');
       loadReviewImages();
     } else {
-      showToast(data.error || 'Failed to save', 'error');
+      toast(data.error || 'Failed to save', 'error');
     }
   } catch(e) {
-    showToast('Network error', 'error');
+    toast('Network error', 'error');
   }
 }
 
 async function deleteReviewImage(id) {
   if(!confirm('Are you sure you want to delete this review?')) return;
   try {
-    const res = await fetch(`${API}/admin/review-images/${id}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${getCookie('admin_token')}` }
-    });
+    const res = await apiFetch(`/admin/review-images/${id}`, { method: 'DELETE' });
     if(res.ok) {
-      showToast('Review deleted', 'success');
+      toast('Review deleted', 'success');
       loadReviewImages();
     } else {
-      showToast('Failed to delete', 'error');
+      toast('Failed to delete', 'error');
     }
   } catch(e) {
-    showToast('Network error', 'error');
+    toast('Network error', 'error');
   }
 }
 
