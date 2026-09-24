@@ -1371,7 +1371,7 @@ body.page-home #categories { padding: 50px 0 !important; }
   display: none;
 }
 .cat-circle-card {
-  flex: 0 0 110px !important;
+  flex: 0 0 145px !important; margin: 0 10px;
 }
 
 /* Instagram Section Enhancements */

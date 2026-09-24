@@ -418,13 +418,13 @@ async function zarinehusnRenderHomepageGrids() {
         { id: 'rings', name: 'Rings', img: 'images/categories/rings.jpg', href: 'jewelry.html?cat=rings' },
         { id: 'bracelets', name: 'Bracelets', img: 'images/categories/bracelets.jpg', href: 'jewelry.html?cat=bracelets' },
         { id: 'bangles', name: 'Bangles', img: 'images/categories/bangles.jpg', href: 'jewelry.html?cat=bangles' },
-        { id: 'jewelry-sets', name: 'Sets', img: 'images/categories/sets.jpg', href: 'jewelry.html?cat=jewelry-sets' },
+        { id: 'jewelry-sets', name: 'Jewelry Sets', img: 'images/categories/sets.jpg', href: 'jewelry.html?cat=jewelry-sets' },
         // Cosmetics
-        { id: 'face-cosmetics', name: 'Face', img: 'images/categories/face.jpg', href: 'cosmetics.html?cat=face-cosmetics' },
-        { id: 'eye-makeup', name: 'Eyes', img: 'images/categories/eyes.jpg', href: 'cosmetics.html?cat=eye-makeup' },
-        { id: 'lip-makeup', name: 'Lips', img: 'images/categories/lips.jpg', href: 'cosmetics.html?cat=lip-makeup' },
+        { id: 'face-cosmetics', name: 'Face Makeup', img: 'images/categories/face.jpg', href: 'cosmetics.html?cat=face-cosmetics' },
+        { id: 'eye-makeup', name: 'Eye Makeup', img: 'images/categories/eyes.jpg', href: 'cosmetics.html?cat=eye-makeup' },
+        { id: 'lip-makeup', name: 'Lip Makeup', img: 'images/categories/lips.jpg', href: 'cosmetics.html?cat=lip-makeup' },
         { id: 'skin-care', name: 'Skin Care', img: 'images/categories/skincare.jpg', href: 'cosmetics.html?cat=skin-care' },
-        { id: 'nail-cosmetics', name: 'Nails', img: 'images/categories/nails.jpg', href: 'cosmetics.html?cat=nail-cosmetics' },
+        { id: 'nail-cosmetics', name: 'False Nails', img: 'images/categories/nails.jpg', href: 'cosmetics.html?cat=nail-cosmetics' },
         // Deals
         { id: 'deals', name: 'Deals', img: 'images/categories/deals.jpg', href: 'shop.html?cat=deals' },
         // Shop All
