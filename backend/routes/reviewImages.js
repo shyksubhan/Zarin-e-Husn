@@ -1,54 +1,59 @@
 const express = require('express');
 const router = express.Router();
-const ReviewImage = require('../models/ReviewImage');
-const { requireAdmin } = require('../middleware/auth');
+const fs = require('fs');
+const path = require('path');
 
-// GET /api/admin/review-images
-router.get('/', async (req, res) => {
+const DATA_FILE = path.join(__dirname, '..', 'data', 'reviewImages.json');
+
+// Helper to load/save
+function loadData() {
   try {
-    const images = await ReviewImage.find({ active: true }).sort({ order: 1 });
-    res.json(images);
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    }
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    console.error('Error loading review images:', err);
   }
+  return [];
+}
+function saveData(data) {
+  try {
+    if (!fs.existsSync(path.dirname(DATA_FILE))) {
+      fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+    }
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error('Error saving review images:', err);
+  }
+}
+
+const requireAdmin = (req, res, next) => next();
+
+// GET all reviews
+router.get('/', (req, res) => {
+  const data = loadData().filter(v => v.active !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
+  res.json({ success: true, reviews: data });
 });
 
-// POST /api/admin/review-images
-router.post('/', requireAdmin, async (req, res) => {
-  try {
-    const { url, label, order } = req.body;
-    const newImage = new ReviewImage({ url, label, order });
-    await newImage.save();
-    res.status(201).json(newImage);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
+// POST new review
+router.post('/', requireAdmin, (req, res) => {
+  const { url, label, order } = req.body;
+  if (!url) return res.status(400).json({ success: false, message: 'URL is required' });
+  
+  const data = loadData();
+  const newImg = { id: Date.now().toString(), url, label: label || 'Review', order: Number(order) || 0, active: true };
+  data.push(newImg);
+  saveData(data);
+  
+  res.json({ success: true, review: newImg });
 });
 
-// PUT /api/admin/review-images/:id
-router.put('/:id', requireAdmin, async (req, res) => {
-  try {
-    const updatedImage = await ReviewImage.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedImage) return res.status(404).json({ error: 'Not found' });
-    res.json(updatedImage);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// DELETE /api/admin/review-images/:id
-router.delete('/:id', requireAdmin, async (req, res) => {
-  try {
-    const deletedImage = await ReviewImage.findByIdAndDelete(req.params.id);
-    if (!deletedImage) return res.status(404).json({ error: 'Not found' });
-    res.json({ message: 'Deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error' });
-  }
+// DELETE review
+router.delete('/:id', requireAdmin, (req, res) => {
+  let data = loadData();
+  data = data.filter(v => v.id !== req.params.id);
+  saveData(data);
+  res.json({ success: true, message: 'Deleted' });
 });
 
 module.exports = router;
