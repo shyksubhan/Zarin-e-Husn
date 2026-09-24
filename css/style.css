@@ -1180,3 +1180,141 @@ body.page-home nav:not(.scrolled) .nav-dropdown .dropdown-menu a:hover {
     z-index: -1 !important;
   }
 }
+
+/* 1. NEW NAVBAR STYLES (EFFORRO-style centered logo) */
+nav { flex-direction: column; padding: 0; }
+.nav-top-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; width: 100%; }
+.nav-logo-center { display: block; text-align: center; }
+.nav-logo-center img { height: 50px; }
+.nav-categories-row { display: flex; justify-content: center; gap: 32px; padding: 8px 0; border-top: 1px solid #eee; width: 100%; }
+.nav-categories-row a { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: #333; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+.nav-categories-row a:hover { color: var(--gold); }
+@media (max-width: 768px) {
+  .nav-categories-row { display: none; }
+}
+
+/* 2. HERO VIDEO SECTION */
+.hero-videos { padding: 60px 0; background: #fff; }
+.hero-video-heading { text-align: center; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; font-family: var(--font-heading); }
+.hero-video-subtitle { text-align: center; color: var(--muted); font-size: 1rem; font-style: italic; margin-bottom: 40px; }
+.hero-video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.hero-video-card { border-radius: 16px; overflow: hidden; aspect-ratio: 9/16; position: relative; cursor: pointer; }
+.hero-video-card video { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 768px) {
+  .hero-video-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+@media (max-width: 480px) {
+  .hero-video-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .hero-video-heading { font-size: 1.5rem; }
+}
+
+/* 3. CATEGORY CIRCLES */
+.section-title-simple { text-align: center; font-size: 1.8rem; font-family: var(--font-heading); margin-bottom: 32px; font-weight: 600; }
+.section-subtitle { text-align: center; color: var(--muted); font-size: 0.95rem; margin-top: -20px; margin-bottom: 32px; }
+.category-circles-scroll { display: flex; gap: 28px; overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none; -ms-overflow-style: none; justify-content: center; flex-wrap: wrap; }
+.category-circles-scroll::-webkit-scrollbar { display: none; }
+.cat-circle { text-decoration: none; text-align: center; flex: 0 0 auto; width: 110px; transition: transform 0.3s; }
+.cat-circle:hover { transform: translateY(-4px); }
+.cat-circle-img { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px; border: 3px solid #f0ebe3; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+.cat-circle-img img { width: 100%; height: 100%; object-fit: cover; }
+.cat-circle p { font-size: 0.82rem; color: #333; font-weight: 500; margin: 0; }
+@media (max-width: 768px) {
+  .category-circles-scroll { flex-wrap: nowrap; justify-content: flex-start; padding-left: 16px; }
+  .cat-circle { width: 90px; }
+  .cat-circle-img { width: 80px; height: 80px; }
+}
+
+/* 4. PRODUCT SECTIONS (New Arrivals, Trending Now) */
+.product-section { padding: 50px 0; }
+.section-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.section-header-row h2 { font-size: 1.8rem; font-family: var(--font-heading); margin: 0; font-weight: 600; }
+.see-all-link { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); text-decoration: none; font-weight: 600; transition: opacity 0.3s; }
+.see-all-link:hover { opacity: 0.7; }
+.product-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.loading-text { grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted); }
+@media (max-width: 992px) {
+  .product-grid-4 { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+@media (max-width: 768px) {
+  .product-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .section-header-row h2 { font-size: 1.4rem; }
+}
+
+/* 5. FEATURED SPOTLIGHT */
+.spotlight-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 40px 0; }
+.spotlight-image { border-radius: 16px; overflow: hidden; }
+.spotlight-image img { width: 100%; display: block; }
+.spotlight-details { padding: 20px; }
+.spotlight-label { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+.spotlight-name { font-size: 2.2rem; font-family: var(--font-heading); line-height: 1.2; margin-bottom: 12px; }
+.spotlight-price { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; }
+.spotlight-desc { color: var(--muted); line-height: 1.7; margin-bottom: 24px; font-size: 0.95rem; }
+.spotlight-btn { display: inline-block; background: var(--gold); color: #fff; padding: 14px 36px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; }
+.spotlight-btn:hover { background: #a07930; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(184,136,58,0.3); }
+@media (max-width: 768px) {
+  .spotlight-layout { grid-template-columns: 1fr; }
+  .spotlight-name { font-size: 1.6rem; }
+}
+
+/* 6. INSTAGRAM SECTION */
+#instagram-section { padding: 60px 0; background: #faf8f5; }
+.insta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.insta-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+.insta-grid img:hover { transform: scale(1.03); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+@media (max-width: 768px) {
+  .insta-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+}
+
+/* 7. REVIEWS HIGHLIGHTS */
+#reviews-section { padding: 60px 0; }
+.reviews-highlights-scroll { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0 20px; scrollbar-width: none; -ms-overflow-style: none; }
+.reviews-highlights-scroll::-webkit-scrollbar { display: none; }
+.review-highlight { flex: 0 0 auto; text-align: center; cursor: pointer; transition: transform 0.3s; }
+.review-highlight:hover { transform: scale(1.05); }
+.review-highlight-img { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold); padding: 3px; margin: 0 auto 8px; }
+.review-highlight-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.review-highlight p { font-size: 0.75rem; color: #555; margin: 0; }
+/* Review modal/lightbox */
+.review-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.review-lightbox.active { opacity: 1; pointer-events: auto; }
+.review-lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; }
+.review-lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 2rem; cursor: pointer; background: none; border: none; }
+
+/* ══════════════════════════════════════════════════
+   REDESIGN OVERRIDES — New homepage layout
+   Override old hero and transparent nav styles
+   ══════════════════════════════════════════════════ */
+
+/* Kill the old transparent-nav-on-homepage behavior */
+body.page-home nav:not(.scrolled) .nav-logo-link,
+body.page-home nav:not(.scrolled) .nav-links > li > a, 
+body.page-home nav:not(.scrolled) .nav-icons button,
+body.page-home nav:not(.scrolled) .nav-icons a {
+  color: #333 !important;
+}
+body.page-home nav:not(.scrolled) .nav-logo-link em { color: #333 !important; }
+
+/* New nav: always white bg, not fixed/transparent */
+body.page-home nav {
+  position: relative !important;
+  background: #fff !important;
+  height: auto !important;
+  border-bottom: 1px solid #eee;
+}
+
+/* Override old fullscreen hero styles */
+body.page-home #hero.hero-videos {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  position: relative !important;
+  align-items: stretch !important;
+  background: #fff !important;
+}
+body.page-home .hero-carousel,
+body.page-home .hero-video-overlay,
+body.page-home .hero-content { display: none !important; }
+
+/* Fix section padding for #categories since old styles have 100px */
+body.page-home #categories { padding: 50px 0 !important; }
+

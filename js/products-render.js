@@ -372,104 +372,109 @@ async function zarinehusnRenderShopGrid() {
 
 /* ── Load & render featured and pinned grids (index.html homepage) ── */
 async function zarinehusnRenderHomepageGrids() {
-  const isHome = document.getElementById('featured-jewelry');
-  if (!isHome) return;
-
   try {
     const data = await apiGet('/products');
     let allProducts = data.products || [];
 
-    // STRICTLY FILTER OUT ANYTHING THAT IS NOT JEWELRY OR COSMETICS
+    // Filter to valid categories only
     allProducts = allProducts.filter(p => {
       const c = p.category === 'catchers' ? 'clips' : p.category;
       const s = p.subcategory === 'catchers' ? 'clips' : p.subcategory;
       const resolvedCat = s || c;
-      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat) || (CATEGORY_HIERARCHY['deals'] && CATEGORY_HIERARCHY['deals'].includes(resolvedCat));
+      return CATEGORY_HIERARCHY['jewelry'].includes(resolvedCat) || 
+             CATEGORY_HIERARCHY['cosmetics'].includes(resolvedCat) || 
+             (CATEGORY_HIERARCHY['deals'] && CATEGORY_HIERARCHY['deals'].includes(resolvedCat)) ||
+             (CATEGORY_HIERARCHY['addon-boxes'] && CATEGORY_HIERARCHY['addon-boxes'].includes(resolvedCat));
     });
 
-    
-    // --- 0. Render Hot Selling Ads ---
-    const hotAds = data.products.filter(p => p.hotSelling === true);
-    const hotSection = document.getElementById('hot-selling-ads');
-    if (hotSection && hotAds.length > 0) {
-      hotSection.style.display = 'block';
-      hotSection.style.padding = '40px 0';
-      
-      let slidesHTML = hotAds.map((p, idx) => {
-        const productUrl = 'product.html?id=' + (p.id || p.name);
-        const media = (p.video) 
-          ? `<video src="${p.video}" autoplay loop muted playsinline preload="metadata" poster="${(p.images && p.images[0]) || ''}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="window.zhHandleImageError(this, '${p.emoji || ''}', 'hotselling', '${productUrl}')" onclick="window.location.href='${productUrl}'"></video>`
-          : `<img src="${(p.images && p.images[0]) || ''}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;cursor:pointer;" onerror="window.zhHandleImageError(this, '${p.emoji || ''}', 'hotselling', '${productUrl}')" onclick="window.location.href='${productUrl}'"/>`;
-          
-        return `<div class="hot-slide" style="grid-area: 1 / 1; opacity:${idx===0?1:0}; pointer-events:${idx===0?'auto':'none'}; transition: opacity 0.6s ease-in-out; width:100%; max-width:1200px; margin:0 auto;">
-          <div style="display:flex; flex-direction:column; background:var(--bg); border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.08); border:1px solid rgba(184,136,58,0.2);">
-            
-            <style>
-              @media (min-width: 768px) {
-                .hot-selling-split-${idx} { flex-direction: row !important; min-height: 500px; }
-                .hot-selling-media-${idx} { flex: 1.2 !important; min-height: 500px; }
-                .hot-selling-content-${idx} { flex: 1 !important; padding: 60px !important; justify-content: center !important; text-align: left !important; }
-                .hot-selling-btns-${idx} { justify-content: flex-start !important; }
-              }
-              @keyframes pulseBadge { 0% { box-shadow: 0 0 0 0 rgba(225,48,108,0.4); } 70% { box-shadow: 0 0 0 10px rgba(225,48,108,0); } 100% { box-shadow: 0 0 0 0 rgba(225,48,108,0); } }
-            </style>
-
-            <div class="hot-selling-split-${idx}" style="display:flex; flex-direction:column-reverse; width:100%;">
-              <!-- Content Side -->
-              <div class="hot-selling-content-${idx}" style="flex:1; padding:30px 20px; display:flex; flex-direction:column; justify-content:center; text-align:center; background:linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(250,247,242,1) 100%); position:relative;">
-                
-                <div style="margin-bottom:20px;">
-                  <span style="display:inline-block; background:linear-gradient(45deg, #ff416c, #ff4b2b); color:white; padding:6px 16px; border-radius:30px; font-size:0.75rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; animation: pulseBadge 2s infinite;">🔥 Trending Now</span>
-                </div>
-                
-                <h3 style="font-size:clamp(1.8rem, 5vw, 3rem); line-height:1.2; margin:0 0 15px 0; font-family:var(--font-heading); color:#111; cursor:pointer;" onclick="window.location.href='${productUrl}'">${p.name}</h3>
-                <div style="width:60px; height:3px; background:var(--gold); margin: 0 auto 20px auto; border-radius:2px;" class="hot-selling-btns-${idx}"></div>
-                <p style="font-size:1.5rem; margin:0 0 30px 0; font-weight:700; color:var(--gold);">PKR ${Number(p.price).toLocaleString()}</p>
-                
-                <div class="hot-selling-btns-${idx}" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; width:100%;">
-                  <button onclick="window.buyNow('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:200px; padding:16px 24px; font-size:1rem; background:var(--gold); border:1px solid var(--gold); color:#000; font-weight:700; border-radius:12px; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 8px 20px rgba(184,136,58,0.3);"><i class="fa-solid fa-bolt" style="margin-right:6px"></i> Buy it Now</button>
-                  <button onclick="window.addToCart('${p.name.replace(/'/g, "\'")}', ${Number(p.price)}, '${p.emoji||''}', 'Standard', '${(p.images&&p.images[0])||''}')" class="btn-primary" style="flex:1; min-width:200px; padding:16px 24px; font-size:1rem; background:transparent; border:2px solid var(--gold); color:var(--gold); font-weight:700; border-radius:12px; transition:all 0.2s;"><i class="fa-solid fa-cart-plus" style="margin-right:6px"></i> Add to Cart</button>
-                </div>
-                <button onclick="window.open('https://wa.me/${(window.ZARINEHUSN_CONFIG?.whatsapp?.number || '923150727131').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello, I would like to buy this product: ' + p.name + ' ' + window.location.origin + '/product.html?id=' + (p.id||p.name))}', '_blank')" class="btn-primary" style="margin-top:12px; padding:16px 24px; font-size:1rem; background:#25D366; border:none; color:#fff; width:100%; border-radius:12px; font-weight:700; box-shadow:0 8px 20px rgba(37,211,102,0.3); transition:transform 0.2s;"><i class="fa-brands fa-whatsapp" style="font-size:1.2rem; margin-right:8px"></i> Order on WhatsApp</button>
-              
-              </div>
-
-              <!-- Media Side -->
-              <div class="hot-selling-media-${idx}" style="flex:1; position:relative; aspect-ratio:4/3;">
-                ${media}
-              </div>
+    // --- 0. Render Hero Videos ---
+    const heroGrid = document.getElementById('hero-video-grid');
+    if (heroGrid) {
+      try {
+        const heroData = await apiGet('/admin/hero-videos').catch(() => null);
+        const videos = heroData?.videos || [];
+        if (videos.length > 0) {
+          heroGrid.innerHTML = videos.map(v => `
+            <div class="hero-video-card">
+              <video src="${v.url}" autoplay loop muted playsinline preload="metadata"></video>
             </div>
-
-          </div>
-        </div>`;
-      }).join('');
-      
-      hotSection.innerHTML = `
-        <div class="container" style="max-width:1250px; padding:0 20px;">
-          <div style="text-align:center; margin-bottom:40px;">
-            <h2 style="font-family:var(--font-heading); font-size:2.8rem; margin-bottom:10px; color:#111;">Our Hot Selling Products</h2>
-            <p style="color:var(--muted); font-size:1.15rem; max-width:600px; margin:0 auto;">Discover the absolute favorites trending right now. Grab them before they're gone!</p>
-          </div>
-          <div style="display:grid; width:100%; position:relative;">${slidesHTML}</div>
-        </div>
-      `;
-      
-      // Auto-play logic
-      if (hotAds.length > 1) {
-        let currentSlide = 0;
-        const slides = hotSection.querySelectorAll('.hot-slide');
-        setInterval(() => {
-          
-          slides[currentSlide].style.opacity = '0';
-          slides[currentSlide].style.pointerEvents = 'none';
-          currentSlide = (currentSlide + 1) % slides.length;
-          slides[currentSlide].style.opacity = '1';
-          slides[currentSlide].style.pointerEvents = 'auto';
-        }, 4000);
+          `).join('');
+        } else {
+          // Fallback: hide if no videos
+          heroGrid.innerHTML = '<p class="loading-text">Coming soon...</p>';
+        }
+      } catch(e) {
+        heroGrid.innerHTML = '<p class="loading-text">Coming soon...</p>';
       }
     }
 
-    // --- 1. Render Pinned Collections ---
+    // --- 1. Render Category Circles ---
+    const catContainer = document.getElementById('category-circles');
+    if (catContainer) {
+      const subcats = [
+        // Jewelry subcategories
+        { id: 'necklace', name: 'Necklaces', img: 'images/categories/necklace.jpg', href: 'jewelry.html?cat=necklace' },
+        { id: 'earrings', name: 'Earrings', img: 'images/categories/earrings.jpg', href: 'jewelry.html?cat=earrings' },
+        { id: 'rings', name: 'Rings', img: 'images/categories/rings.jpg', href: 'jewelry.html?cat=rings' },
+        { id: 'bracelets', name: 'Bracelets', img: 'images/categories/bracelets.jpg', href: 'jewelry.html?cat=bracelets' },
+        { id: 'bangles', name: 'Bangles', img: 'images/categories/bracelets.jpg', href: 'jewelry.html?cat=bangles' },
+        { id: 'jewelry-sets', name: 'Jewelry Sets', img: 'images/categories/jewelry-new.jpg', href: 'jewelry.html?cat=jewelry-sets' },
+        // Cosmetics subcategories
+        { id: 'face-cosmetics', name: 'Face', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=face-cosmetics' },
+        { id: 'eye-makeup', name: 'Eye Makeup', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=eye-makeup' },
+        { id: 'lip-makeup', name: 'Lip Makeup', img: 'images/categories/cosmetics.jpg', href: 'cosmetics.html?cat=lip-makeup' },
+        { id: 'skin-care', name: 'Skin Care', img: 'images/categories/skincare.jpg', href: 'cosmetics.html?cat=skin-care' },
+        // Deals
+        { id: 'deals', name: 'Deals', img: 'images/hero_deals.jpg', href: 'shop.html?cat=deals' },
+        // Shop All
+        { id: 'all', name: 'Shop All', img: '', href: 'shop.html', isShopAll: true },
+      ];
+
+      catContainer.innerHTML = subcats.map(c => {
+        if (c.isShopAll) {
+          return `<a href="${c.href}" class="cat-circle">
+            <div class="cat-circle-img" style="display:flex;align-items:center;justify-content:center;background:#f5f5f5;">
+              <i class="fa-solid fa-arrow-right" style="font-size:1.5rem;color:#999;"></i>
+            </div>
+            <p>${c.name}</p>
+          </a>`;
+        }
+        return `<a href="${c.href}" class="cat-circle">
+          <div class="cat-circle-img"><img src="${c.img}" alt="${c.name}" loading="lazy"/></div>
+          <p>${c.name}</p>
+        </a>`;
+      }).join('');
+    }
+
+    // --- 2. Render New Arrivals ---
+    const newArrivalsGrid = document.getElementById('new-arrivals-grid');
+    if (newArrivalsGrid) {
+      const newProducts = allProducts.filter(p => p.newArrival === true || p.badge === 'New');
+      if (newProducts.length > 0) {
+        const limited = newProducts.slice(0, 24);
+        newArrivalsGrid.innerHTML = limited.map(p => zarinehusnProductCardHTML(p)).join('');
+        zarinehusnReInitCards(newArrivalsGrid);
+        document.getElementById('new-arrivals').style.display = 'block';
+      } else {
+        document.getElementById('new-arrivals').style.display = 'none';
+      }
+    }
+
+    // --- 3. Render Trending Now ---
+    const trendingGrid = document.getElementById('trending-now-grid');
+    if (trendingGrid) {
+      const trendingProducts = allProducts.filter(p => p.trending === true || p.hotSelling === true);
+      if (trendingProducts.length > 0) {
+        const limited = trendingProducts.slice(0, 24);
+        trendingGrid.innerHTML = limited.map(p => zarinehusnProductCardHTML(p)).join('');
+        zarinehusnReInitCards(trendingGrid);
+        document.getElementById('trending-now').style.display = 'block';
+      } else {
+        document.getElementById('trending-now').style.display = 'none';
+      }
+    }
+
+    // --- 4. Render Pinned Collections ---
     const pinnedRes = await apiGet('/admin/pinned').catch(e => null);
     const pinnedData = pinnedRes && pinnedRes.pinned ? pinnedRes.pinned : [];
     const pinnedContainer = document.getElementById('pinned-collections-wrapper');
@@ -484,23 +489,18 @@ async function zarinehusnRenderHomepageGrids() {
         });
         if (pinProducts.length > 0) {
           const section = document.createElement('section');
-          section.className = 'collection-section';
-          section.style.padding = '40px 0 0 0';
-
+          section.className = 'collection-section product-section';
           const catUrl = (() => {
             if (CATEGORY_HIERARCHY['jewelry'].includes(pin.id)) return `jewelry.html?cat=${pin.id}`;
             if (CATEGORY_HIERARCHY['cosmetics'].includes(pin.id)) return `cosmetics.html?cat=${pin.id}`;
             return `shop.html?cat=${pin.id}`;
           })();
-
           const rowId = `pinrow-${pin.id}`;
           section.innerHTML = `
             <div class="container">
-              <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                <h2 style="font-size:1.6rem;margin:0;">${pin.name}</h2>
-                <div style="display:flex; gap: 8px; align-items:center;">
-                  <a href="${catUrl}" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
-                </div>
+              <div class="section-header-row">
+                <h2>${pin.name}</h2>
+                <a href="${catUrl}" class="see-all-link">View All →</a>
               </div>
               <div class="pinned-scroll-track" id="${rowId}" style="display:flex;overflow-x:auto;gap:12px;padding-bottom:20px;scroll-snap-type:x mandatory;cursor:grab;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;">
                 ${pinProducts.map(p => {
@@ -512,61 +512,76 @@ async function zarinehusnRenderHomepageGrids() {
           `;
           pinnedContainer.appendChild(section);
           zarinehusnReInitCards(section);
-
-          /* ── Mouse drag-to-scroll ── */
+          /* Mouse drag-to-scroll */
           const track = section.querySelector(`#${rowId}`);
           if (track) {
             let isDown = false, startX, scrollLeft;
-            track.addEventListener('mousedown', e => {
-              isDown = true; track.style.cursor = 'grabbing';
-              startX = e.pageX - track.offsetLeft;
-              scrollLeft = track.scrollLeft;
-            });
+            track.addEventListener('mousedown', e => { isDown = true; track.style.cursor = 'grabbing'; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
             track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mouseup',    () => { isDown = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mousemove',  e => {
-              if (!isDown) return;
-              e.preventDefault();
-              const x = e.pageX - track.offsetLeft;
-              track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-            });
+            track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+            track.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.5; });
           }
         }
       });
     }
 
-    // --- 2. Render Featured Rows (grouped by Main Category) ---
-    const featuredProducts = allProducts.filter(p => p.featured);
-    
-    // Jewelry
-    const jewGrid = document.getElementById('featured-jewelry-grid');
-    if (jewGrid) {
-      const jProds = featuredProducts.filter(p => CATEGORY_HIERARCHY['jewelry'].includes(p.subcategory || p.category));
-      
-      if (jProds.length) {
-        jewGrid.innerHTML = jProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
-        document.getElementById('featured-jewelry').style.display = 'block';
-      } else {
-        document.getElementById('featured-jewelry').style.display = 'none';
+    // --- 5. Render Featured Spotlight ---
+    const spotlightSection = document.getElementById('featured-spotlight');
+    const spotlightContent = document.getElementById('spotlight-content');
+    if (spotlightSection && spotlightContent) {
+      const spotlightProduct = allProducts.find(p => p.featuredSpotlight === true) || allProducts.find(p => p.featured === true);
+      if (spotlightProduct) {
+        const sp = spotlightProduct;
+        const productUrl = 'product.html?id=' + (sp.id || sp.name);
+        const img = (sp.images && sp.images[0]) || '';
+        spotlightContent.innerHTML = `
+          <div class="spotlight-image">
+            <img src="${img}" alt="${sp.name}" onerror="window.zhHandleImageError(this, '${sp.emoji||''}', 'product-main')" />
+          </div>
+          <div class="spotlight-details">
+            <p class="spotlight-label">Featured Spotlight</p>
+            <h3 class="spotlight-name">${sp.name}</h3>
+            <p class="spotlight-price">PKR ${Number(sp.price).toLocaleString()}</p>
+            <p class="spotlight-desc">${sp.description || ''}</p>
+            <a href="${productUrl}" class="spotlight-btn">Shop Now</a>
+          </div>
+        `;
+        spotlightSection.style.display = 'block';
       }
-      zarinehusnReInitCards(jewGrid);
     }
 
-    // Cosmetics
-    const cosGrid = document.getElementById('featured-cosmetics-grid');
-    if (cosGrid) {
-      const cProds = featuredProducts.filter(p => {
-        const additional = p.additionalCategories || [];
-        return CATEGORY_HIERARCHY['cosmetics'].includes(p.subcategory || p.category) || additional.some(a => CATEGORY_HIERARCHY['cosmetics'].includes(a));
-      });
-      
-      if (cProds.length) {
-        cosGrid.innerHTML = cProds.map(p => zarinehusnProductCardHTML(p).replace('class="product-card"', 'class="product-card" style="flex: 0 0 280px; scroll-snap-align: start;"')).join('');
-        document.getElementById('featured-cosmetics').style.display = 'block';
-      } else {
-        document.getElementById('featured-cosmetics').style.display = 'none';
+    // --- 6. Render Reviews Highlights ---
+    const reviewsContainer = document.getElementById('reviews-highlights');
+    if (reviewsContainer) {
+      try {
+        const revData = await apiGet('/admin/review-images').catch(() => null);
+        const reviewImages = revData?.images || [];
+        if (reviewImages.length > 0) {
+          reviewsContainer.innerHTML = reviewImages.map((img, i) => `
+            <div class="review-highlight" onclick="openReviewLightbox('${img.url}')">
+              <div class="review-highlight-img"><img src="${img.url}" alt="Review ${i+1}" loading="lazy"/></div>
+              <p>${img.label || 'Review'}</p>
+            </div>
+          `).join('');
+        } else {
+          // Fallback: try text reviews
+          const textRevs = await apiGetReviews().catch(() => ({reviews:[]}) );
+          const reviews = textRevs.reviews || [];
+          if (reviews.length > 0) {
+            reviewsContainer.innerHTML = reviews.map((r, i) => `
+              <div class="review-highlight" style="width:200px;flex:0 0 200px;padding:16px;background:#faf8f5;border-radius:12px;text-align:left;">
+                <div class="t-stars" style="color:var(--gold);margin-bottom:8px;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                <p style="font-size:0.85rem;color:#333;line-height:1.5;margin:0 0 8px;">&ldquo;${r.text}&rdquo;</p>
+                <p style="font-size:0.75rem;font-weight:600;color:#111;margin:0;">${r.customerName}</p>
+              </div>
+            `).join('');
+          } else {
+            document.getElementById('reviews-section').style.display = 'none';
+          }
+        }
+      } catch(e) {
+        document.getElementById('reviews-section')?.style && (document.getElementById('reviews-section').style.display = 'none');
       }
-      zarinehusnReInitCards(cosGrid);
     }
 
   } catch (err) {
@@ -574,11 +589,25 @@ async function zarinehusnRenderHomepageGrids() {
   }
 }
 
+/* Review lightbox */
+function openReviewLightbox(url) {
+  let lb = document.querySelector('.review-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.className = 'review-lightbox';
+    lb.innerHTML = `<button class="review-lightbox-close">&times;</button><img src="" />`;
+    lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('review-lightbox-close')) lb.classList.remove('active'); });
+    document.body.appendChild(lb);
+  }
+  lb.querySelector('img').src = url;
+  lb.classList.add('active');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('shop-products-grid') || document.querySelector('.shop-layout')) {
     zarinehusnRenderShopGrid();
   }
-  if (document.getElementById('featured-jewelry')) {
+  if (document.getElementById('hero-video-grid') || document.getElementById('new-arrivals-grid')) {
     zarinehusnRenderHomepageGrids();
   }
 });

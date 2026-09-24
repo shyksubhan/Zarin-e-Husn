@@ -101,36 +101,40 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body class="page-home">
-  <!-- Custom Cursor -->
-<!-- NAV -->
-  <nav>
-    <a href="/" class="nav-logo nav-logo-link" style="display:inline-flex;align-items:center;text-decoration:none;"><img src="images/logo-light.png" alt="Zarin-e-Husn" class="nav-logo-img" /></a>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li class="nav-dropdown">
-        <a href="shop">Shop <i class="fa-solid fa-chevron-down" style="font-size:0.7em;margin-left:4px;"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="shop.html">All Collections</a></li>
-          <li><a href="jewelry.html">Jewelry</a></li>
-          <li><a href="cosmetics.html">Cosmetics</a></li>
-          <li><a href="shop.html?cat=deals">Deals</a></li>
-        </ul>
-      </li>
-      <li><a href="about">Our Story</a></li>
-      <li><a href="contact">Contact</a></li>
-    </ul>
-    <div class="nav-icons">
-      <button id="search-toggle" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <a href="account" aria-label="Account"><i class="fa-regular fa-user"></i></a>
-      <button data-open-cart aria-label="Bag">
-        <i class="fa-solid fa-bag-shopping"></i>
-        <span class="cart-count" style="display:none">0</span>
-      </button>
-      <button class="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+  <!-- NAV -->
+  <nav style="background: #fff; padding: 10px 0;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <div style="flex: 1;">
+        <button id="search-toggle" aria-label="Search" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #333;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+      <div style="flex: 2; text-align: center;">
+        <a href="/" class="nav-logo" style="display:inline-block; text-decoration:none;">
+          <img src="images/logo-light.png" alt="Zarin-e-Husn" style="height: 60px; width: auto;" />
+        </a>
+      </div>
+      <div class="nav-icons" style="flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 15px;">
+        <a href="account" aria-label="Account" style="color: #333; font-size: 1.2rem;"><i class="fa-regular fa-user"></i></a>
+        <button data-open-cart aria-label="Bag" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #333; position: relative;">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count" style="display:none">0</span>
+        </button>
+        <button class="hamburger" aria-label="Menu" style="background: none; border: none; cursor: pointer;">
+          <span style="background: #333;"></span><span style="background: #333;"></span><span style="background: #333;"></span>
+        </button>
+      </div>
     </div>
+    
+    <ul class="nav-links" style="display: flex; justify-content: center; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">
+      <li><a href="jewelry.html" style="text-decoration: none; color: #333;">JEWELRY</a></li>
+      <li style="color: #ccc; user-select: none;">·</li>
+      <li><a href="cosmetics.html" style="text-decoration: none; color: #333;">COSMETICS</a></li>
+      <li style="color: #ccc; user-select: none;">·</li>
+      <li><a href="shop.html?cat=deals" style="text-decoration: none; color: #333;">DEALS</a></li>
+    </ul>
   </nav>
+
   <!-- SEARCH OVERLAY -->
   <div id="search-overlay">
     <div class="search-box">
@@ -142,234 +146,92 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
       <div id="search-results"></div>
     </div>
   </div>
-  <!-- HERO -->
-  <section id="hero">
-    <!-- Image Carousel Background -->
-    <div class="hero-carousel">
-      <div class="carousel-slide active" style="background-image: url('images/hero_banner_new_1.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('images/hero_banner_new_2.jpg');"></div>
-      <div class="carousel-slide" style="background-image: url('images/hero_banner_new_3_v2.jpg');"></div>
-    </div>
-    <!-- Dark overlay for text readability -->
-    <div class="hero-video-overlay" aria-hidden="true"></div>
-    <!-- SEO-only hidden heading -->
-    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Zarin-e-Husn &mdash; Luxury Cosmetics &amp; Jewelry Online Pakistan</h1>
 
-    <div class="hero-content">
-      <img src="images/logo-light.png" alt="Zarin-e-Husn" style="height: 70px; width: auto; margin-bottom: 20px; filter: brightness(0) invert(1); opacity: 0; animation: fadeUp 1.2s 0.3s forwards;" />
-      <p class="hero-title-main">ZARIN-E-HUSN</p>
-      <p class="hero-title-sub">Premium Jewelry &amp; Beauty Essentials Crafted for Every Woman.</p>
-      <div style="display: flex; gap: 16px; justify-content: flex-start; margin-top: 36px; flex-wrap: wrap; opacity: 0; animation: fadeUp 1.2s 0.9s forwards;">
-        <a href="jewelry.html" class="btn-primary">Shop Jewelry</a>
-        <a href="cosmetics.html" class="btn-primary">Shop Cosmetics</a>
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero-videos">
+    <div class="container">
+      <h2 class="hero-video-heading">MORE THAN A LOOK</h2>
+      <p class="hero-video-subtitle">Your favourite pieces, brought to life in motion</p>
+      <div class="hero-video-grid" id="hero-video-grid">
+        <!-- 4 videos will be loaded dynamically from API by JS -->
+        <div class="hero-video-placeholder">Loading...</div>
       </div>
     </div>
   </section>
 
-  <!-- HOT SELLING ADS -->
-  <section id="hot-selling-ads" style="display:none; width:100%; background:var(--bg);">
-    <!-- Container dynamically populated by JS -->
-  </section>
-
-  <!-- CATEGORIES -->
+  <!-- SHOP BY CATEGORIES (Circle design) -->
   <section id="categories">
     <div class="container">
-      <p class="section-label">Shop by Category</p>
-      <h2 class="section-title">Luxury That Enhances <em>Your Natural Beauty</em></h2>
-      <div class="gold-rule"></div>
-      <div class="premium-cat-grid">
-
-        <a href="jewelry.html" class="premium-cat-card" style="text-decoration:none;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/hero_jewelry.jpg" alt="Jewelry Online Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name">Jewelry</p>
-          </div>
-        </a>
-
-        <a href="cosmetics.html" class="premium-cat-card" style="text-decoration:none;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/hero_cosmetics.jpg" alt="Cosmetics Online Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name">Cosmetics</p>
-          </div>
-        </a>
-        <a href="shop.html?cat=deals" class="premium-cat-card" style="text-decoration:none;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/hero_deals.jpg" alt="Deals Online Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name">Deals</p>
-          </div>
-        </a>
-
+      <h2 class="section-title-simple">Shop by Category</h2>
+      <div class="category-circles-scroll" id="category-circles">
+        <!-- These will be populated by JS with ALL subcategories -->
       </div>
     </div>
   </section>
 
-  <!-- FEATURED PRODUCTS -->
-  
-<div id="pinned-collections-wrapper"></div>
-
-<!-- Featured Jewelry -->
-<section id="featured-jewelry" style="padding:60px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Jewelry</em></h2>
-      <div style="display:flex; gap: 8px; align-items:center;">
-        <a href="jewelry.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
-      </div>
-    </div>
-    <div class="horizontal-scroll-grid" id="featured-jewelry-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
-    </div>
-  </div>
-</section>
-
-<!-- Featured Cosmetics -->
-<section id="featured-cosmetics" style="padding:0 0 60px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <h2 style="font-size:2rem;margin:0;">Featured <em style="color: var(--text);">Cosmetics</em></h2>
-      <div style="display:flex; gap: 8px; align-items:center;">
-        <a href="cosmetics.html" style="font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-family:var(--font-ui); margin-left: 12px;">View All →</a>
-      </div>
-    </div>
-    <div class="horizontal-scroll-grid" id="featured-cosmetics-grid" style="display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;">
-      <div style="grid-column:1/-1;text-align:center;padding:40px;opacity:0.5;">Loading products...</div>
-    </div>
-  </div>
-</section>
-
-  <!-- BRANDS -->
-  <section id="brands" style="padding-bottom: 60px;">
+  <!-- NEW ARRIVALS -->
+  <section id="new-arrivals" class="product-section">
     <div class="container">
-      <p class="section-label">Shop by Brand</p>
-      <h2 class="section-title">Discover Premium Cosmetics from <em>Top Brands</em></h2>
-      <div class="gold-rule"></div>
-      <div class="premium-cat-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; justify-content: center;">
-
-        <a href="shop.html?brand=Vaseline" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_vaseline.jpg" alt="Vaseline Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Vaseline</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Medora" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_medora.jpg" alt="Medora Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Medora</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Rivaj" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_rivaj.jpg" alt="Rivaj Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Rivaj</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Huda beauty" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_huda.jpg" alt="Huda Beauty Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Huda beauty</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Mac Cosmetics" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_mac.jpg" alt="Mac Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Mac Cosmetics</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Miss Rose" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_missrose.jpg" alt="Miss Rose Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Miss Rose</p>
-          </div>
-        </a>
-
-        <a href="shop.html?brand=Maybelline" class="premium-cat-card" style="text-decoration:none; max-width: 180px; margin: 0 auto;">
-          <div class="cat-img-wrap premium-circle">
-            <img src="images/brand_maybelline.jpg" alt="Maybelline Cosmetics Pakistan" loading="lazy" />
-          </div>
-          <div class="cat-img-info">
-            <p class="cat-name" style="font-size: 1.1rem;">Maybelline</p>
-          </div>
-        </a>
-
+      <div class="section-header-row">
+        <h2>New Arrivals</h2>
+        <a href="shop.html?tag=new-arrival" class="see-all-link">See All →</a>
+      </div>
+      <div class="product-grid-4" id="new-arrivals-grid">
+        <p class="loading-text">Loading...</p>
       </div>
     </div>
   </section>
-  <!-- BRAND STORY -->
-  <section id="story">
+
+  <!-- TRENDING NOW -->
+  <section id="trending-now" class="product-section">
     <div class="container">
-      <div class="story-grid">
-        <div class="story-visual reveal">
-          <img src="images/hero_passion_new_v2.jpg" alt="Zarin-e-Husn — Handcrafted skincare and Jewelry for Women in Pakistan" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />
-          <div class="story-accent"></div>
-        </div>
-        <div class="story-text reveal reveal-delay-2">
-          <p class="section-label">The Zarin-e-Husn Story</p>
-          <h2 class="section-title">Born From a Passion<br>for <em>Beauty</em></h2>
-          <div class="gold-rule"></div>
-          <p>
-        Zarin-e-Husn was founded in the heart of Lahore with one simple belief — that every woman deserves premium fashion and accessories that are as beautiful as she is. Every necklace, lipstick, and blush is curated with intention, so you don't just dress up — you express your soul.
-      </p>
-      <p>
-        We partner with skilled artisans and carefully selected suppliers to bring you pieces that elevate your entire look. We believe in quality over quantity, pieces that last beyond a season, and customer trust above all.
-      </p>
-          <a href="about.html" class="btn btn-outline" style="margin-top:20px;">Discover Our Story</a>
-          <div class="story-stats">
-            <div><div class="stat-num">200+</div><div class="stat-label">Accessories</div></div>
-            <div><div class="stat-num">5K+</div><div class="stat-label">Happy Customers</div></div>
-            <div><div class="stat-num">100%</div><div class="stat-label">Gentle Quality</div></div>
-          </div>
-        </div>
+      <div class="section-header-row">
+        <h2>Trending Now</h2>
+        <a href="shop.html?tag=trending" class="see-all-link">See All →</a>
+      </div>
+      <div class="product-grid-4" id="trending-now-grid">
+        <p class="loading-text">Loading...</p>
       </div>
     </div>
   </section>
-  <!-- REVIEWS (Dynamic — real customer reviews only) -->
-  <section id="testimonials">
+
+  <!-- PINNED COLLECTIONS -->
+  <div id="pinned-collections-wrapper"></div>
+
+  <!-- FEATURED SPOTLIGHT -->
+  <section id="featured-spotlight" class="product-section" style="display:none;">
     <div class="container">
-      <p class="section-label" style="text-align:center">What Our Clients Say</p>
-      <h2 class="section-title" style="text-align:center;margin-bottom:48px">Voices of <em>Zarin-e-Husn</em></h2>
-      <div class="testimonial-slider" id="reviews-container">
-        <p style="text-align:center;color:var(--muted);padding:40px 0;font-size:.9rem">Loading reviews…</p>
+      <div class="spotlight-layout" id="spotlight-content">
+        <!-- Populated by JS: left image, right details -->
       </div>
     </div>
   </section>
-  <!-- NEWSLETTER -->
-  <section id="newsletter" style="background: var(--bg-deep); position:relative; overflow:hidden;">
-    <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1400&q=60&fit=crop') center/cover no-repeat;opacity:0.07;pointer-events:none;z-index:0;"></div>
-    <div class="container" style="position:relative;z-index:1;">
-      <div class="newsletter-inner reveal">
-        <p class="section-label">Stay In The Loop</p>
-        <h2 class="section-title">Join the <em>Zarin-e-Husn</em> Circle</h2>
-        <p>Subscribe for exclusive previews and early access to new arrivals — be the first to know about new drops.</p>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Your email address" required />
-          <button type="submit" class="btn-primary">Subscribe</button>
-        </form>
+
+  <!-- FOLLOW OUR INSTAGRAM -->
+  <section id="instagram-section">
+    <div class="container">
+      <h2 class="section-title-simple">Follow Us on Instagram</h2>
+      <p class="section-subtitle">@zarin_e_husn</p>
+      <div class="insta-grid" id="insta-grid">
+        <!-- Will be populated by JS or static images -->
+      </div>
+      <div style="text-align:center;margin-top:24px;">
+        <a href="https://www.instagram.com/zarin_e_husn" target="_blank" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;"><i class="fa-brands fa-instagram"></i> Follow @zarin_e_husn</a>
       </div>
     </div>
   </section>
+
+  <!-- OUR REVIEWS -->
+  <section id="reviews-section">
+    <div class="container">
+      <h2 class="section-title-simple">Our Reviews</h2>
+      <div class="reviews-highlights-scroll" id="reviews-highlights">
+        <!-- Will be populated by JS: circular review screenshot thumbnails -->
+        <p class="loading-text">Loading reviews...</p>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="container">
@@ -454,47 +316,5 @@ src="https://www.facebook.com/tr?id=4331926033691657&ev=PageView&noscript=1"
   <script src="js/main.js"></script>
   <script src="js/products-render.js"></script>
   <script src="js/search.js"></script>
-  <script>
-    /* ── Load Real Reviews on Homepage ── */
-    (async function loadReviews() {
-      const container = document.getElementById('reviews-container');
-      if (!container) return;
-      try {
-        const data = await apiGetReviews();
-        const reviews = data.reviews || [];
-        if (!reviews.length) {
-          container.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0;font-size:.9rem">No reviews yet — be the first to share your experience!</p>';
-          return;
-        }
-        container.innerHTML = reviews.map((r, i) => `
-          <div class="testimonial-card reveal${i===1?' reveal-delay-2':i===2?' reveal-delay-3':''}">
-            <div class="t-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-            <p class="t-text">&ldquo;${r.text}&rdquo;</p>
-            <div class="t-author">${r.customerName}</div>
-            <div class="t-loc">${r.city ? r.city + ', Pakistan' : 'Pakistan'}</div>
-          </div>`).join('');
-        /* Re-observe new reveal elements */
-        const obs = new IntersectionObserver(entries => {
-          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-        }, { threshold: 0.12 });
-        container.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-      } catch {
-        container.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0;font-size:.9rem">No reviews yet.</p>';
-      }
-    })();
-  </script>
-  <!-- Hero carousel sliding script -->
-  <script>
-    (function() {
-      const slides = document.querySelectorAll('.carousel-slide');
-      if (slides.length === 0) return;
-      let currentSlide = 0;
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 4000);
-    })();
-  </script>
 </body>
 </html>
