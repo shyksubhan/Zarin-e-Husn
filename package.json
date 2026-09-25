@@ -4,6 +4,7 @@
     "start": "cd backend && node server.js"
   },
   "dependencies": {
+    "glob": "^13.0.6",
     "jimp": "^1.6.1",
     "resend": "^6.14.0"
   }

@@ -93,7 +93,11 @@ router.post('/', requireRole('super_admin', 'admin'), (req, res) => {
     /* ── 3. Local disk fallback (ephemeral on Render free tier) ── */
     const localName = uniqueName + ext;
     const localPath = path.join(uploadDir, localName);
-    fs.writeFileSync(localPath, req.file.buffer);
+    try {
+      fs.writeFileSync(localPath, req.file.buffer);
+    } catch(e) {
+      return res.status(500).json({ error: 'Local write failed: ' + e.message });
+    }
     const fileUrl = `/images/products/${localName}`;
     console.warn('⚠️ Saved locally (ephemeral):', fileUrl);
     return res.status(201).json({ url: fileUrl, type: resourceType, publicId: localName });
