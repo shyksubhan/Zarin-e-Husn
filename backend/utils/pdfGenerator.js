@@ -138,7 +138,8 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
     (order.items || []).forEach(item => {
       const itemTotal = (item.price * item.qty);
       doc.fillColor(C_TEXT).fontSize(9);
-      const nameHeight = doc.heightOfString(item.name, { width: 230 });
+      const itemNameVar = item.name + (item.variant && item.variant !== 'Standard' ? ` - ${item.variant}` : '');
+        const nameHeight = doc.heightOfString(itemNameVar, { width: 230 });
       const rowHeight = Math.max(40, nameHeight + 25);
       
       doc.rect(50, y, 495, rowHeight).fillAndStroke('#ffffff', '#ffffff');

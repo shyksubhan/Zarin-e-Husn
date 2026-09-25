@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="ck-item-emoji" style="${item.image ? 'display:flex;align-items:center;justify-content:center;' : ''}">${item.image ? `<img src="${item.image}" alt="${item.name.replace(/"/g, '&quot;')}" style="width:36px;height:45px;object-fit:cover;border-radius:4px;">` : (item.emoji || '🛍️')}</span>
         <div class="ck-item-info">
           <span class="ck-item-name">${item.name}</span>
+            ${item.variant && item.variant !== 'Standard' ? `<span class="ck-item-qty" style="font-size: 0.75rem; color: #888; margin-bottom:2px;">${item.variant}</span>` : ''}
           <span class="ck-item-qty">Qty: ${item.qty}</span>
         </div>
         <span class="ck-item-price">PKR ${(item.price * item.qty).toLocaleString()}</span>
