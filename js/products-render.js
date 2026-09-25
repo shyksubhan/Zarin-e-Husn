@@ -395,18 +395,47 @@ async function zarinehusnRenderHomepageGrids() {
         const videos = heroData?.videos || [];
         if (videos.length > 0) {
           heroGrid.innerHTML = videos.map(v => `
-                <div class="hero-video-card" style="position: relative; background: #f9f9f9; overflow: hidden; min-height: 200px;">
-                  <!-- Loading Spinner behind video -->
-                  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid #ddd; border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 0;"></div>
-                  
-                  <video 
-                    src="${v.url}" 
-                    autoplay loop muted playsinline 
-                    preload="auto" 
-                    style="position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover;"
-                  ></video>
-                </div>
-              `).join('');
+                  <div class="hero-video-card" style="position: relative; background: #f9f9f9; overflow: hidden; min-height: 200px;">
+                    <!-- Loading Spinner behind video -->
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid #ddd; border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 0;"></div>
+                    
+                    <video 
+                        data-src="${v.url}" 
+                        loop muted playsinline 
+                        preload="metadata" 
+                        class="hero-lazy-video"
+                        style="position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease;"
+                    ></video>
+                  </div>
+                `).join('');
+
+          // --- Sequential Video Loading & Optimization ---
+          setTimeout(() => {
+            const videoEls = document.querySelectorAll('.hero-lazy-video');
+            if(videoEls.length === 0) return;
+            
+            const loadVideo = (vid) => {
+              return new Promise((resolve) => {
+                if (vid.src === vid.dataset.src) return resolve();
+                vid.src = vid.dataset.src;
+                vid.load();
+                const onCanPlay = () => {
+                  vid.style.opacity = '1';
+                  vid.play().catch(() => {});
+                  resolve();
+                };
+                vid.addEventListener('canplay', onCanPlay, { once: true });
+                vid.addEventListener('loadeddata', onCanPlay, { once: true });
+                setTimeout(resolve, 1000); // Max wait to prevent blocking next video if one is too slow
+              });
+            };
+
+            (async () => {
+              for (let i = 0; i < videoEls.length; i++) {
+                await loadVideo(videoEls[i]);
+              }
+            })();
+          }, 100);
         } else {
           // Fallback: hide if no videos
           heroGrid.innerHTML = '<p class="loading-text">Coming soon...</p>';
