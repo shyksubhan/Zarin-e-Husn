@@ -12,12 +12,13 @@ async function buildPdf(pdfPath, invId, snapshot, liveOrder, company) {
   let localPngLogo = null;
   try {
     const localLogoPath = path.join(__dirname, '..', '..', 'images', 'logo.png');
+    if (company.logoUrl) { /* skip local */ } else
     if (fs.existsSync(localLogoPath)) {
       localPngLogo = localLogoPath;
     }
   } catch(e) {}
 
-  if (!localPngLogo && company.logoUrl && company.logoUrl.startsWith('http')) {
+  if (company.logoUrl && company.logoUrl.startsWith('http')) {
     try {
       const fetch = require('node:http');
       const https = require('node:https');
