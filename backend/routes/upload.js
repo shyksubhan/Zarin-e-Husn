@@ -12,8 +12,14 @@ const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
 
-const uploadDir = path.join(__dirname, '..', '..', 'images', 'products');
+
+let uploadDir = path.join(__dirname, '..', '..', 'images', 'products');
+const hostingerPersistentDir = '/home/u480756160/domains/zarinehusn.com/persistent_uploads';
+if (fs.existsSync('/home/u480756160/domains/zarinehusn.com')) {
+  uploadDir = hostingerPersistentDir;
+}
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+
 
 const storage = multer.memoryStorage();
 const upload = multer({

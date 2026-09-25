@@ -177,6 +177,15 @@ ${urlTags}
 
 
 
+
+/* Hostinger Persistent Uploads Fix */
+const hostingerPersistentDir = '/home/u480756160/domains/zarinehusn.com/persistent_uploads';
+if (fs.existsSync('/home/u480756160/domains/zarinehusn.com')) {
+  if (!fs.existsSync(hostingerPersistentDir)) fs.mkdirSync(hostingerPersistentDir, { recursive: true });
+  app.use('/images/products', express.static(hostingerPersistentDir));
+}
+/* End Fix */
+
 app.use(express.static(path.join(__dirname, '..'), { 
   extensions: ['html'],
   setHeaders: (res, path, stat) => {
